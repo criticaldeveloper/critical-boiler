@@ -8,7 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const packageJson = JSON.parse(
   await readFile(path.join(root, "package.json"), "utf8"),
 );
-const tag = process.argv[2] ?? process.env.GITHUB_REF_NAME ?? `v${packageJson.version}`;
+const tag = process.argv[2] ?? `v${packageJson.version}`;
 
 if (!/^v(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)$/u.test(tag)) {
   throw new Error(`Release tag must use stable semantic versioning (vX.Y.Z); received ${tag}.`);
