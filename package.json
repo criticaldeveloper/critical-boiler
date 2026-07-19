@@ -1,0 +1,36 @@
+{
+  "name": "@critical/critical-boiler",
+  "version": "1.2.0",
+  "author": "Critical Developer",
+  "description": "A pnpm-installable CLI for bootstrapping AI docs, agent instructions, reset CSS, and project starter files depending on project type.",
+  "type": "module",
+  "bin": {
+    "critical-boiler": "./src/cli.js"
+  },
+  "files": [
+    "src",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node ./src/cli.js",
+    "check": "node ./scripts/check-syntax.js",
+    "smoke": "node ./src/cli.js --dry-run --tech react,tailwind",
+    "test": "node --test",
+    "test:beads": "node --test test/beads-integration.test.mjs"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "boilerplate",
+    "cli",
+    "docs",
+    "project-starter"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@11.1.2"
+}
