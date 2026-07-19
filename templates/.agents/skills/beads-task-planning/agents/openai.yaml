@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beads Task Planning"
+  short_description: "Plan and execute work through Beads tasks"
+  default_prompt: "Use $beads-task-planning to plan this work as a dependency-aware Beads task graph."

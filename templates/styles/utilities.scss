@@ -1,0 +1,141 @@
+/* Tiny layout-only utilities. Keep visuals in semantic component classes. */
+.u-block {
+  display: block;
+}
+
+.u-flex {
+  display: flex;
+}
+
+.u-grid {
+  display: grid;
+}
+
+.u-hidden {
+  display: none !important;
+}
+
+.u-items-center {
+  align-items: center;
+}
+
+.u-items-start {
+  align-items: flex-start;
+}
+
+.u-items-end {
+  align-items: flex-end;
+}
+
+.u-justify-center {
+  justify-content: center;
+}
+
+.u-justify-between {
+  justify-content: space-between;
+}
+
+.u-flex-column {
+  flex-direction: column;
+}
+
+.u-flex-wrap {
+  flex-wrap: wrap;
+}
+
+.u-gap-xs {
+  gap: var(--space-xs);
+}
+
+.u-gap-sm {
+  gap: var(--space-sm);
+}
+
+.u-gap-md {
+  gap: var(--space-md);
+}
+
+.u-gap-lg {
+  gap: var(--space-lg);
+}
+
+.u-gap-xl {
+  gap: var(--space-xl);
+}
+
+.u-mt-sm {
+  margin-top: var(--space-sm);
+}
+
+.u-mt-md {
+  margin-top: var(--space-md);
+}
+
+.u-mt-lg {
+  margin-top: var(--space-lg);
+}
+
+.u-mb-sm {
+  margin-bottom: var(--space-sm);
+}
+
+.u-mb-md {
+  margin-bottom: var(--space-md);
+}
+
+.u-mb-lg {
+  margin-bottom: var(--space-lg);
+}
+
+.u-container {
+  width: min(var(--container-lg), 100% - (var(--container-padding) * 2));
+  margin-inline: auto;
+}
+
+.u-container-sm {
+  width: min(var(--container-sm), 100% - (var(--container-padding) * 2));
+  margin-inline: auto;
+}
+
+.u-section {
+  padding-block: var(--space-2xl);
+}
+
+.u-w-full {
+  width: 100%;
+}
+
+.u-h-full {
+  height: 100%;
+}
+
+.u-stack-sm > * + * {
+  margin-top: var(--space-sm);
+}
+
+.u-stack-md > * + * {
+  margin-top: var(--space-md);
+}
+
+.u-stack-lg > * + * {
+  margin-top: var(--space-lg);
+}
+
+.u-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+@media (max-width: 48rem) {
+  .u-mobile-hidden {
+    display: none !important;
+  }
+}
+
+@media (min-width: 48.001rem) {
+  .u-desktop-hidden {
+    display: none !important;
+  }
+}

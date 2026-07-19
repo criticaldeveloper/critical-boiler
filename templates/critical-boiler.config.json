@@ -1,0 +1,13 @@
+{
+  "projectType": "webApplication",
+  "tech": ["typescript", "react", "tailwind"],
+  "standardScss": true,
+  "beads": true,
+  "paths": {
+    "packageJson": "package.json",
+    "cssReset": "src/styles/reset.scss",
+    "cssTokens": "src/styles/tokens.scss",
+    "cssUtilities": "src/styles/utilities.scss",
+    "cssIndex": "src/styles/index.scss"
+  }
+}
