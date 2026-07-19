@@ -13,7 +13,7 @@ The workflow uses the repository's short-lived `GITHUB_TOKEN` for GitHub Release
 
 npm Trusted Publishing is configured from an existing package's settings, so publish the first version interactively:
 
-1. Confirm that your npm account can publish public packages under the `@critical` scope.
+1. Confirm that your npm account can publish public packages under the `@twmw` scope.
 2. Run the full validation locally.
 3. Sign in to the public npm registry and publish with your interactive 2FA:
 

@@ -1,5 +1,5 @@
 {
-  "name": "@critical/critical-boiler",
+  "name": "@twmw/critical-boiler",
   "version": "1.0.0",
   "author": "Critical Developer",
   "description": "A pnpm-installable CLI for bootstrapping AI docs, agent instructions, reset CSS, and project starter files depending on project type.",

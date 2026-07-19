@@ -41,7 +41,7 @@ Those numbers are intentionally approximate: tokenization varies by model and fi
 ## Install
 
 ```sh
-pnpm add -g @critical/critical-boiler
+pnpm add -g @twmw/critical-boiler
 ```
 
 The intended workflow is to install the CLI globally, move into the project you want Codex to work on, and run `critical-boiler` there:

@@ -1,4 +1,4 @@
-export const PACKAGE_NAME = "@critical/critical-boiler";
+export const PACKAGE_NAME = "@twmw/critical-boiler";
 export const VERSION = "1.0.0";
 
 export const CONFIG_FILE = "critical-boiler.config.json";
