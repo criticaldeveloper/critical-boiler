@@ -1,11 +1,19 @@
 {
   "name": "@critical/critical-boiler",
-  "version": "1.2.0",
+  "version": "1.0.0",
   "author": "Critical Developer",
   "description": "A pnpm-installable CLI for bootstrapping AI docs, agent instructions, reset CSS, and project starter files depending on project type.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/criticaldeveloper/critical-boiler.git"
+  },
+  "homepage": "https://github.com/criticaldeveloper/critical-boiler#readme",
+  "bugs": {
+    "url": "https://github.com/criticaldeveloper/critical-boiler/issues"
+  },
   "type": "module",
   "bin": {
-    "critical-boiler": "./src/cli.js"
+    "critical-boiler": "src/cli.js"
   },
   "files": [
     "src",
@@ -18,7 +26,9 @@
     "check": "node ./scripts/check-syntax.js",
     "smoke": "node ./src/cli.js --dry-run --tech react,tailwind",
     "test": "node --test",
-    "test:beads": "node --test test/beads-integration.test.mjs"
+    "test:beads": "node --test test/beads-integration.test.mjs",
+    "release:check": "node ./scripts/verify-release-tag.js",
+    "version:set": "node ./scripts/set-version.js"
   },
   "keywords": [
     "ai",
@@ -31,6 +41,10 @@
   "license": "MIT",
   "engines": {
     "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "packageManager": "pnpm@11.1.2"
 }

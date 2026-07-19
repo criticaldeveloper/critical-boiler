@@ -1,5 +1,5 @@
 export const PACKAGE_NAME = "@critical/critical-boiler";
-export const VERSION = "1.2.0";
+export const VERSION = "1.0.0";
 
 export const CONFIG_FILE = "critical-boiler.config.json";
 

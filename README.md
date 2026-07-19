@@ -2,6 +2,8 @@
 
 A pnpm-installable CLI for saving AI tokens on predictable project setup work.
 
+Maintainer release instructions are documented in [RELEASING.md](./RELEASING.md).
+
 `critical-boiler` generates the repetitive seed files that coding agents otherwise keep re-creating from scratch: root-level `AGENTS.md`, technology-aware `ai-docs`, implementation skills, canonical command notes, definition-of-done rules, Beads task planning, reusable prompt templates, Tailwind or SCSS setup, design tokens, editor defaults, ignore rules, environment examples, and small framework-specific config files.
 
 The point is not novelty. The point is to stop spending expensive AI context on boilerplate that is mostly deterministic. Instead of asking Codex to rediscover “what commands exist?”, “where should components live?”, “what does done mean?”, “how should Tailwind be wired for this stack?”, or “what should the React/Vue/Angular/etc. guardrails be?” in every new repo, this CLI writes those predictable answers once.
