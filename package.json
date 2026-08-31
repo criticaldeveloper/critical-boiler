@@ -1,8 +1,8 @@
 {
   "name": "@twmw/critical-boiler",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Critical Developer",
-  "description": "A pnpm-installable CLI for bootstrapping AI docs, agent instructions, reset CSS, and project starter files depending on project type.",
+  "description": "A pnpm-installable CLI for bootstrapping AI docs, project starters, and optional BCO agent orchestration.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/criticaldeveloper/critical-boiler.git"
@@ -26,16 +26,18 @@
     "check": "node ./scripts/check-syntax.js",
     "smoke": "node ./src/cli.js --dry-run --tech react,tailwind",
     "test": "node --test",
-    "test:beads": "node --test test/beads-integration.test.mjs",
+    "test:bco": "node --test test/bco-enhancement.test.mjs",
     "release:check": "node ./scripts/verify-release-tag.js",
     "version:set": "node ./scripts/set-version.js"
   },
   "keywords": [
     "ai",
     "agents",
+    "bco",
     "boilerplate",
     "cli",
     "docs",
+    "orchestration",
     "project-starter"
   ],
   "license": "MIT",

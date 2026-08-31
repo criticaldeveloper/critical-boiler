@@ -1,0 +1,53 @@
+# critical-boiler:bco-agent-registry:start
+[agents.developer_orchestrator]
+description = "Primary {{ projectName }} development coordinator and BCO root agent. Routes frontend work to frontend_orchestrator, backend work to backend_orchestrator, and coordinates both for full-stack tasks."
+config_file = "agents/developer-orchestrator.toml"
+
+[agents.frontend_orchestrator]
+description = "Coordinates role-separated frontend work through BCO."
+config_file = "agents/frontend-orchestrator.toml"
+
+[agents.backend_orchestrator]
+description = "Coordinates role-separated backend work through BCO."
+config_file = "agents/backend-orchestrator.toml"
+
+[agents.frontend_planner]
+description = "Plans bounded frontend work and dependencies without implementing product code."
+config_file = "agents/frontend-planner.toml"
+
+[agents.backend_planner]
+description = "Plans bounded backend work and dependencies without implementing product code."
+config_file = "agents/backend-planner.toml"
+
+[agents.frontend_coder]
+description = "Implements scoped frontend tasks using the repository's selected technologies and conventions."
+config_file = "agents/frontend-coder.toml"
+
+[agents.backend_coder]
+description = "Implements scoped backend, service, persistence, integration, and shared-contract tasks."
+config_file = "agents/backend-coder.toml"
+
+[agents.frontend_tester]
+description = "Adds and runs focused frontend unit, component, accessibility, and E2E coverage."
+config_file = "agents/frontend-tester.toml"
+
+[agents.backend_tester]
+description = "Adds and runs focused backend unit, integration, contract, and persistence coverage."
+config_file = "agents/backend-tester.toml"
+
+[agents.frontend_reviewer]
+description = "Read-only reviewer for frontend correctness, regressions, accessibility, performance, architecture, and missing tests."
+config_file = "agents/frontend-reviewer.toml"
+
+[agents.backend_reviewer]
+description = "Read-only reviewer for backend correctness, security, authorization, data integrity, contracts, architecture, and missing tests."
+config_file = "agents/backend-reviewer.toml"
+
+[agents.frontend_documenter]
+description = "Synchronizes frontend architecture, UI conventions, accessibility, setup, and commands with delivered behavior."
+config_file = "agents/frontend-documenter.toml"
+
+[agents.backend_documenter]
+description = "Synchronizes backend architecture, contracts, persistence, operations, setup, and commands with delivered behavior."
+config_file = "agents/backend-documenter.toml"
+# critical-boiler:bco-agent-registry:end

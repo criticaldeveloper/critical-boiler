@@ -1,5 +1,10 @@
 import path from "node:path";
-import { PROJECT_TYPES, TECHNOLOGIES } from "../catalog.js";
+import {
+  BCO_ORCHESTRATION_SYSTEMS,
+  DEFAULT_BCO_ORCHESTRATION,
+  PROJECT_TYPES,
+  TECHNOLOGIES,
+} from "../catalog.js";
 import { color } from "../color.js";
 import { withRequiredTechnologies } from "../args.js";
 import { packagesForTechnologies } from "../package-json.js";
@@ -76,14 +81,23 @@ export async function promptForArgs(args) {
     }).tech;
   }
 
-  const useBeads = await selectOne({
-    label: "Use Beads for agent task planning?",
-    options: [option("true", "Yes"), option("false", "No")],
-    selected: String(args.beads),
+  const useBcoEnhancement = await selectOne({
+    label: "Enable BCO enhancement?",
+    options: [option("false", "No"), option("true", "Yes")],
+    selected: String(args.bcoEnhancement),
   });
-  const beads = useBeads === "true";
+  const bcoEnhancement = useBcoEnhancement === "true";
+  const bcoOrchestration = bcoEnhancement
+    ? await selectOne({
+        label: "BCO orchestration system",
+        options: Object.entries(BCO_ORCHESTRATION_SYSTEMS).map(
+          ([key, system]) => option(key, system.label),
+        ),
+        selected: args.bcoOrchestration ?? DEFAULT_BCO_ORCHESTRATION,
+      })
+    : undefined;
 
-  printPackagePlan(techInput, beads, projectTypeInput);
+  printPackagePlan(techInput, projectTypeInput);
 
   const forceInput = await selectOne({
     label: "Overwrite existing files?",
@@ -97,30 +111,22 @@ export async function promptForArgs(args) {
     projectType: projectTypeInput,
     tech: techInput,
     standardScss,
-    beads,
+    bcoEnhancement,
+    bcoOrchestration,
     force: forceInput === "true",
   };
 }
 
-export function printPackagePlan(
-  technologies,
-  beads = true,
-  projectType = undefined,
-) {
+export function printPackagePlan(technologies, projectType = undefined) {
   if (projectType === "mobileApplication") {
     console.log("");
     console.log(
-      beads
-        ? `${color.cyan("i")} Flutter does not use ${color.bold("package.json")}. Install ${color.bold("@beads/bd")} globally before running the generated setup script.`
-        : `${color.cyan("i")} No npm packages are required for this Flutter starter.`,
+      `${color.cyan("i")} No npm packages are required for this Flutter starter.`,
     );
     return;
   }
 
-  const packagePlan = packagesForTechnologies([
-    ...technologies,
-    ...(beads ? ["beads"] : []),
-  ]);
+  const packagePlan = packagesForTechnologies(technologies);
   const allPackages = [
     ...packagePlan.dependencies,
     ...packagePlan.devDependencies,

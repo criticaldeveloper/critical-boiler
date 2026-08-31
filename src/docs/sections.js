@@ -701,9 +701,9 @@ export function aiDocsSkillsSection(args) {
   const selectedFiles = selectedFileKeys(args);
   const lines = [];
 
-  if (selectedFiles.includes("beadsSkill")) {
+  if (selectedFiles.includes("bcoSkill")) {
     lines.push(
-      "- `../.agents/skills/beads-task-planning/SKILL.md`: dependency-aware Beads planning, claiming, coordination, evidence, and completion workflow.",
+      "- `../.agents/skills/bco-task-orchestration/SKILL.md`: capability-scoped BCO task execution, evidence, role orchestration, recovery, and completion workflow.",
     );
   }
 

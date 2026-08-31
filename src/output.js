@@ -1,4 +1,10 @@
-import { FILES, PROJECT_TYPES, PROMPT_TEMPLATES, TECHNOLOGIES } from "./catalog.js";
+import {
+  BCO_ORCHESTRATION_SYSTEMS,
+  FILES,
+  PROJECT_TYPES,
+  PROMPT_TEMPLATES,
+  TECHNOLOGIES,
+} from "./catalog.js";
 import { color, terminalCellLogo } from "./color.js";
 import { packageVersionStatus } from "./package-version-check.js";
 
@@ -12,7 +18,9 @@ ${color.bold("Options:")}
   -t, --tech <items>        Comma-separated technologies: ${Object.keys(TECHNOLOGIES).join(", ")}
       --project-type <name> Project type metadata: ${Object.keys(PROJECT_TYPES).join(", ")}
       --no-standard-scss    Skip generated SCSS reset, tokens, utilities, and entrypoint
-      --no-beads            Disable Beads package, skill, setup script, and task docs
+      --bco-enhancement     Add BCO docs and orchestrated agent declarations (disabled by default)
+      --bco-orchestration <name>
+                            BCO orchestration system: ${Object.keys(BCO_ORCHESTRATION_SYSTEMS).join(", ")}
   -c, --config <path>       JSON config file. Defaults to critical-boiler.config.json when present
       --cwd <path>          Target folder. Defaults to current directory
   -f, --force               Overwrite existing files
@@ -28,7 +36,7 @@ ${color.bold("Examples:")}
   critical-boiler prompt --list
   critical-boiler ./new-app
   critical-boiler --dry-run --tech node,typescript
-  critical-boiler --no-beads --tech node,typescript
+  critical-boiler --bco-enhancement --tech node,typescript
 `);
 }
 
@@ -73,6 +81,13 @@ export function printCatalog() {
   for (const [key, projectType] of Object.entries(PROJECT_TYPES)) {
     console.log(
       `  ${color.green(key)}: ${projectType.label} ${color.dim("-")} ${projectType.technologies.join(", ")}`,
+    );
+  }
+
+  console.log(`\n${color.bold("BCO orchestration systems:")}`);
+  for (const [key, system] of Object.entries(BCO_ORCHESTRATION_SYSTEMS)) {
+    console.log(
+      `  ${color.green(key)}: ${system.label} ${color.dim("-")} root agent ${system.rootAgent}`,
     );
   }
 }

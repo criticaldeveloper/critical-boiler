@@ -1,0 +1,7 @@
+model = "gpt-5.6-sol"
+model_reasoning_effort = "xhigh"
+sandbox_mode = "workspace-write"
+developer_instructions = """
+Read `.codex/prompts/agents/developer-orchestrator.md` completely before acting and follow it as your role contract.
+Coordinate domain orchestrators and BCO task state; do not delegate directly to specialists or implement product code yourself.
+"""

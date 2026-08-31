@@ -1,0 +1,4 @@
+interface:
+  display_name: "BCO Task Orchestration"
+  short_description: "Deliver native BCO tasks through role-separated agents"
+  default_prompt: "Use $bco-task-orchestration to inspect, execute, evidence, and complete the assigned native BCO task."
