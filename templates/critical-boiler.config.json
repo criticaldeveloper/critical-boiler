@@ -2,7 +2,8 @@
   "projectType": "webApplication",
   "tech": ["typescript", "react", "tailwind"],
   "standardScss": true,
-  "beads": true,
+  "bcoEnhancement": false,
+  "bcoOrchestration": "complete",
   "paths": {
     "packageJson": "package.json",
     "cssReset": "src/styles/reset.scss",

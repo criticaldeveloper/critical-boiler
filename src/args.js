@@ -1,7 +1,17 @@
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { CONFIG_FILE, DEFAULT_ARGS, FILES, PROJECT_TYPES, TECHNOLOGIES, TYPESCRIPT_PROJECT_TYPES, TYPESCRIPT_TECHNOLOGIES } from "./catalog.js";
+import {
+  BCO_ORCHESTRATION_SYSTEMS,
+  CONFIG_FILE,
+  DEFAULT_ARGS,
+  DEFAULT_BCO_ORCHESTRATION,
+  FILES,
+  PROJECT_TYPES,
+  TECHNOLOGIES,
+  TYPESCRIPT_PROJECT_TYPES,
+  TYPESCRIPT_TECHNOLOGIES,
+} from "./catalog.js";
 import { splitList, normalizeList, unique } from "./utils.js";
 
 export function parseArgs(argv) {
@@ -42,9 +52,14 @@ export function parseArgs(argv) {
     } else if (arg === "--no-standard-scss") {
       args.standardScss = false;
       provided.add("standardScss");
-    } else if (arg === "--no-beads") {
-      args.beads = false;
-      provided.add("beads");
+    } else if (arg === "--bco-enhancement") {
+      args.bcoEnhancement = true;
+      provided.add("bcoEnhancement");
+    } else if (arg === "--bco-orchestration") {
+      args.bcoOrchestration = readValue();
+      args.bcoEnhancement = true;
+      provided.add("bcoOrchestration");
+      provided.add("bcoEnhancement");
     } else if (arg === "--config" || arg === "-c") {
       args.config = path.resolve(readValue());
       provided.add("config");
@@ -117,6 +132,15 @@ export function validateOptions(args) {
     }
   }
 
+  if (
+    args.bcoOrchestration &&
+    !BCO_ORCHESTRATION_SYSTEMS[args.bcoOrchestration]
+  ) {
+    throw new Error(
+      `Unknown BCO orchestration system "${args.bcoOrchestration}". Use one of: ${Object.keys(BCO_ORCHESTRATION_SYSTEMS).join(", ")}`,
+    );
+  }
+
   for (const key of Object.keys(args.paths ?? {})) {
     if (!FILES[key]) {
       throw new Error(
@@ -160,7 +184,10 @@ export async function resolveArgs(cliArgs, provided) {
   args.projectType = args.projectType ? String(args.projectType) : undefined;
   args.tech = normalizeList(args.tech);
   args.standardScss = args.standardScss !== false;
-  args.beads = args.beads !== false;
+  args.bcoEnhancement = args.bcoEnhancement === true;
+  args.bcoOrchestration = args.bcoEnhancement
+    ? String(args.bcoOrchestration ?? DEFAULT_BCO_ORCHESTRATION)
+    : undefined;
   args.paths = args.paths ?? {};
 
   return withRequiredTechnologies(args);

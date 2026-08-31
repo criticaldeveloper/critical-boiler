@@ -5,7 +5,7 @@ import { runPromptCommand } from "./prompts.js";
 import { selectedFileKeys, skippedBySelectionResults } from "./project-plan.js";
 import { writeProjectFile } from "./templates.js";
 import { promptForArgs } from "./ui/guided-setup.js";
-import { applyBeadsExtensions } from "./beads.js";
+import { applyBcoExtensions } from "./bco.js";
 import { assertGitAvailable, initializeGitRepository } from "./git.js";
 
 export async function run() {
@@ -47,7 +47,7 @@ export async function run() {
     results.push(await writeProjectFile(args, key));
   }
 
-  results.push(...(await applyBeadsExtensions(args)));
+  results.push(...(await applyBcoExtensions(args)));
   results.push(initializeGitRepository(args));
 
   printSummary(args, [...results, ...skippedBySelectionResults(args)]);

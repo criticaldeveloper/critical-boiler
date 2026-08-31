@@ -2,8 +2,9 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { FILES, TECHNOLOGIES } from "./catalog.js";
+import { mergeBcoAgentRegistry } from "./bco.js";
 import { templatesDir } from "./paths.js";
-import { mergeBeadsPackageJson, renderPackageJson } from "./package-json.js";
+import { renderPackageJson } from "./package-json.js";
 import { selectedFileKeys } from "./project-plan.js";
 import { agentVerificationExpectations, architectureBoundariesSection, architectureDataLayerSection, architectureEntrypointsSection, architectureRoutingSection, architectureSharedUiSection, architectureStateSection, architectureStylingSection, architectureTestSection, aiDocsPromptsSection, aiDocsSkillsSection, commandsMissingNotes, commandsRows, commandsTaskVerificationSection, commandsVerificationNotes, frontendComponentSkillInstruction, frontendStylingBaselineSection, listLines, scssRecommendedStructure, stylingArchitectureSection, stylingRefactorChecklist, stylingRefactorPromptIntro, stylingRefactorPromptTitle, stylingRefactorSkillInstruction, tailwindComponentGoodExample, tailwindComponentRiskyExample, typescriptFrameworkReviewChecklist, typescriptFrameworkSection, viteFrameworkPluginImport, vitePlugins } from "./docs/sections.js";
 
@@ -56,27 +57,6 @@ export async function renderTemplate(templatePath, args) {
     agentsPath: args.paths?.agents ?? FILES.agents.path,
     aiDocsPath: args.paths?.aiDocs ?? FILES.aiDocs.path,
     commandsPath: args.paths?.commands ?? FILES.commands.path,
-    beadsSetupCommand: args.tech.includes("flutter")
-      ? "node scripts/setup-beads.mjs"
-      : "pnpm beads:setup",
-    beadsInstallCommand: args.tech.includes("flutter")
-      ? "npm install -g @beads/bd"
-      : "pnpm install",
-    beadsPrimeCommand: args.tech.includes("flutter")
-      ? "bd prime"
-      : "pnpm beads:prime",
-    beadsReadyCommand: args.tech.includes("flutter")
-      ? "bd ready"
-      : "pnpm beads:ready",
-    beadsStatusCommand: args.tech.includes("flutter")
-      ? "bd status"
-      : "pnpm beads:status",
-    beadsImportCommand: args.tech.includes("flutter")
-      ? "node scripts/import-beads-markdown.mjs <file.md>"
-      : "pnpm beads:import-md <file.md>",
-    beadsImportApplyCommand: args.tech.includes("flutter")
-      ? "node scripts/import-beads-markdown.mjs <file.md> --apply"
-      : "pnpm beads:import-md <file.md> --apply",
   };
 
   return raw.replaceAll(
@@ -112,11 +92,12 @@ export async function writeProjectFile(args, fileKey) {
   const action =
     exists && !args.force ? "skip" : exists ? "overwrite" : "create";
 
-  if (fileKey === "packageJson" && exists && !args.force && args.beads) {
+  if (fileKey === "bcoAgentRegistry" && exists && !args.force) {
     const raw = await readFile(destination, "utf8");
-    const merged = await mergeBeadsPackageJson(raw, !args.dryRun);
-    if (!merged.changed) return { fileKey, action: "skip", path: relativePath };
-    if (!args.dryRun) await writeFile(destination, merged.contents, "utf8");
+    const generated = await renderProjectFile(fileKey, args);
+    const merged = mergeBcoAgentRegistry(raw, generated);
+    if (merged === raw) return { fileKey, action: "skip", path: relativePath };
+    if (!args.dryRun) await writeFile(destination, merged, "utf8");
     return { fileKey, action: "extend", path: relativePath };
   }
 

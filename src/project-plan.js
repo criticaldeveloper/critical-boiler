@@ -1,4 +1,9 @@
-import { REACT_TECHNOLOGIES, TYPESCRIPT_PROJECT_TYPES } from "./catalog.js";
+import {
+  BCO_ORCHESTRATION_SYSTEMS,
+  DEFAULT_BCO_ORCHESTRATION,
+  REACT_TECHNOLOGIES,
+  TYPESCRIPT_PROJECT_TYPES,
+} from "./catalog.js";
 import { unique } from "./utils.js";
 
 export function selectedFileKeys(args) {
@@ -17,14 +22,9 @@ export function defaultFileKeys(args) {
     "envExample",
   ];
 
-  if (args.beads) {
-    keys.push(
-      "beadsWorkflow",
-      "beadsSkill",
-      "beadsSkillMetadata",
-      "beadsSetup",
-      "beadsMarkdownImport",
-    );
+  if (args.bcoEnhancement) {
+    const system = args.bcoOrchestration ?? DEFAULT_BCO_ORCHESTRATION;
+    keys.push(...BCO_ORCHESTRATION_SYSTEMS[system].fileKeys);
   }
 
   if (args.projectType !== "mobileApplication") {

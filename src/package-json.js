@@ -7,7 +7,6 @@ import { selectedFileKeys } from "./project-plan.js";
 import { unique } from "./utils.js";
 const execFileAsync = promisify(execFile);
 export const DEFAULT_PACKAGE_MANAGER = "pnpm@11.1.2";
-export const BEADS_PACKAGE = "@beads/bd";
 
 export async function renderPackageJson(args) {
   const packagePlan = packagesForTechnologies(packageTechnologies(args));
@@ -103,8 +102,6 @@ export function packageTechnologies(args) {
     technologies.push("scss");
   }
 
-  if (args.beads) technologies.push("beads");
-
   return unique(technologies);
 }
 
@@ -178,62 +175,7 @@ export function packageScriptsForTechnologies(technologies) {
     };
   }
 
-  if (!technologies.includes("beads")) return scripts;
-
-  return {
-    ...scripts,
-    "beads:setup": "node scripts/setup-beads.mjs",
-    "beads:prime": "bd prime",
-    "beads:ready": "bd ready",
-    "beads:status": "bd status",
-    "beads:import-md": "node scripts/import-beads-markdown.mjs",
-  };
-}
-
-export async function mergeBeadsPackageJson(raw, resolveVersion = true) {
-  let packageJson;
-
-  try {
-    packageJson = JSON.parse(raw);
-  } catch (error) {
-    throw new Error(`Could not add Beads to package.json: ${error.message}`);
-  }
-
-  const beadsScripts = Object.fromEntries(
-    Object.entries(packageScriptsForTechnologies(["beads"])).filter(([name]) =>
-      name.startsWith("beads:"),
-    ),
-  );
-  const scripts = { ...(packageJson.scripts ?? {}) };
-  const hasPackage = Boolean(
-    packageJson.dependencies?.[BEADS_PACKAGE] ??
-      packageJson.devDependencies?.[BEADS_PACKAGE],
-  );
-  let changed = false;
-
-  for (const [name, command] of Object.entries(beadsScripts)) {
-    if (scripts[name] !== undefined) continue;
-    scripts[name] = command;
-    changed = true;
-  }
-
-  if (!hasPackage) changed = true;
-  if (!changed) return { changed: false, contents: raw };
-  if (!resolveVersion) return { changed: true, contents: raw };
-
-  packageJson.scripts = scripts;
-  if (!hasPackage) {
-    packageJson.devDependencies = {
-      ...(packageJson.devDependencies ?? {}),
-      [BEADS_PACKAGE]: await latestPublishedVersion(BEADS_PACKAGE),
-    };
-  }
-
-  const indent = raw.match(/\n([\t ]+)"/)?.[1] ?? "  ";
-  return {
-    changed: true,
-    contents: `${JSON.stringify(packageJson, null, indent)}\n`,
-  };
+  return scripts;
 }
 
 export async function resolvePackageVersions(packageNames) {

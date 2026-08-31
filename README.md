@@ -4,7 +4,7 @@ A pnpm-installable CLI for saving AI tokens on predictable project setup work.
 
 Maintainer release instructions are documented in [RELEASING.md](./RELEASING.md).
 
-`critical-boiler` generates the repetitive seed files that coding agents otherwise keep re-creating from scratch: root-level `AGENTS.md`, technology-aware `ai-docs`, implementation skills, canonical command notes, definition-of-done rules, Beads task planning, reusable prompt templates, Tailwind or SCSS setup, design tokens, editor defaults, ignore rules, environment examples, and small framework-specific config files.
+`critical-boiler` generates the repetitive seed files that coding agents otherwise keep re-creating from scratch: root-level `AGENTS.md`, technology-aware `ai-docs`, implementation skills, canonical command notes, definition-of-done rules, reusable prompt templates, Tailwind or SCSS setup, design tokens, editor defaults, ignore rules, environment examples, and small framework-specific config files. An optional BCO enhancement adds native-task guidance and a complete role-separated orchestration system for Better Codex Orchestrator.
 
 The point is not novelty. The point is to stop spending expensive AI context on boilerplate that is mostly deterministic. Instead of asking Codex to rediscover “what commands exist?”, “where should components live?”, “what does done mean?”, “how should Tailwind be wired for this stack?”, or “what should the React/Vue/Angular/etc. guardrails be?” in every new repo, this CLI writes those predictable answers once.
 
@@ -18,23 +18,23 @@ Approximate current output size, measured from the generated seed files and esti
 
 | Variant            | Files | Approx. generated tokens |
 | ------------------ | ----: | -----------------------: |
-| Angular + SCSS     |    16 |                    11.2k |
-| Angular + Tailwind |    14 |                     9.3k |
+| Angular + SCSS     |    16 |                    11.3k |
+| Angular + Tailwind |    14 |                     9.4k |
 | Astro + SCSS       |    16 |                    10.1k |
-| Astro + Tailwind   |    14 |                     8.1k |
-| Flutter            |    12 |                     5.5k |
-| Next.js + SCSS     |    17 |                    12.4k |
-| Next.js + Tailwind |    15 |                    10.6k |
-| Nuxt + SCSS        |    16 |                    10.4k |
-| Nuxt + Tailwind    |    14 |                     8.5k |
-| React + SCSS       |    16 |                    10.4k |
+| Astro + Tailwind   |    14 |                     8.2k |
+| Flutter            |    12 |                     5.6k |
+| Next.js + SCSS     |    17 |                    12.5k |
+| Next.js + Tailwind |    15 |                    10.7k |
+| Nuxt + SCSS        |    16 |                    10.5k |
+| Nuxt + Tailwind    |    14 |                     8.6k |
+| React + SCSS       |    16 |                    10.5k |
 | React + Tailwind   |    14 |                     8.7k |
-| Svelte + SCSS      |    16 |                    10.4k |
-| Svelte + Tailwind  |    14 |                     8.5k |
+| Svelte + SCSS      |    16 |                    10.5k |
+| Svelte + Tailwind  |    14 |                     8.6k |
 | Vue + SCSS         |    16 |                    10.4k |
 | Vue + Tailwind     |    14 |                     8.5k |
 
-Across the 15 supported starter variants, that is about **143k tokens** of repeatable setup text and config. A single project usually saves roughly **5.5k-12.4k tokens** of generation work before any real feature work begins. The more often a team creates repos or asks agents to review fresh scaffolds, the more this compounds.
+Across the 15 supported starter variants, that is about **144k tokens** of repeatable setup text and config. A single project usually saves roughly **5.6k-12.5k tokens** of generation work before any real feature work begins. The optional Complete Orchestration System adds 32 BCO files and roughly 8.5k more reusable tokens. The more often a team creates repos or asks agents to review fresh scaffolds, the more this compounds.
 
 Those numbers are intentionally approximate: tokenization varies by model and file content. They are useful as an order-of-magnitude comparison, not as billing math.
 
@@ -73,7 +73,7 @@ Guided setup uses keyboard selectors:
 - Mobile projects skip technology selection and use Flutter as the base technology.
 - Mobile projects also skip web styling questions.
 - Mobile projects generate a minimal Flutter scaffold instead of `package.json`.
-- Beads task planning is enabled by default and can be disabled during guided setup.
+- `BCO enhancement` is disabled by default. Enabling it opens a second radio selector for the orchestration system; the current choice is `Complete Orchestration System`.
 - Single-choice questions use radio selectors.
 - Use arrow keys to move.
 - Use Enter to confirm.
@@ -102,6 +102,7 @@ critical-boiler
 critical-boiler ./new-api --tech node,typescript
 critical-boiler ./docs-site --project-type staticWebsite --tech astro
 critical-boiler ./mobile-app --project-type mobileApplication
+critical-boiler ./new-app --tech react --bco-enhancement
 critical-boiler prompt feature-implementation
 critical-boiler --dry-run --tech react,tailwind
 ```
@@ -123,19 +124,20 @@ critical-boiler --list
 - `--tech, -t`: comma-separated technologies such as `react,tailwind` or `astro`. TypeScript is added automatically for web applications and static websites.
 - `--project-type`: optional metadata for config, one of `webApplication`, `staticWebsite`, or `mobileApplication`
 - `--no-standard-scss`: skip generated SCSS reset, tokens, utilities, and entrypoint
-- `--no-beads`: disable the Beads package, project skill, setup script, and workflow documentation
+- `--bco-enhancement`: add BCO operating docs and orchestrated agent declarations; disabled by default
+- `--bco-orchestration`: select the BCO orchestration system; currently `complete`. Passing this option also enables the enhancement.
 - `--force, -f`: overwrite existing files
 - `--dry-run`: preview planned writes
 - `--cwd`: choose the target directory
 - `--config, -c`: read options from a JSON config file
 
-Existing files are skipped by default. Beads is the exception: its marked guidance blocks and missing `package.json` entries are merged additively without replacing existing instructions, dependencies, or scripts. Use `--force` when you explicitly want to overwrite generated files.
+Existing files are skipped by default. The BCO enhancement appends uniquely marked sections to existing agent and AI documentation and safely adds its agent registry to an existing `.codex/config.toml`. Existing agent IDs are never replaced implicitly; a collision fails with a clear error. Use `--force` only when you explicitly want to overwrite generated files, including the Codex agent registry.
 
 ## Package JSON
 
 Non-mobile project plans generate a starter `package.json` unless one already exists. Existing files are skipped by default. Mobile applications are the exception: when `--project-type mobileApplication` is selected, the CLI does not generate `package.json` because Flutter projects are not npm projects. Instead, it generates a minimal Flutter `pubspec.yaml`, `lib/main.dart`, and `lib/app.dart`.
 
-Dependency names are derived from selected technologies. Before writing the file, the CLI queries npm with `npm view <package-name> versions --json`, chooses the latest stable published version, and writes that exact version into `dependencies` or `devDependencies`. Beads-enabled Node projects include an exact `@beads/bd` development dependency and idempotent `beads:*` scripts by default.
+Dependency names are derived from selected technologies. Before writing the file, the CLI queries npm with `npm view <package-name> versions --json`, chooses the latest stable published version, and writes that exact version into `dependencies` or `devDependencies`. The BCO enhancement adds no runtime dependency or repository-local task service.
 
 Web applications and static websites always include TypeScript. You do not need to pass `typescript` in `--tech` for React, Angular, Vue, Svelte, Astro, Next.js, or Nuxt; the generated `package.json` includes `typescript` in `devDependencies` automatically.
 
@@ -250,45 +252,22 @@ The CLI also generates `ai-docs/skills/scss-implementation.md`, a practical skil
 
 In guided setup, choosing Tailwind copies `ai-docs/skills/tailwind-implementation.md`, adapts the `critical-boiler prompt tailwind-refactor` template for Tailwind refactors, and skips the SCSS skill and standard SCSS files. Vite-based React, Vue, and Svelte projects receive `vite.config.ts` and `src/styles/index.css`; Astro receives `astro.config.mjs`; Nuxt receives `nuxt.config.ts`; Angular receives `.postcssrc.json`; Next.js receives `postcss.config.mjs`. Tailwind stacks also receive `src/styles/index.css` with `@import "tailwindcss";`; framework-specific docs explain where to wire or import that file once the full scaffold exists. Choosing no Tailwind enables the SCSS guidance and adds `sass` to `package.json`. You can then choose whether to include the standard SCSS utility files.
 
-## Beads Task Planning
+## BCO Enhancement
 
-Beads is enabled by default. The generated integration treats its dependency graph as the authoritative source for planned work and follows the closed loop described in the [CriticalDeveloper Beads orchestration article](https://blog.criticaldeveloper.com/posts/2026-07-18-how-to-integrate-beads-into-an-ai-orchestrated-system-for-agentic-task-planning/): plan, create tasks, execute, report evidence, and replan from actual state.
+The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enhancement`. The current `complete` orchestration system follows the role topology proven by the Timecrock project:
 
-Enabled projects receive:
+- `developer_orchestrator` is the root agent and the main orchestrator selected when the project is registered in BCO.
+- Frontend and backend orchestrators own their domain pipelines.
+- Each domain has planner, coder, tester, independent reviewer, and documenter roles.
+- Generated `.codex/agents/*.toml` files define model, reasoning, sandbox, and role loading.
+- Generated `.codex/prompts/agents/*.md` files define task-bounded role contracts.
+- `.agents/skills/bco-task-orchestration/SKILL.md` defines the reusable native-task workflow.
+- `ai-docs/bco-task-management.md`, `ai-docs/bco-orchestration-policy.md`, and `ai-docs/bco-next-action-policy.md` define task, delivery, NextWorkflowPlan, and Experimental Brain behavior.
+- Marked sections are added to `AGENTS.md`, `ai-docs/README.md`, `ai-docs/commands.md`, and `ai-docs/definition-of-done.md`.
 
-- `@beads/bd` as an exact development dependency for Node-based projects
-- `.agents/skills/beads-task-planning/SKILL.md` with a discoverable Codex workflow
-- `ai-docs/beads.md` with lifecycle, taxonomy, dependency, evidence, and role policies
-- `scripts/setup-beads.mjs`, an idempotent initializer
-- `scripts/import-beads-markdown.mjs`, a preview-first idempotent Markdown backlog importer
-- `pnpm-workspace.yaml` approval limited to the native installer required by `@beads/bd`
-- additive marked sections in `AGENTS.md`, `ai-docs/README.md`, and `ai-docs/commands.md`
-- `beads:setup`, `beads:prime`, `beads:ready`, `beads:status`, and `beads:import-md` package scripts
-- automatic Git initialization on a `main` branch for standalone non-repository targets
+Critical Boiler prepares the repository side only. After generation, register the project root in BCO, choose its native task system, select `developer_orchestrator`, and create the initial tasks and acceptance criteria in BCO's integrated task manager. BCO then owns claims, injected task capabilities, evidence, completion, and persisted next-workflow decisions. Workflow agents return evidence for their assigned work; BCO's separate read-only AI governor decides what follows after terminal settlement.
 
-The setup logic never replaces an existing `AGENTS.md` section. It appends a uniquely marked block once and leaves existing instructions intact. Existing `package.json` files are parsed and receive only missing Beads dependency and script entries; existing values win on name collisions.
-
-Bootstrap a generated Node project in this order:
-
-```sh
-pnpm install
-pnpm beads:setup
-pnpm beads:prime
-pnpm beads:ready
-```
-
-Critical Boiler generates the integration files but does not install dependencies, create `pnpm-lock.yaml`, or initialize `.beads/`. Run `bd ping --json` for a lightweight database health check if setup or priming appears stuck.
-
-Flutter projects do not generate `package.json`; install Beads globally with `npm install -g @beads/bd`, then run `node scripts/setup-beads.mjs`. Pass `--no-beads` or set `"beads": false` in `critical-boiler.config.json` to opt out completely.
-
-To migrate a large Markdown backlog, generate a review report first and apply it explicitly:
-
-```sh
-pnpm beads:import-md PROJECT_TASKS.md
-pnpm beads:import-md PROJECT_TASKS.md --apply
-```
-
-The importer accepts checkbox tasks, preserves nested relationships, supports explicit dependency and taxonomy annotations, skips completed work by default, enforces a task-count limit, and stores stable fingerprints in Beads metadata for idempotent reruns.
+Experimental Brain does not change the generated plan contract or agent permissions. With Brain off, BCO waits for manual launch of its persisted decision. With Brain on, it executes the same decision automatically through the normal claim, approval, sandbox, permission, concurrency, and recovery boundaries.
 
 ## Prompt Kit
 
@@ -329,7 +308,8 @@ Example:
   "projectType": "webApplication",
   "tech": ["typescript", "react", "tailwind"],
   "standardScss": true,
-  "beads": true,
+  "bcoEnhancement": true,
+  "bcoOrchestration": "complete",
   "paths": {
     "packageJson": "package.json",
     "cssReset": "app/styles/reset.scss",

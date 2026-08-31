@@ -1,5 +1,5 @@
 export const PACKAGE_NAME = "@twmw/critical-boiler";
-export const VERSION = "1.0.0";
+export const VERSION = "2.0.0";
 
 export const CONFIG_FILE = "critical-boiler.config.json";
 
@@ -8,7 +8,8 @@ export const DEFAULT_ARGS = {
   cwd: process.cwd(),
   tech: [],
   standardScss: true,
-  beads: true,
+  bcoEnhancement: false,
+  bcoOrchestration: undefined,
   force: false,
   dryRun: false,
   list: false,
@@ -50,35 +51,88 @@ export const FILES = {
     description:
       "A completion checklist for scope control, consistency, quality, docs, verification, and handoff.",
   },
-  beadsWorkflow: {
-    path: "ai-docs/beads.md",
-    template: "ai-docs/beads.md",
+  bcoTaskManagement: {
+    path: "ai-docs/bco-task-management.md",
+    template: "ai-docs/bco-task-management.md",
     description:
-      "Authoritative Beads task lifecycle, planning, dependency, and evidence guidance.",
+      "Native BCO task lifecycle, evidence, recovery, and completion guidance.",
   },
-  beadsSkill: {
-    path: ".agents/skills/beads-task-planning/SKILL.md",
-    template: ".agents/skills/beads-task-planning/SKILL.md",
+  bcoOrchestrationPolicy: {
+    path: "ai-docs/bco-orchestration-policy.md",
+    template: "ai-docs/bco-orchestration-policy.md",
     description:
-      "Project-local Codex skill for dependency-aware task planning and execution with Beads.",
+      "Role-separated BCO orchestration, verification, Git delivery, and recovery policy.",
   },
-  beadsSkillMetadata: {
-    path: ".agents/skills/beads-task-planning/agents/openai.yaml",
-    template: ".agents/skills/beads-task-planning/agents/openai.yaml",
-    description: "Codex UI metadata for the Beads task-planning skill.",
-  },
-  beadsSetup: {
-    path: "scripts/setup-beads.mjs",
-    template: "scripts/setup-beads.mjs",
+  bcoNextActionPolicy: {
+    path: "ai-docs/bco-next-action-policy.md",
+    template: "ai-docs/bco-next-action-policy.md",
     description:
-      "Idempotent setup script that appends Beads guidance without replacing existing docs.",
+      "BCO NextWorkflowPlan and Experimental Brain handoff contract.",
   },
-  beadsMarkdownImport: {
-    path: "scripts/import-beads-markdown.mjs",
-    template: "scripts/import-beads-markdown.mjs",
+  bcoSkill: {
+    path: ".agents/skills/bco-task-orchestration/SKILL.md",
+    template: ".agents/skills/bco-task-orchestration/SKILL.md",
     description:
-      "Deterministic preview-and-apply importer for Markdown checkbox task backlogs.",
+      "Project-local skill for BCO-native task execution and orchestration.",
   },
+  bcoSkillMetadata: {
+    path: ".agents/skills/bco-task-orchestration/agents/openai.yaml",
+    template: ".agents/skills/bco-task-orchestration/agents/openai.yaml",
+    description: "Codex UI metadata for the BCO orchestration skill.",
+  },
+  bcoAgentRegistry: {
+    path: ".codex/config.toml",
+    template: ".codex/config.toml",
+    description:
+      "Codex agent registry for the selected BCO orchestration system.",
+  },
+  developerOrchestratorAgent: agentConfig(
+    "developer-orchestrator",
+    "Primary development coordinator and BCO root agent.",
+  ),
+  frontendOrchestratorAgent: agentConfig(
+    "frontend-orchestrator",
+    "Frontend workflow coordinator.",
+  ),
+  backendOrchestratorAgent: agentConfig(
+    "backend-orchestrator",
+    "Backend workflow coordinator.",
+  ),
+  frontendPlannerAgent: agentConfig("frontend-planner", "Frontend planner."),
+  backendPlannerAgent: agentConfig("backend-planner", "Backend planner."),
+  frontendCoderAgent: agentConfig("frontend-coder", "Frontend implementer."),
+  backendCoderAgent: agentConfig("backend-coder", "Backend implementer."),
+  frontendTesterAgent: agentConfig("frontend-tester", "Frontend tester."),
+  backendTesterAgent: agentConfig("backend-tester", "Backend tester."),
+  frontendReviewerAgent: agentConfig(
+    "frontend-reviewer",
+    "Read-only frontend reviewer.",
+  ),
+  backendReviewerAgent: agentConfig(
+    "backend-reviewer",
+    "Read-only backend reviewer.",
+  ),
+  frontendDocumenterAgent: agentConfig(
+    "frontend-documenter",
+    "Frontend documentation specialist.",
+  ),
+  backendDocumenterAgent: agentConfig(
+    "backend-documenter",
+    "Backend documentation specialist.",
+  ),
+  developerOrchestratorPrompt: agentPrompt("developer-orchestrator"),
+  frontendOrchestratorPrompt: agentPrompt("frontend-orchestrator"),
+  backendOrchestratorPrompt: agentPrompt("backend-orchestrator"),
+  frontendPlannerPrompt: agentPrompt("frontend-planner"),
+  backendPlannerPrompt: agentPrompt("backend-planner"),
+  frontendCoderPrompt: agentPrompt("frontend-coder"),
+  backendCoderPrompt: agentPrompt("backend-coder"),
+  frontendTesterPrompt: agentPrompt("frontend-tester"),
+  backendTesterPrompt: agentPrompt("backend-tester"),
+  frontendReviewerPrompt: agentPrompt("frontend-reviewer"),
+  backendReviewerPrompt: agentPrompt("backend-reviewer"),
+  frontendDocumenterPrompt: agentPrompt("frontend-documenter"),
+  backendDocumenterPrompt: agentPrompt("backend-documenter"),
   packageJson: {
     path: "package.json",
     template: null,
@@ -238,6 +292,49 @@ export const FILES = {
   },
 };
 
+export const DEFAULT_BCO_ORCHESTRATION = "complete";
+
+export const BCO_ORCHESTRATION_SYSTEMS = {
+  complete: {
+    label: "Complete Orchestration System",
+    rootAgent: "developer_orchestrator",
+    fileKeys: [
+      "bcoTaskManagement",
+      "bcoOrchestrationPolicy",
+      "bcoNextActionPolicy",
+      "bcoSkill",
+      "bcoSkillMetadata",
+      "bcoAgentRegistry",
+      "developerOrchestratorAgent",
+      "frontendOrchestratorAgent",
+      "backendOrchestratorAgent",
+      "frontendPlannerAgent",
+      "backendPlannerAgent",
+      "frontendCoderAgent",
+      "backendCoderAgent",
+      "frontendTesterAgent",
+      "backendTesterAgent",
+      "frontendReviewerAgent",
+      "backendReviewerAgent",
+      "frontendDocumenterAgent",
+      "backendDocumenterAgent",
+      "developerOrchestratorPrompt",
+      "frontendOrchestratorPrompt",
+      "backendOrchestratorPrompt",
+      "frontendPlannerPrompt",
+      "backendPlannerPrompt",
+      "frontendCoderPrompt",
+      "backendCoderPrompt",
+      "frontendTesterPrompt",
+      "backendTesterPrompt",
+      "frontendReviewerPrompt",
+      "backendReviewerPrompt",
+      "frontendDocumenterPrompt",
+      "backendDocumenterPrompt",
+    ],
+  },
+};
+
 export const PROMPT_TEMPLATES = {
   "project-kickoff": {
     template: "ai-docs/prompts/project-kickoff.md",
@@ -282,10 +379,6 @@ export const PROMPT_TEMPLATES = {
 };
 
 export const PACKAGE_RECIPES = {
-  beads: {
-    dependencies: [],
-    devDependencies: ["@beads/bd"],
-  },
   react: {
     dependencies: ["react", "react-dom"],
     devDependencies: ["@vitejs/plugin-react", "vite"],
@@ -346,6 +439,22 @@ export const PACKAGE_RECIPES = {
     devDependencies: [],
   },
 };
+
+function agentConfig(name, description) {
+  return {
+    path: `.codex/agents/${name}.toml`,
+    template: `.codex/agents/${name}.toml`,
+    description,
+  };
+}
+
+function agentPrompt(name) {
+  return {
+    path: `.codex/prompts/agents/${name}.md`,
+    template: `.codex/prompts/agents/${name}.md`,
+    description: `Role contract for ${name.replaceAll("-", " ")}.`,
+  };
+}
 
 export const PROJECT_TYPES = {
   webApplication: {

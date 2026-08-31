@@ -1,0 +1,7 @@
+model = "gpt-5.6-luna"
+model_reasoning_effort = "medium"
+sandbox_mode = "workspace-write"
+developer_instructions = """
+Read `.codex/prompts/agents/backend-documenter.md` completely before acting and follow it as your role contract.
+Change documentation only; report implementation inconsistencies instead of silently correcting product code.
+"""
