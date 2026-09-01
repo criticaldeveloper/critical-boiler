@@ -34,7 +34,7 @@ Approximate current output size, measured from the generated seed files and esti
 | Vue + SCSS         |    16 |                    10.4k |
 | Vue + Tailwind     |    14 |                     8.5k |
 
-Across the 15 supported starter variants, that is about **144k tokens** of repeatable setup text and config. A single project usually saves roughly **5.6k-12.5k tokens** of generation work before any real feature work begins. The optional Complete Orchestration System adds 32 BCO files and roughly 8.5k more reusable tokens. The more often a team creates repos or asks agents to review fresh scaffolds, the more this compounds.
+Across the 15 supported starter variants, that is about **144k tokens** of repeatable setup text and config. A single project usually saves roughly **5.6k-12.5k tokens** of generation work before any real feature work begins. The optional Complete Orchestration System adds 37 BCO files and roughly 12.8k more reusable tokens. The more often a team creates repos or asks agents to review fresh scaffolds, the more this compounds.
 
 Those numbers are intentionally approximate: tokenization varies by model and file content. They are useful as an order-of-magnitude comparison, not as billing math.
 
@@ -103,6 +103,7 @@ critical-boiler ./new-api --tech node,typescript
 critical-boiler ./docs-site --project-type staticWebsite --tech astro
 critical-boiler ./mobile-app --project-type mobileApplication
 critical-boiler ./new-app --tech react --bco-enhancement
+critical-boiler --bco-sync --cwd ./existing-bco-project
 critical-boiler prompt feature-implementation
 critical-boiler --dry-run --tech react,tailwind
 ```
@@ -126,12 +127,13 @@ critical-boiler --list
 - `--no-standard-scss`: skip generated SCSS reset, tokens, utilities, and entrypoint
 - `--bco-enhancement`: add BCO operating docs and orchestrated agent declarations; disabled by default
 - `--bco-orchestration`: select the BCO orchestration system; currently `complete`. Passing this option also enables the enhancement.
+- `--bco-sync`: refresh only Critical Boiler-managed BCO docs, skills, role declarations, prompts, registry block, and bounded documentation sections in an existing project. This also enables the enhancement.
 - `--force, -f`: overwrite existing files
 - `--dry-run`: preview planned writes
 - `--cwd`: choose the target directory
 - `--config, -c`: read options from a JSON config file
 
-Existing files are skipped by default. The BCO enhancement appends uniquely marked sections to existing agent and AI documentation and safely adds its agent registry to an existing `.codex/config.toml`. Existing agent IDs are never replaced implicitly; a collision fails with a clear error. Use `--force` only when you explicitly want to overwrite generated files, including the Codex agent registry.
+Existing files are skipped by default. The BCO enhancement appends uniquely marked sections to existing agent and AI documentation and safely adds its agent registry to an existing `.codex/config.toml`. Existing agent IDs are never replaced implicitly; a collision fails with a clear error. Use `--bco-sync` to update only versioned, Critical Boiler-managed BCO assets while preserving unrelated project files and non-BCO Codex configuration. Legacy 2.0 extension blocks are upgraded when their generated boundary can be identified safely. Use `--force` only when you explicitly want to overwrite the entire generated file set, including project-owned files and the complete Codex agent registry.
 
 ## Package JSON
 
@@ -254,20 +256,39 @@ In guided setup, choosing Tailwind copies `ai-docs/skills/tailwind-implementatio
 
 ## BCO Enhancement
 
-The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enhancement`. The current `complete` orchestration system follows the role topology proven by the Timecrock project:
+The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enhancement`. Contract version 2.5.0 generates 37 managed BCO assets. The current `complete` orchestration system follows a defensive role topology and deterministic phase contract:
 
 - `developer_orchestrator` is the root agent and the main orchestrator selected when the project is registered in BCO.
 - Frontend and backend orchestrators own their domain pipelines.
 - Each domain has planner, coder, tester, independent reviewer, and documenter roles.
+- A domain runs one specialist phase at a time by default: plan, implement, document when needed, verify a stable tree, independently review that exact tree, correct through the original owner, integrate, and run the merged-tree gate.
+- Planners and reviewers are read-only. Coders, documenters, and testers require settled predecessor evidence plus exact non-overlapping path ownership before writing.
+- Build, E2E, formatter, codegen, migration, database, browser-server, port, and Git resources have one explicit owner at a time. The tester owns final verification and any browser-server lifecycle.
 - Generated `.codex/agents/*.toml` files define model, reasoning, sandbox, and role loading.
 - Generated `.codex/prompts/agents/*.md` files define task-bounded role contracts.
 - `.agents/skills/bco-task-orchestration/SKILL.md` defines the reusable native-task workflow.
-- `ai-docs/bco-task-management.md`, `ai-docs/bco-orchestration-policy.md`, and `ai-docs/bco-next-action-policy.md` define task, delivery, NextWorkflowPlan, and Experimental Brain behavior.
+- `.agents/skills/bco-project-planning/SKILL.md` turns an operator-authorized project brief into a validated native-task draft with stable keys, explicit dependency edges, capability prerequisites, observable acceptance, verification, resources, and Git delivery evidence.
+- `ai-docs/bco-task-management.md`, `ai-docs/bco-project-planning.md`, `ai-docs/bco-orchestration-policy.md`, `ai-docs/bco-automation-readiness.md`, and `ai-docs/bco-next-action-policy.md` define task, planning, capability, delivery, NextWorkflowPlan, and Experimental Brain behavior.
 - Marked sections are added to `AGENTS.md`, `ai-docs/README.md`, `ai-docs/commands.md`, and `ai-docs/definition-of-done.md`.
 
-Critical Boiler prepares the repository side only. After generation, register the project root in BCO, choose its native task system, select `developer_orchestrator`, and create the initial tasks and acceptance criteria in BCO's integrated task manager. BCO then owns claims, injected task capabilities, evidence, completion, and persisted next-workflow decisions. Workflow agents return evidence for their assigned work; BCO's separate read-only AI governor decides what follows after terminal settlement.
+Critical Boiler prepares the repository side only. After generation, register the project root in BCO, choose its native task system, and select `developer_orchestrator`. Invoke `$bco-project-planning` for operator-authorized bootstrap or backlog restructuring. The skill applies a plan only through project-planning capabilities actually exposed by BCO; otherwise it returns `draft_only` for operator entry. After apply or manual entry, native dependency relationships must be reread and validated before automatic chaining is enabled.
+
+The planning readiness gate prevents prose-only dependency failures where task descriptions mention “Task 2” but BCO stores no dependency edge. It also requires browser-critical tasks to declare a working repository E2E runner such as Playwright or an exposed browser-control capability. If neither exists, the plan must add an enabling predecessor or leave dependent tasks blocked; a build is not browser evidence.
+
+BCO owns claims, injected task capabilities, evidence, completion, and persisted next-workflow decisions. Workflow agents return evidence for their assigned work; BCO's separate read-only AI governor decides what follows after terminal settlement.
 
 Experimental Brain does not change the generated plan contract or agent permissions. With Brain off, BCO waits for manual launch of its persisted decision. With Brain on, it executes the same decision automatically through the normal claim, approval, sandbox, permission, concurrency, and recovery boundaries.
+
+### Updating an existing BCO project
+
+Preview the BCO-only refresh, then apply it:
+
+```sh
+critical-boiler --bco-sync --cwd ./your-project --dry-run
+critical-boiler --bco-sync --cwd ./your-project
+```
+
+The sync overwrites dedicated Critical Boiler-managed BCO templates, replaces bounded managed sections and the BCO registry block, and leaves baseline architecture, source, package, styling, and unrelated Codex configuration untouched. Keep both generated start/end markers intact so later versions can update the section safely.
 
 ## Prompt Kit
 

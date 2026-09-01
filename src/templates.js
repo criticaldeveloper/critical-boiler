@@ -1,11 +1,11 @@
 import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { FILES, TECHNOLOGIES } from "./catalog.js";
+import { BCO_CONTRACT_VERSION, FILES, TECHNOLOGIES } from "./catalog.js";
 import { mergeBcoAgentRegistry } from "./bco.js";
 import { templatesDir } from "./paths.js";
 import { renderPackageJson } from "./package-json.js";
-import { selectedFileKeys } from "./project-plan.js";
+import { isBcoManagedFileKey, selectedFileKeys } from "./project-plan.js";
 import { agentVerificationExpectations, architectureBoundariesSection, architectureDataLayerSection, architectureEntrypointsSection, architectureRoutingSection, architectureSharedUiSection, architectureStateSection, architectureStylingSection, architectureTestSection, aiDocsPromptsSection, aiDocsSkillsSection, commandsMissingNotes, commandsRows, commandsTaskVerificationSection, commandsVerificationNotes, frontendComponentSkillInstruction, frontendStylingBaselineSection, listLines, scssRecommendedStructure, stylingArchitectureSection, stylingRefactorChecklist, stylingRefactorPromptIntro, stylingRefactorPromptTitle, stylingRefactorSkillInstruction, tailwindComponentGoodExample, tailwindComponentRiskyExample, typescriptFrameworkReviewChecklist, typescriptFrameworkSection, viteFrameworkPluginImport, vitePlugins } from "./docs/sections.js";
 
 export async function renderTemplate(templatePath, args) {
@@ -17,6 +17,7 @@ export async function renderTemplate(templatePath, args) {
     projectName: path.basename(args.cwd),
     flutterPackageName: normalizeDartPackageName(path.basename(args.cwd)),
     generatedAt: new Date().toISOString(),
+    bcoContractVersion: BCO_CONTRACT_VERSION,
     technologies:
       techDetails.map((tech) => tech.label).join(", ") || "Not specified",
     agentTechnologyNotes: listLines(
@@ -89,23 +90,31 @@ export async function writeProjectFile(args, fileKey) {
   const relativePath = args.paths?.[fileKey] ?? file.path;
   const destination = path.join(args.cwd, relativePath);
   const exists = existsSync(destination);
+  const syncBcoFile = args.bcoSync && isBcoManagedFileKey(fileKey, args);
+  const overwrite = args.force || syncBcoFile;
   const action =
-    exists && !args.force ? "skip" : exists ? "overwrite" : "create";
+    exists && !overwrite ? "skip" : exists ? "overwrite" : "create";
 
   if (fileKey === "bcoAgentRegistry" && exists && !args.force) {
     const raw = await readFile(destination, "utf8");
     const generated = await renderProjectFile(fileKey, args);
-    const merged = mergeBcoAgentRegistry(raw, generated);
+    const merged = mergeBcoAgentRegistry(raw, generated, {
+      replaceManaged: args.bcoSync,
+    });
     if (merged === raw) return { fileKey, action: "skip", path: relativePath };
     if (!args.dryRun) await writeFile(destination, merged, "utf8");
-    return { fileKey, action: "extend", path: relativePath };
+    return {
+      fileKey,
+      action: args.bcoSync ? "overwrite" : "extend",
+      path: relativePath,
+    };
   }
 
   if (args.dryRun) {
     return { fileKey, action, path: relativePath };
   }
 
-  if (exists && !args.force) {
+  if (exists && !overwrite) {
     return { fileKey, action, path: relativePath };
   }
 

@@ -5,6 +5,7 @@ import path from "node:path";
 import test from "node:test";
 import { parseArgs, resolveArgs, validateOptions } from "../src/args.js";
 import {
+  BCO_CONTRACT_VERSION,
   BCO_ORCHESTRATION_SYSTEMS,
   DEFAULT_ARGS,
   DEFAULT_BCO_ORCHESTRATION,
@@ -73,7 +74,23 @@ test("the orchestration option enables BCO and rejects unknown systems", async (
   );
 });
 
-test("complete orchestration generates BCO docs and thirteen agent roles", async (t) => {
+test("BCO sync enables the enhancement and selects only managed BCO files", async (t) => {
+  const root = await createFixture(t);
+  const parsed = parseArgs(["--cwd", root, "--bco-sync"]);
+  const args = await resolveArgs(parsed.args, parsed.provided);
+
+  validateOptions(args);
+  assert.equal(args.bcoEnhancement, true);
+  assert.equal(args.bcoSync, true);
+  assert.deepEqual(
+    selectedFileKeys(args),
+    BCO_ORCHESTRATION_SYSTEMS.complete.fileKeys,
+  );
+  assert.equal(selectedFileKeys(args).includes("packageJson"), false);
+  assert.equal(selectedFileKeys(args).includes("architecture"), false);
+});
+
+test("complete orchestration generates versioned BCO contracts and thirteen agent roles", async (t) => {
   const root = await createFixture(t);
   const args = templateArgs(root);
 
@@ -117,13 +134,13 @@ test("complete orchestration generates BCO docs and thirteen agent roles", async
     "utf8",
   );
 
-  assert.equal(count(agents, "<!-- critical-boiler:bco-agents -->"), 1);
-  assert.equal(count(aiDocs, "<!-- critical-boiler:bco-docs -->"), 1);
-  assert.equal(count(commands, "<!-- critical-boiler:bco-commands -->"), 1);
+  assert.equal(count(agents, "<!-- critical-boiler:bco-agents:start -->"), 1);
+  assert.equal(count(aiDocs, "<!-- critical-boiler:bco-docs:start -->"), 1);
+  assert.equal(count(commands, "<!-- critical-boiler:bco-commands:start -->"), 1);
   assert.equal(
     count(
       definitionOfDone,
-      "<!-- critical-boiler:bco-definition-of-done -->",
+      "<!-- critical-boiler:bco-definition-of-done:start -->",
     ),
     1,
   );
@@ -131,6 +148,105 @@ test("complete orchestration generates BCO docs and thirteen agent roles", async
   assert.match(agents, /dedicated read-only AI governor/u);
   assert.match(commands, /select `developer_orchestrator` as the main orchestrator/u);
   assert.match(rootPrompt, /never select, propose, claim, or start a successor/u);
+
+  const policy = await readFile(
+    path.join(root, "ai-docs", "bco-orchestration-policy.md"),
+    "utf8",
+  );
+  const readiness = await readFile(
+    path.join(root, "ai-docs", "bco-automation-readiness.md"),
+    "utf8",
+  );
+  const planningSkill = await readFile(
+    path.join(root, ".agents", "skills", "bco-project-planning", "SKILL.md"),
+    "utf8",
+  );
+  const plannerConfig = await readFile(
+    path.join(root, ".codex", "agents", "frontend-planner.toml"),
+    "utf8",
+  );
+
+  assert.match(policy, /Only one specialist phase is active in a domain by default/u);
+  assert.match(policy, /Tester, reviewer, and documenter phases never overlap/u);
+  assert.match(readiness, new RegExp(`contract version: \`${BCO_CONTRACT_VERSION}\``, "u"));
+  assert.match(readiness, /critical-boiler --bco-sync/u);
+  assert.match(planningSkill, /Say `draft_only`/u);
+  assert.match(planningSkill, /verify native relationships/u);
+  assert.match(plannerConfig, /sandbox_mode = "read-only"/u);
+});
+
+test("BCO sync refreshes managed assets without overwriting project files", async (t) => {
+  const root = await createFixture(t);
+  const initialArgs = templateArgs(root);
+
+  for (const fileKey of selectedFileKeys(initialArgs)) {
+    await writeProjectFile(initialArgs, fileKey);
+  }
+  await applyBcoExtensions(initialArgs);
+
+  const promptPath = path.join(
+    root,
+    ".codex",
+    "prompts",
+    "agents",
+    "frontend-orchestrator.md",
+  );
+  const architecturePath = path.join(root, "ai-docs", "architecture.md");
+  const agentsPath = path.join(root, "AGENTS.md");
+  await writeFile(promptPath, "stale managed prompt\n", "utf8");
+  await writeFile(architecturePath, "operator architecture notes\n", "utf8");
+  await writeFile(
+    agentsPath,
+    (await readFile(agentsPath, "utf8")).replace(
+      "Domain orchestrators enforce one active specialist phase",
+      "stale phase contract",
+    ),
+    "utf8",
+  );
+
+  const syncArgs = { ...initialArgs, bcoSync: true };
+  for (const fileKey of selectedFileKeys(syncArgs)) {
+    await writeProjectFile(syncArgs, fileKey);
+  }
+  await applyBcoExtensions(syncArgs);
+
+  assert.match(await readFile(promptPath, "utf8"), /Default to one active specialist phase/u);
+  assert.equal(
+    await readFile(architecturePath, "utf8"),
+    "operator architecture notes\n",
+  );
+  assert.doesNotMatch(await readFile(agentsPath, "utf8"), /stale phase contract/u);
+  assert.match(
+    await readFile(agentsPath, "utf8"),
+    /Domain orchestrators enforce one active specialist phase/u,
+  );
+  assert.equal(
+    count(
+      await readFile(agentsPath, "utf8"),
+      "<!-- critical-boiler:bco-agents:start -->",
+    ),
+    1,
+  );
+});
+
+test("BCO sync upgrades legacy unbounded extensions without losing later content", async (t) => {
+  const root = await createFixture(t);
+  const agentsPath = path.join(root, "AGENTS.md");
+  const legacyEnd =
+    "- Read `ai-docs/bco-task-management.md`, `ai-docs/bco-orchestration-policy.md`, and `ai-docs/bco-next-action-policy.md` before BCO-managed work.";
+  await writeFile(
+    agentsPath,
+    `operator prefix\n\n<!-- critical-boiler:bco-agents -->\n## Native BCO Orchestration\n${legacyEnd}\n\noperator suffix\n`,
+    "utf8",
+  );
+
+  await applyBcoExtensions({ ...templateArgs(root), bcoSync: true });
+  const upgraded = await readFile(agentsPath, "utf8");
+
+  assert.match(upgraded, /^operator prefix/u);
+  assert.match(upgraded, /<!-- critical-boiler:bco-agents:start -->/u);
+  assert.doesNotMatch(upgraded, /<!-- critical-boiler:bco-agents -->/u);
+  assert.match(upgraded, /operator suffix\n$/u);
 });
 
 test("BCO registry merge preserves existing Codex config and is idempotent", async (t) => {
@@ -163,6 +279,19 @@ test("BCO registry merge fails on conflicting agent IDs", () => {
     () => mergeBcoAgentRegistry(existing, generated),
     /developer_orchestrator/u,
   );
+});
+
+test("BCO registry sync replaces only its bounded managed section", () => {
+  const generated = `${BCO_AGENT_REGISTRY_MARKER}\n# generated\n# critical-boiler:bco-agent-registry:end\n`;
+  const existing = `model = "custom"\n\n${BCO_AGENT_REGISTRY_MARKER}\n# stale\n# critical-boiler:bco-agent-registry:end\n\n[features]\nexample = true\n`;
+  const merged = mergeBcoAgentRegistry(existing, generated, {
+    replaceManaged: true,
+  });
+
+  assert.match(merged, /^model = "custom"/u);
+  assert.match(merged, /# generated/u);
+  assert.doesNotMatch(merged, /# stale/u);
+  assert.match(merged, /\[features\]\nexample = true/u);
 });
 
 async function createFixture(t) {

@@ -1,4 +1,5 @@
 # critical-boiler:bco-agent-registry:start
+# critical-boiler:bco-contract:{{ bcoContractVersion }}
 [agents.developer_orchestrator]
 description = "Primary {{ projectName }} development coordinator and BCO root agent. Routes frontend work to frontend_orchestrator, backend work to backend_orchestrator, and coordinates both for full-stack tasks."
 config_file = "agents/developer-orchestrator.toml"

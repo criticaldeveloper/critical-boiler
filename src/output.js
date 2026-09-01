@@ -21,6 +21,7 @@ ${color.bold("Options:")}
       --bco-enhancement     Add BCO docs and orchestrated agent declarations (disabled by default)
       --bco-orchestration <name>
                             BCO orchestration system: ${Object.keys(BCO_ORCHESTRATION_SYSTEMS).join(", ")}
+      --bco-sync            Safely refresh only Critical Boiler-managed BCO files and sections
   -c, --config <path>       JSON config file. Defaults to critical-boiler.config.json when present
       --cwd <path>          Target folder. Defaults to current directory
   -f, --force               Overwrite existing files

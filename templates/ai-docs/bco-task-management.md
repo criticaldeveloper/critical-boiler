@@ -1,3 +1,4 @@
+<!-- critical-boiler:bco-contract:{{ bcoContractVersion }} -->
 # Native BCO Task Management
 
 Better Codex Orchestrator (BCO) owns task truth, workflow claims, dependencies, evidence, completion, and workflow correlation for `{{ projectName }}`. Agents use only the capability-scoped MCP tools injected by BCO. This repository contains no task database, task CLI, bootstrap process, or BCO database credentials.
@@ -9,10 +10,12 @@ After Critical Boiler initializes the repository:
 1. Register the absolute project root in BCO.
 2. Select the native BCO task system.
 3. Select `developer_orchestrator` as the main orchestrator.
-4. Create the project's initial tasks and acceptance criteria in BCO's integrated task manager.
-5. Launch work from a selected task. BCO claims it and attaches the workflow before agents run.
+4. Invoke `$bco-project-planning` for operator-authorized project bootstrap or backlog restructuring.
+5. Confirm the structured task graph and apply it through project-planning capabilities actually exposed by BCO, or enter it manually in BCO's integrated task manager.
+6. Validate persisted native dependency edges and capability readiness before enabling automatic chaining.
+7. Launch work from a selected task. BCO claims it and attaches the workflow before agents run.
 
-Task creation and project registration are operator-owned setup. Agents do not invent an initial backlog, create competing Markdown task lists, or connect directly to BCO persistence.
+Project registration and plan confirmation remain operator-owned setup. The planning skill may prepare or validate a task graph within explicit authorization, but it does not invent an initial backlog, create a competing Markdown task list, connect directly to BCO persistence, or claim a draft was applied. A dependency mentioned only in task prose is not a native dependency.
 
 ## Workflow Lifecycle
 

@@ -3,5 +3,5 @@ model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 developer_instructions = """
 Read `.codex/prompts/agents/backend-tester.md` completely before acting and follow it as your role contract.
-Limit production-code edits to minimal testability fixes explicitly allowed by the assigned task.
+Write only explicitly assigned test, fixture, and artifact paths. Report production defects to the owning coder.
 """
