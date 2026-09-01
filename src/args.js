@@ -55,6 +55,11 @@ export function parseArgs(argv) {
     } else if (arg === "--bco-enhancement") {
       args.bcoEnhancement = true;
       provided.add("bcoEnhancement");
+    } else if (arg === "--bco-sync") {
+      args.bcoSync = true;
+      args.bcoEnhancement = true;
+      provided.add("bcoSync");
+      provided.add("bcoEnhancement");
     } else if (arg === "--bco-orchestration") {
       args.bcoOrchestration = readValue();
       args.bcoEnhancement = true;
@@ -184,7 +189,8 @@ export async function resolveArgs(cliArgs, provided) {
   args.projectType = args.projectType ? String(args.projectType) : undefined;
   args.tech = normalizeList(args.tech);
   args.standardScss = args.standardScss !== false;
-  args.bcoEnhancement = args.bcoEnhancement === true;
+  args.bcoSync = args.bcoSync === true;
+  args.bcoEnhancement = args.bcoEnhancement === true || args.bcoSync;
   args.bcoOrchestration = args.bcoEnhancement
     ? String(args.bcoOrchestration ?? DEFAULT_BCO_ORCHESTRATION)
     : undefined;

@@ -1,3 +1,4 @@
+<!-- critical-boiler:bco-contract:{{ bcoContractVersion }} -->
 # BCO Next Action And Experimental Brain Policy
 
 BCO evaluates terminal workflows and persists one server-owned `NextWorkflowPlan`. The plan may select one task workflow, one bounded prompt workflow, an authorized native-task repair or completion, an operator action, or project completion. Agents do not infer continuation from prose, task ordering, branch names, or claimability results.

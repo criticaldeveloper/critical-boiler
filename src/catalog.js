@@ -1,5 +1,6 @@
 export const PACKAGE_NAME = "@twmw/critical-boiler";
-export const VERSION = "2.0.0";
+export const VERSION = "2.5.0";
+export const BCO_CONTRACT_VERSION = "2.5.0";
 
 export const CONFIG_FILE = "critical-boiler.config.json";
 
@@ -9,6 +10,7 @@ export const DEFAULT_ARGS = {
   tech: [],
   standardScss: true,
   bcoEnhancement: false,
+  bcoSync: false,
   bcoOrchestration: undefined,
   force: false,
   dryRun: false,
@@ -69,6 +71,18 @@ export const FILES = {
     description:
       "BCO NextWorkflowPlan and Experimental Brain handoff contract.",
   },
+  bcoProjectPlanning: {
+    path: "ai-docs/bco-project-planning.md",
+    template: "ai-docs/bco-project-planning.md",
+    description:
+      "BCO-native backlog design, dependency, capability, and validation contract.",
+  },
+  bcoAutomationReadiness: {
+    path: "ai-docs/bco-automation-readiness.md",
+    template: "ai-docs/bco-automation-readiness.md",
+    description:
+      "Versioned BCO capability and shared-resource readiness contract.",
+  },
   bcoSkill: {
     path: ".agents/skills/bco-task-orchestration/SKILL.md",
     template: ".agents/skills/bco-task-orchestration/SKILL.md",
@@ -79,6 +93,23 @@ export const FILES = {
     path: ".agents/skills/bco-task-orchestration/agents/openai.yaml",
     template: ".agents/skills/bco-task-orchestration/agents/openai.yaml",
     description: "Codex UI metadata for the BCO orchestration skill.",
+  },
+  bcoPlanningSkill: {
+    path: ".agents/skills/bco-project-planning/SKILL.md",
+    template: ".agents/skills/bco-project-planning/SKILL.md",
+    description:
+      "Project-local skill for dependency-safe native BCO task planning.",
+  },
+  bcoPlanningSkillMetadata: {
+    path: ".agents/skills/bco-project-planning/agents/openai.yaml",
+    template: ".agents/skills/bco-project-planning/agents/openai.yaml",
+    description: "Codex UI metadata for the BCO project-planning skill.",
+  },
+  bcoPlanningSkillTaskContract: {
+    path: ".agents/skills/bco-project-planning/references/task-contract.md",
+    template:
+      ".agents/skills/bco-project-planning/references/task-contract.md",
+    description: "Canonical task-draft contract for the BCO planning skill.",
   },
   bcoAgentRegistry: {
     path: ".codex/config.toml",
@@ -302,8 +333,13 @@ export const BCO_ORCHESTRATION_SYSTEMS = {
       "bcoTaskManagement",
       "bcoOrchestrationPolicy",
       "bcoNextActionPolicy",
+      "bcoProjectPlanning",
+      "bcoAutomationReadiness",
       "bcoSkill",
       "bcoSkillMetadata",
+      "bcoPlanningSkill",
+      "bcoPlanningSkillMetadata",
+      "bcoPlanningSkillTaskContract",
       "bcoAgentRegistry",
       "developerOrchestratorAgent",
       "frontendOrchestratorAgent",

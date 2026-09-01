@@ -11,6 +11,11 @@ export function selectedFileKeys(args) {
 }
 
 export function defaultFileKeys(args) {
+  if (args.bcoSync) {
+    const system = args.bcoOrchestration ?? DEFAULT_BCO_ORCHESTRATION;
+    return unique(BCO_ORCHESTRATION_SYSTEMS[system].fileKeys);
+  }
+
   const keys = [
     "agents",
     "aiDocs",
@@ -63,6 +68,11 @@ export function defaultFileKeys(args) {
   keys.push(...stylingFileKeys(args));
 
   return unique(keys);
+}
+
+export function isBcoManagedFileKey(fileKey, args) {
+  const system = args.bcoOrchestration ?? DEFAULT_BCO_ORCHESTRATION;
+  return BCO_ORCHESTRATION_SYSTEMS[system]?.fileKeys.includes(fileKey) ?? false;
 }
 
 export function technologyFileKeys(args) {

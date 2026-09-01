@@ -1,0 +1,7 @@
+interface:
+  display_name: "BCO Project Planning"
+  short_description: "Build dependency-safe native BCO task plans"
+  default_prompt: "Use $bco-project-planning to turn this project brief into a validated, automation-ready native BCO task graph."
+
+policy:
+  allow_implicit_invocation: true
