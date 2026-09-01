@@ -1,7 +1,13 @@
 import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { BCO_CONTRACT_VERSION, FILES, TECHNOLOGIES } from "./catalog.js";
+import {
+  BCO_CONTRACT_VERSION,
+  BCO_PROJECT_PLAN_SCHEMA_VERSION,
+  BCO_TASK_ADOPTION_SCHEMA_VERSION,
+  FILES,
+  TECHNOLOGIES,
+} from "./catalog.js";
 import { mergeBcoAgentRegistry } from "./bco.js";
 import { templatesDir } from "./paths.js";
 import { renderPackageJson } from "./package-json.js";
@@ -18,6 +24,8 @@ export async function renderTemplate(templatePath, args) {
     flutterPackageName: normalizeDartPackageName(path.basename(args.cwd)),
     generatedAt: new Date().toISOString(),
     bcoContractVersion: BCO_CONTRACT_VERSION,
+    bcoProjectPlanSchemaVersion: BCO_PROJECT_PLAN_SCHEMA_VERSION,
+    bcoTaskAdoptionSchemaVersion: BCO_TASK_ADOPTION_SCHEMA_VERSION,
     technologies:
       techDetails.map((tech) => tech.label).join(", ") || "Not specified",
     agentTechnologyNotes: listLines(

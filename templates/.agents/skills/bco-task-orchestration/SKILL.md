@@ -10,7 +10,7 @@ Use BCO as authoritative task and workflow truth. Never create a repository task
 ## Workflow
 
 1. Read `ai-docs/bco-task-management.md`, the assigned task with `bco_task_get`, and current project memory with a bounded `bco_memory_list` call.
-2. Read `ai-docs/bco-orchestration-policy.md`, inspect nearby repository code and tests, then classify the affected scope before delegation or editing.
+2. Read `ai-docs/bco-orchestration-policy.md` and, when present, `ai-docs/context-map.md`; inspect only the routed repository code, documentation, and tests needed for the affected scope before delegation or editing.
 3. Treat task list, search, and claimability output as bounded evidence, never as project-global ranking or successor selection.
 4. Delegate only task-owned work through the generated role topology. Enforce one specialist phase at a time by default: plan, implement, document when required, verify after all writers settle, then independently review the exact verified tree.
 5. Record exact writable paths and exclusive shared resources before implementation. Refuse tester or reviewer work whose predecessor evidence or tree identity is missing or stale.

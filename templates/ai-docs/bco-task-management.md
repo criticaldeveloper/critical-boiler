@@ -11,11 +11,11 @@ After Critical Boiler initializes the repository:
 2. Select the native BCO task system.
 3. Select `developer_orchestrator` as the main orchestrator.
 4. Invoke `$bco-project-planning` for operator-authorized project bootstrap or backlog restructuring.
-5. Confirm the structured task graph and apply it through project-planning capabilities actually exposed by BCO, or enter it manually in BCO's integrated task manager.
+5. Confirm the strict schema-versioned JSON graph and apply it through BCO preview/validate/apply, or paste the exact JSON into BCO's integrated task manager.
 6. Validate persisted native dependency edges and capability readiness before enabling automatic chaining.
 7. Launch work from a selected task. BCO claims it and attaches the workflow before agents run.
 
-Project registration and plan confirmation remain operator-owned setup. The planning skill may prepare or validate a task graph within explicit authorization, but it does not invent an initial backlog, create a competing Markdown task list, connect directly to BCO persistence, or claim a draft was applied. A dependency mentioned only in task prose is not a native dependency.
+Project registration and plan confirmation remain operator-owned setup. The planning skill may prepare or validate a task graph within explicit authorization, but it does not invent an initial backlog, create a competing Markdown task list, connect directly to BCO persistence, or claim a draft was applied. A dependency mentioned only in task prose is not a native dependency. Existing-task adoption uses exact BCO-exported identity, version, and content fingerprints and must cover the complete active catalog.
 
 ## Workflow Lifecycle
 
