@@ -12,11 +12,13 @@ Use BCO as authoritative task and workflow truth. Never create a repository task
 1. Read `ai-docs/bco-task-management.md`, the assigned task with `bco_task_get`, and current project memory with a bounded `bco_memory_list` call.
 2. Read `ai-docs/bco-orchestration-policy.md` and, when present, `ai-docs/context-map.md`; inspect only the routed repository code, documentation, and tests needed for the affected scope before delegation or editing.
 3. Treat task list, search, and claimability output as bounded evidence, never as project-global ranking or successor selection.
-4. Delegate only task-owned work through the generated role topology. Enforce one specialist phase at a time by default: plan, implement, document when required, verify after all writers settle, then independently review the exact verified tree.
+4. Delegate only task-owned work through the generated role topology. A role policy constrains specialists that actually appear; it is not a launch roster. Use the minimum roles required by the task and evidence, and enforce one specialist phase at a time by default: plan when needed, implement, document when assigned separately, verify after all writers settle, then independently review the exact verified tree.
 5. Record exact writable paths and exclusive shared resources before implementation. Refuse tester or reviewer work whose predecessor evidence or tree identity is missing or stale.
 6. Use the latest task version and a stable command ID for every permitted mutation. On stale state, reread; on forbidden or unavailable state, stop.
 7. Attach exact verification, review, Git, and artifact evidence. Any write after verification invalidates that evidence; any write after review requires fresh verification and review. Request completion only after acceptance criteria, documentation, review, merge, and the merged-tree gate pass.
 8. Finish the assigned workflow and return task-scoped evidence only. Read `ai-docs/bco-next-action-policy.md` to preserve the boundary: BCO's separate read-only AI governor selects and persists any next workflow.
+
+For story-finalization workflows, rely on BCO's completed native child-lifecycle preflight. Audit only the selected container and its current exact-commit evidence in the root thread, with at most one narrowly missing read-only check. Do not enumerate or mutate child tasks, launch a specialist hierarchy, or write product files. Return an exact evidence gap instead of repairing it inside finalization.
 
 ## Recovery
 

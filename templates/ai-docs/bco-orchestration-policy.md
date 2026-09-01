@@ -12,11 +12,13 @@ This policy defines the Complete Orchestration System generated for `{{ projectN
 - split full-stack work into non-overlapping frontend and backend ownership, with contract dependencies settled before dependent work starts;
 - never delegate directly to specialist agents or implement product code itself.
 
-Each domain orchestrator owns one planner, coder, tester, reviewer, and documenter pipeline. Reuse the owning specialist for corrections. Do not create duplicate waves for the same role or scope.
+Each domain orchestrator may use one planner, coder, tester, reviewer, and documenter identity. Reuse the owning specialist for corrections. Do not create duplicate waves for the same role or scope.
+
+A declared role policy is an admission-control backstop for roles that actually appear, not a roster that the workflow must instantiate. Launch only the minimum specialists required by the selected task, risk, and current evidence. Encode an `afterRoles` edge only when that predecessor is unconditionally required for the workflow profile; do not make an optional repair coder a required predecessor of verification or finalization.
 
 ## Deterministic Specialist Phases
 
-The default execution order is a state machine, not a list of agents to launch:
+The ordered phase catalog is a state machine for roles the task actually needs, not a list of agents to launch. Low-risk or verification work may omit planning, implementation, or separate documentation when its contract and evidence do not require those roles:
 
 1. **Plan:** the planner inspects task truth and returns scope, exact ownership, dependency order, risks, and verification requirements without writing.
 2. **Implement:** after the plan is accepted, the coder is the only product-code writer. Wait for the coder to finish and settle.
@@ -62,7 +64,7 @@ Builds, E2E suites, formatters, code generation, migration runners, preview serv
 ## Workflow Intent
 
 - **Implementation:** plan, implement, document when required, verify, review, correct until clean, integrate, merged-tree gate.
-- **Story finalization or audit:** verify and review the stable candidate commit first. Launch a coder only for a confirmed defect, then repeat the invalidated phases.
+- **Story finalization or audit:** BCO has already validated the declared native child lifecycle. The root audits only the selected container's acceptance, recorded evidence, Git provenance, and exact stable commit. Reuse current exact-commit evidence and run at most one narrowly missing read-only check. Do not enumerate or mutate child tasks, launch specialists, or write files. Report any exact gap so a separately authorized repair workflow can own it.
 - **Recovery:** diagnose settled repository and BCO truth, authorize one bounded repair wave, then obtain fresh verification and review. Never recreate the whole agent pipeline speculatively.
 
 ## Risk And Minimum Evidence

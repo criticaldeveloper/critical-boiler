@@ -64,6 +64,8 @@ task uses `type: "epic"`, a non-delivery workflow profile, and `gitDeliveryOwner
 verification describes finalization of its declared children rather than a second implementation.
 Only declare capability and resource identifiers present in BCO's project inventory.
 
+`rolePolicy` is an admission-control contract for observed roles, not an instruction to launch every listed role. Include only roles relevant to the workflow profile, and add an `afterRoles` edge only when that predecessor is unconditionally required. A delivery task may use the full example chain. A verification task that needs no implementation should normally declare tester then reviewer. A container finalization task should not declare a specialist pipeline: BCO validates its native child lifecycle before launch, and the root workflow performs only the bounded closure audit. Never encode an optional repair coder as a mandatory predecessor; a separately authorized repair workflow owns the coder and invalidated verification cycle.
+
 ## Adopt an existing native catalog
 
 Use schema version `{{ bcoTaskAdoptionSchemaVersion }}` only for tasks that already exist without

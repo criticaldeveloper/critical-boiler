@@ -34,7 +34,7 @@ Approximate current output size, measured from the generated seed files and esti
 | Vue + SCSS         |    16 |                    10.4k |
 | Vue + Tailwind     |    14 |                     8.5k |
 
-Across the 15 supported starter variants, that is about **144k tokens** of repeatable setup text and config. A single project usually saves roughly **5.6k-12.5k tokens** of generation work before any real feature work begins. The optional Complete Orchestration System adds 37 BCO files and roughly 12.8k more reusable tokens. The more often a team creates repos or asks agents to review fresh scaffolds, the more this compounds.
+Across the 15 supported starter variants, that is about **144k tokens** of repeatable setup text and config. A single project usually saves roughly **5.6k-12.5k tokens** of generation work before any real feature work begins. The optional Complete Orchestration System adds 37 BCO files and roughly 15.1k more reusable tokens. The more often a team creates repos or asks agents to review fresh scaffolds, the more this compounds.
 
 Those numbers are intentionally approximate: tokenization varies by model and file content. They are useful as an order-of-magnitude comparison, not as billing math.
 
@@ -256,12 +256,12 @@ In guided setup, choosing Tailwind copies `ai-docs/skills/tailwind-implementatio
 
 ## BCO Enhancement
 
-The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enhancement`. Contract version 2.6.0 generates 37 managed BCO assets. The current `complete` orchestration system follows a defensive role topology and versioned phase contract:
+The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enhancement`. Contract version 2.6.1 generates 37 managed BCO assets. The current `complete` orchestration system follows a defensive role topology and versioned phase contract:
 
 - `developer_orchestrator` is the root agent and the main orchestrator selected when the project is registered in BCO.
 - Frontend and backend orchestrators own their domain pipelines.
-- Each domain has planner, coder, tester, independent reviewer, and documenter roles.
-- A domain runs one specialist phase at a time by default: plan, implement, document when needed, verify a stable tree, independently review that exact tree, correct through the original owner, integrate, and run the merged-tree gate.
+- Each domain can use planner, coder, tester, independent reviewer, and documenter roles. The role policy is an admission backstop, not a roster; only roles required by the task, risk, and current evidence are launched.
+- A domain runs one required specialist phase at a time by default: plan when needed, implement, document under one owner, verify a stable tree, independently review that exact tree, correct through the original owner, integrate, and run the merged-tree gate.
 - Planners and reviewers are read-only. Coders, documenters, and testers require settled predecessor evidence plus exact non-overlapping path ownership before writing.
 - Build, E2E, formatter, codegen, migration, database, browser-server, port, and Git resources have one explicit owner at a time. The tester owns final verification and any browser-server lifecycle.
 - Generated `.codex/agents/*.toml` files define model, reasoning, sandbox, and role loading.
@@ -278,6 +278,8 @@ The planning readiness gate makes native `blocked-by` edges—not phrases such a
 BCO owns claims, injected task capabilities, evidence, completion, and persisted next-workflow decisions. Workflow agents return evidence for their assigned work; BCO's separate read-only AI governor decides what follows after terminal settlement.
 
 Experimental Brain does not change the generated plan contract or agent permissions. With Brain off, BCO waits for manual launch of its persisted decision. With Brain on, it executes the same decision automatically through the normal claim, approval, sandbox, permission, concurrency, and recovery boundaries.
+
+Automation-contract freshness follows only the task definition used by orchestration; lifecycle bookkeeping, comments, evidence, and claims do not stale it. Real definition changes remain one operator-owned **Prepare automation** action. Container finalization is a root-only read-only audit after BCO validates child lifecycle; it does not launch a specialist pipeline or create another Git delivery.
 
 ### Updating an existing BCO project
 

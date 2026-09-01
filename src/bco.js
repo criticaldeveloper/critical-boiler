@@ -24,11 +24,13 @@ const EXTENSIONS = {
 - Bootstrap or replan native tasks with \`$bco-project-planning\`; no task is automation-ready until its native dependency edges, verification, and required capabilities validate in BCO.
 - BCO starts each workflow from an operator-confirmed native task. Read the assigned task, dependencies, acceptance criteria, and bounded project memory before editing.
 - \`developer_orchestrator\` is the root agent for the Complete Orchestration System. It routes frontend work to \`frontend_orchestrator\`, backend work to \`backend_orchestrator\`, and full-stack work to both through non-overlapping task ownership.
-- Domain orchestrators enforce one active specialist phase by default: plan, implement, document, verify, independently review, correct if needed, integrate, and verify the merged tree. Tester, reviewer, and documenter work must never start from a tree that an implementation writer can still invalidate.
+- Role policies constrain specialists that actually appear; they are not agent rosters. Domain orchestrators launch only the minimum required roles and enforce one active specialist phase by default. Tester, reviewer, and documenter work must never start from a tree that an implementation writer can still invalidate.
+- Story finalization is a root-only, read-only audit of the selected container after BCO validates its native child lifecycle. It never launches specialists, mutates child tasks, or writes files.
 - Assign exact path ownership and one owner for build, E2E, codegen, formatter, browser-server, and other shared commands. Do not run those resources concurrently.
 - Every workflow agent, including the root, returns task-scoped evidence and never selects or starts a project-global successor.
 - Use the latest task version and a stable command ID for every permitted BCO mutation. On stale state, reread authoritative truth before deciding whether to retry.
-- Attach exact verification, independent-review, commit, merge, and artifact evidence. Request completion only after acceptance criteria and the repository definition of done pass.
+- Attach exact verification, independent-review, and, for Git-delivery tasks, commit, merge, and artifact evidence. Request completion only after acceptance criteria and the repository definition of done pass.
+- Automation-contract preview, validation, apply, and supersede remain operator-owned. Agents and the AI governor must return an operator action for **Prepare automation** instead of attempting contract refresh.
 - After workflow settlement, BCO's dedicated read-only AI governor selects and persists the next NextWorkflowPlan independently. Experimental Brain changes automatic launch timing only; it grants no extra task, approval, permission, or execution authority.
 - Read \`ai-docs/bco-task-management.md\`, \`ai-docs/bco-orchestration-policy.md\`, \`ai-docs/bco-automation-readiness.md\`, and \`ai-docs/bco-next-action-policy.md\` before BCO-managed work.
 <!-- critical-boiler:bco-agents:end -->
@@ -69,7 +71,7 @@ BCO is an external local control plane; this project has no repository-local BCO
 
 When BCO starts a workflow, use only its injected capability-scoped task and memory tools. An unavailable BCO capability is an orchestration blocker, not permission to install fallback task tooling or update BCO's database directly.
 
-The tester owns final verification and the lifecycle of any browser server it starts. Build, E2E, formatter, codegen, preview-server, and migration commands run under one explicit resource owner at a time.
+The tester owns final verification and the lifecycle of any browser server it starts. Build, E2E, formatter, codegen, preview-server, and migration commands run under one explicit resource owner at a time. Role policies constrain roles that appear; they do not require every configured specialist.
 
 Workflow agents finish the assigned work and return evidence; they do not launch another workflow. BCO's dedicated AI governor evaluates persisted terminal truth afterward.
 <!-- critical-boiler:bco-commands:end -->
@@ -87,11 +89,12 @@ Workflow agents finish the assigned work and return evidence; they do not launch
 
 - The assigned native BCO task and acceptance criteria are satisfied.
 - Required repository and external capabilities were declared available, or the task was blocked before implementation.
-- Focused verification ran on a stable tree with no active implementation writer and passed with exact command evidence.
-- An independent reviewer checked the same exact task commit after verification and all findings are resolved or blocked explicitly.
+- For delivery or correction work, focused verification ran on a stable tree with no active implementation writer and passed with exact command evidence.
+- For delivery work, an independent reviewer checked the same exact task commit after verification and all findings are resolved or blocked explicitly.
 - Documentation is synchronized with the implementation.
-- The reviewed task branch is merged into the integration branch and the merged-tree gate passes.
-- Verification, review, commit, merge, and artifact evidence is attached through BCO before completion is requested.
+- For Git-delivery tasks, the reviewed task branch is merged into the integration branch and the merged-tree gate passes.
+- For non-delivery container finalization, the root reused exact current evidence without creating a branch, delegating, or writing files.
+- Applicable verification, review, commit, merge, and artifact evidence is attached through BCO before completion is requested.
 - All workflow agents return task-scoped evidence only. BCO's separate read-only AI governor owns project-global next-action selection.
 <!-- critical-boiler:bco-definition-of-done:end -->
 `,

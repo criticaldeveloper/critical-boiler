@@ -11,6 +11,12 @@ critical-boiler --bco-sync --cwd <project-root>
 
 The sync preserves unrelated project files and non-BCO Codex configuration. Bounded managed sections are replaced between their start and end markers. Do not remove or edit only one marker.
 
+## Contract Freshness
+
+BCO records the canonical task definition consumed by automation: task identity, title, description, acceptance criteria, verification, type, labels, parent, and container semantics. Claims, lifecycle changes, status reasons, comments, evidence, provenance, versions, timestamps, and ordinary workflow bookkeeping do not stale a contract.
+
+A missing or stale contract is operator-owned project-plan authority. Use **Prepare automation** to export the exact current catalog, generate a complete plan, preview and validate it, then apply or supersede it once. Workflow agents and the AI governor cannot create, refresh, amend, or supersede automation contracts and must not launch a recovery workflow for that purpose.
+
 ## Capability Declaration
 
 Before native tasks are confirmed, `$bco-project-planning` records each required capability as one of:

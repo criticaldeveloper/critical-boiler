@@ -6,11 +6,13 @@ BCO evaluates terminal workflows and persists one server-owned `NextWorkflowPlan
 ## Selection Authority
 
 - Every workflow agent, including `developer_orchestrator`, finishes only its assigned workflow and returns task-scoped status and evidence. Workflow agents never rank candidates, select or propose a successor, claim another task, or start another workflow.
-- After terminal settlement, BCO launches a separate ephemeral AI-governor thread with a read-only sandbox, no delegation authority, no task mutation tools, and a strict structured-output schema.
+- After terminal settlement, BCO launches a separate ephemeral AI-governor thread with a read-only sandbox, no delegation authority, no task mutation tools, and a strict structured-output schema. Its schema may propose only the bounded native-task repairs or completion BCO explicitly supplied; BCO validates current authority and performs any mutation.
 - BCO supplies that governor with bounded persisted workflow, task, repository, policy, permission, budget, and candidate evidence. The governor owns semantic interpretation and returns exactly one schema-valid decision.
 - Deterministic BCO code validates current identities, lifecycle, claimability, repository truth, bounds, policy, confidence, and concurrency before persisting a `NextWorkflowPlan`.
 
 The governor must treat conflicting or stale evidence as a reason to stop and must never invent a candidate, task, prompt, evidence reference, or missing field. Workflow prompts must not imitate, preempt, or replace this governor boundary.
+
+Automation contracts are operator-owned. When a missing or stale contract prevents admission, the governor returns an operator action for **Prepare automation**; it never delegates contract refresh to a recovery workflow.
 
 ## Manual And Experimental Brain Execution
 

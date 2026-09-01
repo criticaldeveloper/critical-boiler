@@ -19,6 +19,7 @@ New work uses BCO project-plan schema version `{{ bcoProjectPlanSchemaVersion }}
 - Add enabling tasks for missing capabilities, migrations, contracts, or infrastructure. Block dependent work with native edges.
 - Design the smallest useful dependency graph. Independent tasks may be parallel only when paths, contracts, data, and shared resources are genuinely independent.
 - Avoid stacked task branches. Each implementation task starts from updated integration truth after its predecessor is merged.
+- Treat `rolePolicy` as admission control for roles that actually appear, not an agent roster. Declare only unconditional predecessor edges for the workflow profile. Verification-only work does not require an optional coder predecessor, and container finalization declares no specialist pipeline.
 
 Reject cycles, missing keys, self-dependencies, broad multi-outcome tasks, verification without observable commands or evidence, and tasks requiring unavailable capabilities without an explicit enabling dependency. Treat prose dependency language and ordinal task references as review advisories; deterministic text matching must not invent project semantics.
 

@@ -135,6 +135,26 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
     ),
     "utf8",
   );
+  const frontendOrchestratorPrompt = await readFile(
+    path.join(
+      root,
+      ".codex",
+      "prompts",
+      "agents",
+      "frontend-orchestrator.md",
+    ),
+    "utf8",
+  );
+  const backendOrchestratorPrompt = await readFile(
+    path.join(
+      root,
+      ".codex",
+      "prompts",
+      "agents",
+      "backend-orchestrator.md",
+    ),
+    "utf8",
+  );
 
   assert.equal(count(agents, "<!-- critical-boiler:bco-agents:start -->"), 1);
   assert.equal(count(aiDocs, "<!-- critical-boiler:bco-docs:start -->"), 1);
@@ -150,6 +170,13 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   assert.match(agents, /dedicated read-only AI governor/u);
   assert.match(commands, /select `developer_orchestrator` as the main orchestrator/u);
   assert.match(rootPrompt, /never select, propose, claim, or start a successor/u);
+  assert.match(rootPrompt, /story-finalization intent/u);
+  assert.match(rootPrompt, /Do not enumerate or mutate child tasks, delegate, or write files/u);
+  assert.match(frontendOrchestratorPrompt, /role policy constrains roles that appear/u);
+  assert.match(frontendOrchestratorPrompt, /Story finalization is root-owned/u);
+  assert.match(backendOrchestratorPrompt, /role policy constrains roles that appear/u);
+  assert.match(backendOrchestratorPrompt, /Story finalization is root-owned/u);
+  assert.match(definitionOfDone, /For non-delivery container finalization/u);
 
   const policy = await readFile(
     path.join(root, "ai-docs", "bco-orchestration-policy.md"),
@@ -167,13 +194,34 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
     path.join(root, ".codex", "agents", "frontend-planner.toml"),
     "utf8",
   );
+  const taskSkill = await readFile(
+    path.join(root, ".agents", "skills", "bco-task-orchestration", "SKILL.md"),
+    "utf8",
+  );
+  const taskManagement = await readFile(
+    path.join(root, "ai-docs", "bco-task-management.md"),
+    "utf8",
+  );
+  const nextActionPolicy = await readFile(
+    path.join(root, "ai-docs", "bco-next-action-policy.md"),
+    "utf8",
+  );
 
   assert.match(policy, /Only one specialist phase is active in a domain by default/u);
   assert.match(policy, /Tester, reviewer, and documenter phases never overlap/u);
+  assert.match(policy, /admission-control backstop/u);
+  assert.match(policy, /Do not enumerate or mutate child tasks, launch specialists, or write files/u);
   assert.match(readiness, new RegExp(`contract version: \`${BCO_CONTRACT_VERSION}\``, "u"));
   assert.match(readiness, /critical-boiler --bco-sync/u);
+  assert.match(readiness, /Claims, lifecycle changes, status reasons, comments, evidence/u);
+  assert.match(readiness, /operator-owned project-plan authority/u);
   assert.match(planningSkill, /Say `draft_only`/u);
   assert.match(planningSkill, /automation-readiness report/u);
+  assert.match(taskSkill, /it is not a launch roster/u);
+  assert.match(taskSkill, /For story-finalization workflows/u);
+  assert.match(taskManagement, /Automation-contract preview, validation, apply, and supersede remain operator-only/u);
+  assert.match(taskManagement, /BCO admits story finalization only after validating/u);
+  assert.match(nextActionPolicy, /operator action for \*\*Prepare automation\*\*/u);
   const planningContract = await readFile(
     path.join(
       root,
@@ -196,7 +244,65 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   assert.match(planningContract, /"blockedByKeys"/u);
   assert.match(planningContract, /"operation": "adopt-existing"/u);
   assert.match(planningContract, /rejects partial or stale adoption atomically/u);
+  assert.match(planningContract, /admission-control contract for observed roles/u);
+  assert.match(planningContract, /container finalization task should not declare a specialist pipeline/u);
   assert.match(plannerConfig, /sandbox_mode = "read-only"/u);
+});
+
+test("generated BCO routing stays within bounded context budgets", async (t) => {
+  const root = await createFixture(t);
+  const args = {
+    ...templateArgs(root),
+    projectType: "webApplication",
+    tech: ["typescript", "react", "scss"],
+  };
+
+  for (const fileKey of selectedFileKeys(args)) {
+    if (fileKey === "packageJson") continue;
+    await writeProjectFile(args, fileKey);
+  }
+  await applyBcoExtensions(args);
+
+  const routes = {
+    alwaysLoaded: ["AGENTS.md"],
+    developer: [
+      "AGENTS.md",
+      ".agents/skills/bco-task-orchestration/SKILL.md",
+      "ai-docs/bco-task-management.md",
+      "ai-docs/bco-orchestration-policy.md",
+      "ai-docs/bco-next-action-policy.md",
+      ".codex/prompts/agents/developer-orchestrator.md",
+    ],
+    frontend: [
+      "AGENTS.md",
+      ".agents/skills/bco-task-orchestration/SKILL.md",
+      "ai-docs/bco-task-management.md",
+      "ai-docs/bco-orchestration-policy.md",
+      "ai-docs/bco-automation-readiness.md",
+      "ai-docs/architecture.md",
+      "ai-docs/commands.md",
+      ".codex/prompts/agents/frontend-orchestrator.md",
+    ],
+    backend: [
+      "AGENTS.md",
+      ".agents/skills/bco-task-orchestration/SKILL.md",
+      "ai-docs/bco-task-management.md",
+      "ai-docs/bco-orchestration-policy.md",
+      "ai-docs/bco-automation-readiness.md",
+      "ai-docs/architecture.md",
+      "ai-docs/commands.md",
+      ".codex/prompts/agents/backend-orchestrator.md",
+    ],
+  };
+  const limits = { alwaysLoaded: 1_800, developer: 5_000, frontend: 5_400, backend: 5_400 };
+
+  for (const [route, files] of Object.entries(routes)) {
+    let words = 0;
+    for (const file of files) {
+      words += countWords(await readFile(path.join(root, file), "utf8"));
+    }
+    assert.ok(words <= limits[route], `${route} routing uses ${words}/${limits[route]} words`);
+  }
 });
 
 test("BCO sync refreshes managed assets without overwriting project files", async (t) => {
@@ -222,7 +328,7 @@ test("BCO sync refreshes managed assets without overwriting project files", asyn
   await writeFile(
     agentsPath,
     (await readFile(agentsPath, "utf8")).replace(
-      "Domain orchestrators enforce one active specialist phase",
+      "Role policies constrain specialists that actually appear",
       "stale phase contract",
     ),
     "utf8",
@@ -242,7 +348,7 @@ test("BCO sync refreshes managed assets without overwriting project files", asyn
   assert.doesNotMatch(await readFile(agentsPath, "utf8"), /stale phase contract/u);
   assert.match(
     await readFile(agentsPath, "utf8"),
-    /Domain orchestrators enforce one active specialist phase/u,
+    /Role policies constrain specialists that actually appear/u,
   );
   assert.equal(
     count(
@@ -337,4 +443,8 @@ function templateArgs(cwd) {
 
 function count(value, needle) {
   return value.split(needle).length - 1;
+}
+
+function countWords(value) {
+  return value.match(/[\p{L}\p{N}]+(?:[_'’-][\p{L}\p{N}]+)*/gu)?.length ?? 0;
 }
