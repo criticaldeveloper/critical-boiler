@@ -46,9 +46,9 @@ const EXTENSIONS = {
 
 - \`bco-task-management.md\` owns native task lifecycle, capability, recovery, and evidence rules.
 - \`bco-project-planning.md\` owns backlog dependency, acceptance, capability, and operator-confirmation rules.
-- \`bco-orchestration-policy.md\` owns deterministic specialist phases, ownership, verification, Git delivery, correction, and cleanup.
+- \`bco-orchestration-policy.md\` owns declared specialist phases, ownership, verification, Git delivery, correction, and cleanup.
 - \`bco-automation-readiness.md\` owns the generated contract version and capability/resource readiness declaration.
-- \`bco-next-action-policy.md\` owns the dedicated AI-governor and Experimental Brain boundary.
+- [\`bco-next-action-policy.md\`](bco-next-action-policy.md) owns the dedicated AI-governor and Experimental Brain boundary.
 - \`../.agents/skills/bco-task-orchestration/SKILL.md\` is the executable project workflow for BCO-managed tasks.
 - \`../.agents/skills/bco-project-planning/SKILL.md\` prepares or validates operator-authorized native BCO project plans.
 - The generated \`.codex/config.toml\`, role configurations, and role prompts declare the Complete Orchestration System. Register this project in BCO and select \`developer_orchestrator\` as its main orchestrator.

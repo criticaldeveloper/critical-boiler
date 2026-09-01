@@ -6,6 +6,8 @@ import test from "node:test";
 import { parseArgs, resolveArgs, validateOptions } from "../src/args.js";
 import {
   BCO_CONTRACT_VERSION,
+  BCO_PROJECT_PLAN_SCHEMA_VERSION,
+  BCO_TASK_ADOPTION_SCHEMA_VERSION,
   BCO_ORCHESTRATION_SYSTEMS,
   DEFAULT_ARGS,
   DEFAULT_BCO_ORCHESTRATION,
@@ -171,7 +173,29 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   assert.match(readiness, new RegExp(`contract version: \`${BCO_CONTRACT_VERSION}\``, "u"));
   assert.match(readiness, /critical-boiler --bco-sync/u);
   assert.match(planningSkill, /Say `draft_only`/u);
-  assert.match(planningSkill, /verify native relationships/u);
+  assert.match(planningSkill, /automation-readiness report/u);
+  const planningContract = await readFile(
+    path.join(
+      root,
+      ".agents",
+      "skills",
+      "bco-project-planning",
+      "references",
+      "task-contract.md",
+    ),
+    "utf8",
+  );
+  assert.match(
+    planningContract,
+    new RegExp(`Use schema version \`${BCO_PROJECT_PLAN_SCHEMA_VERSION}\``, "u"),
+  );
+  assert.match(
+    planningContract,
+    new RegExp(`Use schema version \`${BCO_TASK_ADOPTION_SCHEMA_VERSION}\``, "u"),
+  );
+  assert.match(planningContract, /"blockedByKeys"/u);
+  assert.match(planningContract, /"operation": "adopt-existing"/u);
+  assert.match(planningContract, /rejects partial or stale adoption atomically/u);
   assert.match(plannerConfig, /sandbox_mode = "read-only"/u);
 });
 

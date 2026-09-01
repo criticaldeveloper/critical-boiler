@@ -256,7 +256,7 @@ In guided setup, choosing Tailwind copies `ai-docs/skills/tailwind-implementatio
 
 ## BCO Enhancement
 
-The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enhancement`. Contract version 2.5.0 generates 37 managed BCO assets. The current `complete` orchestration system follows a defensive role topology and deterministic phase contract:
+The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enhancement`. Contract version 2.6.0 generates 37 managed BCO assets. The current `complete` orchestration system follows a defensive role topology and versioned phase contract:
 
 - `developer_orchestrator` is the root agent and the main orchestrator selected when the project is registered in BCO.
 - Frontend and backend orchestrators own their domain pipelines.
@@ -271,9 +271,9 @@ The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enha
 - `ai-docs/bco-task-management.md`, `ai-docs/bco-project-planning.md`, `ai-docs/bco-orchestration-policy.md`, `ai-docs/bco-automation-readiness.md`, and `ai-docs/bco-next-action-policy.md` define task, planning, capability, delivery, NextWorkflowPlan, and Experimental Brain behavior.
 - Marked sections are added to `AGENTS.md`, `ai-docs/README.md`, `ai-docs/commands.md`, and `ai-docs/definition-of-done.md`.
 
-Critical Boiler prepares the repository side only. After generation, register the project root in BCO, choose its native task system, and select `developer_orchestrator`. Invoke `$bco-project-planning` for operator-authorized bootstrap or backlog restructuring. The skill applies a plan only through project-planning capabilities actually exposed by BCO; otherwise it returns `draft_only` for operator entry. After apply or manual entry, native dependency relationships must be reread and validated before automatic chaining is enabled.
+Critical Boiler prepares the repository side only. After generation, register the project root in BCO, choose its native task system, and select `developer_orchestrator`. Invoke `$bco-project-planning` for operator-authorized bootstrap, backlog restructuring, or adoption of an older native catalog. The skill emits BCO's exact schema-versioned JSON and applies it only through BCO preview/validate/apply capabilities; otherwise it returns `draft_only` for operator paste. Existing-task adoption starts from BCO's exact catalog export and never guesses IDs, versions, or fingerprints. After apply, native dependency relationships and automation readiness must be reread before automatic chaining is enabled.
 
-The planning readiness gate prevents prose-only dependency failures where task descriptions mention “Task 2” but BCO stores no dependency edge. It also requires browser-critical tasks to declare a working repository E2E runner such as Playwright or an exposed browser-control capability. If neither exists, the plan must add an enabling predecessor or leave dependent tasks blocked; a build is not browser evidence.
+The planning readiness gate makes native `blocked-by` edges—not phrases such as “Task 2”—the execution graph. Prose dependency language is a review advisory rather than a brittle deterministic rejection. Browser-critical tasks still declare a working repository E2E runner such as Playwright or an exposed browser-control capability. If neither exists, the plan adds an enabling predecessor or remains non-ready; a build is not browser evidence.
 
 BCO owns claims, injected task capabilities, evidence, completion, and persisted next-workflow decisions. Workflow agents return evidence for their assigned work; BCO's separate read-only AI governor decides what follows after terminal settlement.
 
