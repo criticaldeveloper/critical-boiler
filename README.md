@@ -256,13 +256,15 @@ In guided setup, choosing Tailwind copies `ai-docs/skills/tailwind-implementatio
 
 ## BCO Enhancement
 
-The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enhancement`. Contract version 2.6.1 generates 37 managed BCO assets. The current `complete` orchestration system follows a defensive role topology and versioned phase contract:
+The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enhancement`. Contract version 2.6.2 generates 37 managed BCO assets. The current `complete` orchestration system follows a defensive role topology and versioned phase contract:
 
 - `developer_orchestrator` is the root agent and the main orchestrator selected when the project is registered in BCO.
 - Frontend and backend orchestrators own their domain pipelines.
 - Each domain can use planner, coder, tester, independent reviewer, and documenter roles. The role policy is an admission backstop, not a roster; only roles required by the task, risk, and current evidence are launched.
+- Automation plans use exact configured role IDs and explicit `afterRoles` edges for every unconditionally sequential phase, so BCO can project the same planner → coder → tester → reviewer graph it enforces.
 - A domain runs one required specialist phase at a time by default: plan when needed, implement, document under one owner, verify a stable tree, independently review that exact tree, correct through the original owner, integrate, and run the merged-tree gate.
 - Planners and reviewers are read-only. Coders, documenters, and testers require settled predecessor evidence plus exact non-overlapping path ownership before writing.
+- Planner acceptance and closure-matrix rows keep stable IDs through tester assertion evidence and independent review; a broad green suite cannot hide an unproved row.
 - Build, E2E, formatter, codegen, migration, database, browser-server, port, and Git resources have one explicit owner at a time. The tester owns final verification and any browser-server lifecycle.
 - Generated `.codex/agents/*.toml` files define model, reasoning, sandbox, and role loading.
 - Generated `.codex/prompts/agents/*.md` files define task-bounded role contracts.
@@ -276,6 +278,8 @@ Critical Boiler prepares the repository side only. After generation, register th
 The planning readiness gate makes native `blocked-by` edges—not phrases such as “Task 2”—the execution graph. Prose dependency language is a review advisory rather than a brittle deterministic rejection. Browser-critical tasks still declare a working repository E2E runner such as Playwright or an exposed browser-control capability. If neither exists, the plan adds an enabling predecessor or remains non-ready; a build is not browser evidence.
 
 BCO owns claims, injected task capabilities, evidence, completion, and persisted next-workflow decisions. Workflow agents return evidence for their assigned work; BCO's separate read-only AI governor decides what follows after terminal settlement.
+
+Ordinary failed verification, rejected review, or exhaustion of one bounded repair wave remains `in-progress` with exact evidence for governor recovery. Workflow agents do not classify or clear `authority-conflict`; that state is reserved for operator/governor authority.
 
 Experimental Brain does not change the generated plan contract or agent permissions. With Brain off, BCO waits for manual launch of its persisted decision. With Brain on, it executes the same decision automatically through the normal claim, approval, sandbox, permission, concurrency, and recovery boundaries.
 

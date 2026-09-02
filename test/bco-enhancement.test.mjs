@@ -155,6 +155,14 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
     ),
     "utf8",
   );
+  const frontendTesterPrompt = await readFile(
+    path.join(root, ".codex", "prompts", "agents", "frontend-tester.md"),
+    "utf8",
+  );
+  const frontendReviewerPrompt = await readFile(
+    path.join(root, ".codex", "prompts", "agents", "frontend-reviewer.md"),
+    "utf8",
+  );
 
   assert.equal(count(agents, "<!-- critical-boiler:bco-agents:start -->"), 1);
   assert.equal(count(aiDocs, "<!-- critical-boiler:bco-docs:start -->"), 1);
@@ -168,6 +176,7 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   );
   assert.match(agents, /Experimental Brain changes automatic launch timing only/u);
   assert.match(agents, /dedicated read-only AI governor/u);
+  assert.match(agents, /Only operator\/governor authority classifies authority-conflict/u);
   assert.match(commands, /select `developer_orchestrator` as the main orchestrator/u);
   assert.match(rootPrompt, /never select, propose, claim, or start a successor/u);
   assert.match(rootPrompt, /story-finalization intent/u);
@@ -176,6 +185,9 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   assert.match(frontendOrchestratorPrompt, /Story finalization is root-owned/u);
   assert.match(backendOrchestratorPrompt, /role policy constrains roles that appear/u);
   assert.match(backendOrchestratorPrompt, /Story finalization is root-owned/u);
+  assert.match(backendOrchestratorPrompt, /Preserve planner row IDs/u);
+  assert.match(frontendTesterPrompt, /return `not_ready` rather than calling an unmapped matrix complete/u);
+  assert.match(frontendReviewerPrompt, /broad green suites do not close an unmapped row/u);
   assert.match(definitionOfDone, /For non-delivery container finalization/u);
 
   const policy = await readFile(
@@ -210,6 +222,8 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   assert.match(policy, /Only one specialist phase is active in a domain by default/u);
   assert.match(policy, /Tester, reviewer, and documenter phases never overlap/u);
   assert.match(policy, /admission-control backstop/u);
+  assert.match(policy, /Workflow agents never create or clear `authority-conflict`/u);
+  assert.match(policy, /test file, assertion, and command outcome per row/u);
   assert.match(policy, /Do not enumerate or mutate child tasks, launch specialists, or write files/u);
   assert.match(readiness, new RegExp(`contract version: \`${BCO_CONTRACT_VERSION}\``, "u"));
   assert.match(readiness, /critical-boiler --bco-sync/u);
@@ -218,6 +232,7 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   assert.match(planningSkill, /Say `draft_only`/u);
   assert.match(planningSkill, /automation-readiness report/u);
   assert.match(taskSkill, /it is not a launch roster/u);
+  assert.match(taskSkill, /spent repair wave stays `in-progress` with evidence/u);
   assert.match(taskSkill, /For story-finalization workflows/u);
   assert.match(taskManagement, /Automation-contract preview, validation, apply, and supersede remain operator-only/u);
   assert.match(taskManagement, /BCO admits story finalization only after validating/u);
@@ -245,6 +260,9 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   assert.match(planningContract, /"operation": "adopt-existing"/u);
   assert.match(planningContract, /rejects partial or stale adoption atomically/u);
   assert.match(planningContract, /admission-control contract for observed roles/u);
+  assert.match(planningContract, /"role": "frontend_planner"/u);
+  assert.match(planningContract, /"afterRoles": \["frontend_coder"\]/u);
+  assert.doesNotMatch(planningContract, /"role": "planner"/u);
   assert.match(planningContract, /container finalization task should not declare a specialist pipeline/u);
   assert.match(plannerConfig, /sandbox_mode = "read-only"/u);
 });
