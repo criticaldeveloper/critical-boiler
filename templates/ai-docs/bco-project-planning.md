@@ -20,6 +20,7 @@ New work uses BCO project-plan schema version `{{ bcoProjectPlanSchemaVersion }}
 - Design the smallest useful dependency graph. Independent tasks may be parallel only when paths, contracts, data, and shared resources are genuinely independent.
 - Avoid stacked task branches. Each implementation task starts from updated integration truth after its predecessor is merged.
 - Treat `rolePolicy` as admission control for roles that actually appear, not an agent roster. Declare only unconditional predecessor edges for the workflow profile. Verification-only work does not require an optional coder predecessor, and container finalization declares no specialist pipeline.
+- Use only exact specialist role IDs declared in `.codex/config.toml`. For every unconditionally required phase, persist the real predecessor in `afterRoles`—for example `backend_planner` → `backend_coder` → `backend_tester` → `backend_reviewer`. Do not emit generic role names or empty edges for a sequential delivery chain.
 
 Reject cycles, missing keys, self-dependencies, broad multi-outcome tasks, verification without observable commands or evidence, and tasks requiring unavailable capabilities without an explicit enabling dependency. Treat prose dependency language and ordinal task references as review advisories; deterministic text matching must not invent project semantics.
 
@@ -35,6 +36,7 @@ A task is automation-ready only when:
 6. delivery ownership and evidence expectations are defined;
 7. BCO validation confirms a cycle-free, internally consistent graph;
 8. containers have non-delivery finalization contracts and do not own Git delivery;
-9. the operator confirms the plan or applied changes.
+9. required sequential specialist phases use exact configured role IDs and explicit `afterRoles` edges;
+10. the operator confirms the plan or applied changes.
 
 Experimental Brain changes launch timing only. It must not compensate for an incomplete graph, missing capability, or ambiguous task definition.

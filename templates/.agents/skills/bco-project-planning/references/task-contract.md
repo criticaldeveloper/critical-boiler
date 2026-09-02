@@ -37,12 +37,12 @@ tasks that must finish before this task. `parentKey` is organization only and ne
         "rolePolicy": {
           "schemaVersion": 1,
           "phases": [
-            { "role": "planner", "afterRoles": [] },
-            { "role": "coder", "afterRoles": ["planner"] },
-            { "role": "tester", "afterRoles": ["coder"] },
-            { "role": "reviewer", "afterRoles": ["tester"] }
+            { "role": "frontend_planner", "afterRoles": [] },
+            { "role": "frontend_coder", "afterRoles": ["frontend_planner"] },
+            { "role": "frontend_tester", "afterRoles": ["frontend_coder"] },
+            { "role": "frontend_reviewer", "afterRoles": ["frontend_tester"] }
           ],
-          "exclusiveRoleGroups": [["coder", "tester", "reviewer"]]
+          "exclusiveRoleGroups": [["frontend_coder", "frontend_tester", "frontend_reviewer"]]
         }
       }
     }
@@ -64,7 +64,7 @@ task uses `type: "epic"`, a non-delivery workflow profile, and `gitDeliveryOwner
 verification describes finalization of its declared children rather than a second implementation.
 Only declare capability and resource identifiers present in BCO's project inventory.
 
-`rolePolicy` is an admission-control contract for observed roles, not an instruction to launch every listed role. Include only roles relevant to the workflow profile, and add an `afterRoles` edge only when that predecessor is unconditionally required. A delivery task may use the full example chain. A verification task that needs no implementation should normally declare tester then reviewer. A container finalization task should not declare a specialist pipeline: BCO validates its native child lifecycle before launch, and the root workflow performs only the bounded closure audit. Never encode an optional repair coder as a mandatory predecessor; a separately authorized repair workflow owns the coder and invalidated verification cycle.
+`rolePolicy` is an admission-control contract for observed roles, not an instruction to launch every listed role. Use exact IDs from `.codex/config.toml`; use the equivalent `backend_*` IDs for backend work. Include only roles relevant to the workflow profile, and add an `afterRoles` edge whenever that predecessor is unconditionally required. A delivery task may use the full example chain. A verification task that needs no implementation should normally declare tester then reviewer. A container finalization task should not declare a specialist pipeline: BCO validates its native child lifecycle before launch, and the root workflow performs only the bounded closure audit. Never encode an optional repair coder as a mandatory predecessor; a separately authorized repair workflow owns the coder and invalidated verification cycle.
 
 ## Adopt an existing native catalog
 
@@ -92,7 +92,17 @@ rejects partial or stale adoption atomically.
         "requiredCapabilities": ["script:test"],
         "expectedEvidence": ["verification", "review", "git-commit"],
         "requiredResources": ["repo"],
-        "gitDeliveryOwner": true
+        "gitDeliveryOwner": true,
+        "rolePolicy": {
+          "schemaVersion": 1,
+          "phases": [
+            { "role": "frontend_planner", "afterRoles": [] },
+            { "role": "frontend_coder", "afterRoles": ["frontend_planner"] },
+            { "role": "frontend_tester", "afterRoles": ["frontend_coder"] },
+            { "role": "frontend_reviewer", "afterRoles": ["frontend_tester"] }
+          ],
+          "exclusiveRoleGroups": [["frontend_coder", "frontend_tester", "frontend_reviewer"]]
+        }
       }
     }
   ]

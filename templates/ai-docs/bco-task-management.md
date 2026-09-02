@@ -27,9 +27,11 @@ Project registration and plan confirmation remain operator-owned setup. The plan
 6. Attach concise verification, review, Git, or artifact evidence with `bco_task_attach_evidence`.
 7. Call `bco_task_request_completion` only after the acceptance criteria and repository definition of done pass. BCO performs authoritative completion and delivery checks.
 
+Failed review or a spent repair wave stays `in-progress` with evidence. Workflow tools do not create or clear `authority-conflict`; operator/governor authority owns that classification.
+
 The presence of a tool is the authority boundary. A role must not ask another agent to bypass a missing capability, install fallback task tooling, or directly mutate BCO state.
 
-Selected-task workflow capabilities may expose comments, evidence, blocking, unblocking, deferral, reopening, and completion requests. The governor has no mutation tools; its strict decision may propose only BCO's bounded dependency, scope-label, authority-conflict, or completion mutations, which BCO validates and enacts. Automation-contract preview, validation, apply, and supersede remain operator-only project-plan commands.
+Selected-task workflow capabilities may expose comments, evidence, ordinary blocking/unblocking, deferral, reopening, and completion requests. The governor has no mutation tools; its strict decision may propose only BCO's bounded dependency, scope-label, authority-conflict, or completion mutations, which BCO validates and enacts. Automation-contract preview, validation, apply, and supersede remain operator-only project-plan commands.
 
 ## Container Finalization
 

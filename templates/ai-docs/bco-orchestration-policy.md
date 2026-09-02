@@ -41,6 +41,7 @@ Every delegation names its phase, predecessor result, exact owned paths, prohibi
 - A tester refuses verification while product or documentation writers are active, when the tree identity is unknown, or when a required test/browser capability is unavailable.
 - A reviewer refuses review without the exact verified commit or tree identity and current verification evidence.
 - Any post-verification write makes the evidence stale. Any post-review write requires both fresh verification and fresh review.
+- A planner assigns stable acceptance/closure row IDs. The tester cites a test file, assertion, and command outcome per row; the reviewer rejects missing mappings regardless of broad green suites.
 
 `not_ready` is a successful defensive response, not permission to infer missing authority or launch another role.
 
@@ -59,7 +60,7 @@ The domain orchestrator records a non-overlapping ownership map before implement
 
 The coder and tester must never share a writable test path. If tests must change during correction, the orchestrator assigns each path to one owner and waits for that owner to settle before the next phase.
 
-Builds, E2E suites, formatters, code generation, migration runners, preview servers, browser servers, and repository-wide commands are exclusive shared resources. The tester owns final verification and any browser-server lifecycle it starts: select an available project-approved port, record it, do not terminate another owner's process, and clean up the owned process. Reviewers consume tester evidence and run only a narrowly missing read-only check after the tester; they do not duplicate the full gate.
+Builds, E2E suites, formatters, code generation, migrations, servers, and repository-wide commands are exclusive shared resources with one serialized owner; BCO does not infer ownership from command text. The tester uses an assigned `BCO_TEST_SERVER_PORT` and owns cleanup, or returns `not_ready` when a required isolated listener has no port. Reviewers consume tester evidence and do not duplicate the full gate.
 
 ## Workflow Intent
 
@@ -89,6 +90,8 @@ If a test, gate, or review fails:
 4. add regression evidence within the assigned ownership map;
 5. settle every writer and rerun the focused failed checks;
 6. request a fresh full review only after every finding is closed or explicitly blocked.
+
+Failed checks/reviews or a spent repair wave stay `in-progress` with exact evidence. Workflow agents never create or clear `authority-conflict`; only operator/governor authority classifies missing or contradictory authority.
 
 ## Git Delivery
 
