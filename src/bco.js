@@ -32,7 +32,7 @@ const EXTENSIONS = {
 - Every workflow agent, including the root, returns task-scoped evidence and never selects or starts a project-global successor.
 - Use the latest task version and a stable command ID for every permitted BCO mutation. On stale state, reread authoritative truth before deciding whether to retry.
 - Attach exact verification, independent-review, and, for Git-delivery tasks, commit, merge, and artifact evidence. Request completion only after acceptance criteria and the repository definition of done pass.
-- Failed review or a spent repair wave stays in-progress with evidence. Only operator/governor authority classifies authority-conflict.
+- Follow \`bco-orchestration-policy.md\` for iterative correction within existing workflow budgets; exhausted work stays in-progress with evidence. Only operator/governor authority classifies authority-conflict.
 - Automation-contract preview, validation, apply, and supersede remain operator-owned. Agents and the AI governor must return an operator action for **Prepare automation** instead of attempting contract refresh.
 - After workflow settlement, BCO's dedicated read-only AI governor selects and persists the next NextWorkflowPlan independently. Experimental Brain changes automatic launch timing only; it grants no extra task, approval, permission, or execution authority.
 - Read \`ai-docs/bco-task-management.md\`, \`ai-docs/bco-orchestration-policy.md\`, \`ai-docs/bco-automation-readiness.md\`, and \`ai-docs/bco-next-action-policy.md\` before BCO-managed work.
@@ -74,7 +74,7 @@ BCO is an external local control plane; this project has no repository-local BCO
 
 When BCO starts a workflow, use only its injected capability-scoped task and memory tools. An unavailable BCO capability is an orchestration blocker, not permission to install fallback task tooling or update BCO's database directly.
 
-The tester owns final verification and the lifecycle of any browser server it starts. Build, E2E, formatter, codegen, preview-server, and migration commands run under one explicit resource owner at a time. When BCO supplies BCO_TEST_SERVER_PORT, use that exact port; return not_ready if an isolated listener is required but no port was assigned. Role policies constrain roles that appear; they do not require every configured specialist.
+The tester owns final verification and any browser server it starts; shared commands have one explicit owner. Use the exact \`BCO_TEST_SERVER_PORT\`, or return \`not_ready\` when an isolated listener has none. For Vite, pass \`--host\` and \`--port\` directly after the pnpm script name without an extra standalone \`--\`. Record the server root PID, verify its listener, and stop the owned process tree before completion; never terminate a pre-existing process. Role policies constrain roles that appear; they do not require every configured specialist.
 
 Workflow agents finish the assigned work and return evidence; they do not launch another workflow. BCO's dedicated AI governor evaluates persisted terminal truth afterward.
 <!-- critical-boiler:bco-commands:end -->

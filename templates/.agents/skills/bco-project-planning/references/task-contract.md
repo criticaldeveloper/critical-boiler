@@ -71,7 +71,9 @@ Only declare capability and resource identifiers present in BCO's project invent
 Use schema version `{{ bcoTaskAdoptionSchemaVersion }}` only for tasks that already exist without
 automation contracts. Start from an exact BCO catalog export. Never invent or reuse `taskId`,
 `expectedVersion`, or `expectedContentFingerprint`. The plan must contain every active task; BCO
-rejects partial or stale adoption atomically.
+rejects partial or stale adoption atomically. The export and returned adoption JSON are temporary
+operator artifacts, not project authority or deliverables; keep them outside the repository and
+normally do not commit them.
 
 ```json
 {
@@ -113,6 +115,8 @@ rejects partial or stale adoption atomically.
 
 BCO deterministically validates strict schema, stable authority, unique identities, graph integrity,
 capability availability, role-policy consistency, and transaction idempotency. The planning agent
-owns semantic decomposition, hidden prerequisites, acceptance quality, risk/profile choice, and
-whether independent work is genuinely safe. Prose mentioning a dependency or ordinal task is an
-advisory to inspect, not proof of an edge and not by itself a deterministic rejection.
+owns an explicit cross-layer semantic audit across the complete plan and repository: hidden
+prerequisites, incorrect ordering, overlapping scope or ownership, executable acceptance criteria,
+automation-contract fit, risk/profile choice, and whether independent work is genuinely safe. BCO
+preview and apply add a fresh read-only semantic audit. Prose mentioning a dependency or ordinal
+task is an advisory to inspect, not proof of an edge and not by itself a deterministic rejection.

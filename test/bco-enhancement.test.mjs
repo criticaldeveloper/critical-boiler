@@ -12,6 +12,7 @@ import {
   DEFAULT_ARGS,
   DEFAULT_BCO_ORCHESTRATION,
   FILES,
+  VERSION,
 } from "../src/catalog.js";
 import {
   applyBcoExtensions,
@@ -96,6 +97,11 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   const root = await createFixture(t);
   const args = templateArgs(root);
 
+  assert.equal(VERSION, "2.6.3");
+  assert.equal(BCO_CONTRACT_VERSION, VERSION);
+  assert.equal(BCO_PROJECT_PLAN_SCHEMA_VERSION, 1);
+  assert.equal(BCO_TASK_ADOPTION_SCHEMA_VERSION, 1);
+
   for (const fileKey of selectedFileKeys(args)) {
     await writeProjectFile(args, fileKey);
   }
@@ -176,8 +182,12 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   );
   assert.match(agents, /Experimental Brain changes automatic launch timing only/u);
   assert.match(agents, /dedicated read-only AI governor/u);
+  assert.match(agents, /iterative correction/u);
+  assert.match(agents, /within existing workflow budgets/u);
   assert.match(agents, /Only operator\/governor authority classifies authority-conflict/u);
   assert.match(commands, /select `developer_orchestrator` as the main orchestrator/u);
+  assert.match(commands, /pass `--host` and `--port` directly after the pnpm script name/u);
+  assert.match(commands, /stop the owned process tree before completion/u);
   assert.match(rootPrompt, /never select, propose, claim, or start a successor/u);
   assert.match(rootPrompt, /story-finalization intent/u);
   assert.match(rootPrompt, /Do not enumerate or mutate child tasks, delegate, or write files/u);
@@ -187,6 +197,8 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   assert.match(backendOrchestratorPrompt, /Story finalization is root-owned/u);
   assert.match(backendOrchestratorPrompt, /Preserve planner row IDs/u);
   assert.match(frontendTesterPrompt, /return `not_ready` rather than calling an unmapped matrix complete/u);
+  assert.match(frontendTesterPrompt, /without an extra standalone `--`/u);
+  assert.match(frontendTesterPrompt, /Record the owned server root PID/u);
   assert.match(frontendReviewerPrompt, /broad green suites do not close an unmapped row/u);
   assert.match(definitionOfDone, /For non-delivery container finalization/u);
 
@@ -225,18 +237,29 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   assert.match(policy, /Workflow agents never create or clear `authority-conflict`/u);
   assert.match(policy, /test file, assertion, and command outcome per row/u);
   assert.match(policy, /Do not enumerate or mutate child tasks, launch specialists, or write files/u);
+  assert.match(policy, /repeat only scoped repair, fresh exact-tree verification, and independent review/u);
+  assert.match(policy, /while existing time and specialist budgets remain/u);
+  assert.doesNotMatch(policy, /one bounded repair wave|spent repair wave/u);
   assert.match(readiness, new RegExp(`contract version: \`${BCO_CONTRACT_VERSION}\``, "u"));
   assert.match(readiness, /critical-boiler --bco-sync/u);
   assert.match(readiness, /Claims, lifecycle changes, status reasons, comments, evidence/u);
   assert.match(readiness, /operator-owned project-plan authority/u);
   assert.match(planningSkill, /Say `draft_only`/u);
   assert.match(planningSkill, /automation-readiness report/u);
+  assert.match(planningSkill, /explicit cross-layer semantic audit/u);
+  assert.match(planningSkill, /temporary operator artifacts/u);
   assert.match(taskSkill, /it is not a launch roster/u);
-  assert.match(taskSkill, /spent repair wave stays `in-progress` with evidence/u);
+  assert.match(taskSkill, /iterative correction loop/u);
+  assert.match(taskSkill, /within existing workflow budgets/u);
+  assert.doesNotMatch(taskSkill, /spent repair wave/u);
   assert.match(taskSkill, /For story-finalization workflows/u);
   assert.match(taskManagement, /Automation-contract preview, validation, apply, and supersede remain operator-only/u);
   assert.match(taskManagement, /BCO admits story finalization only after validating/u);
   assert.match(nextActionPolicy, /operator action for \*\*Prepare automation\*\*/u);
+  assert.match(nextActionPolicy, /just-in-time semantic readiness/u);
+  assert.match(nextActionPolicy, /stale task, contract, or HEAD truth returns to a fresh semantic reconsideration/u);
+  assert.match(nextActionPolicy, /first `complete-task` proposal fails only completion-evidence selection/u);
+  assert.match(nextActionPolicy, /second fresh isolated AI review repeats the exact proposal/u);
   const planningContract = await readFile(
     path.join(
       root,
@@ -259,6 +282,8 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   assert.match(planningContract, /"blockedByKeys"/u);
   assert.match(planningContract, /"operation": "adopt-existing"/u);
   assert.match(planningContract, /rejects partial or stale adoption atomically/u);
+  assert.match(planningContract, /temporary\s+operator artifacts/u);
+  assert.match(planningContract, /explicit cross-layer semantic audit/u);
   assert.match(planningContract, /admission-control contract for observed roles/u);
   assert.match(planningContract, /"role": "frontend_planner"/u);
   assert.match(planningContract, /"afterRoles": \["frontend_coder"\]/u);

@@ -12,7 +12,7 @@ This policy defines the Complete Orchestration System generated for `{{ projectN
 - split full-stack work into non-overlapping frontend and backend ownership, with contract dependencies settled before dependent work starts;
 - never delegate directly to specialist agents or implement product code itself.
 
-Each domain orchestrator may use one planner, coder, tester, reviewer, and documenter identity. Reuse the owning specialist for corrections. Do not create duplicate waves for the same role or scope.
+Each domain orchestrator may use one planner, coder, tester, reviewer, and documenter identity. Reuse the owning specialist across correction rounds. Do not create concurrent duplicate waves for the same role or scope.
 
 A declared role policy is an admission-control backstop for roles that actually appear, not a roster that the workflow must instantiate. Launch only the minimum specialists required by the selected task, risk, and current evidence. Encode an `afterRoles` edge only when that predecessor is unconditionally required for the workflow profile; do not make an optional repair coder a required predecessor of verification or finalization.
 
@@ -60,13 +60,13 @@ The domain orchestrator records a non-overlapping ownership map before implement
 
 The coder and tester must never share a writable test path. If tests must change during correction, the orchestrator assigns each path to one owner and waits for that owner to settle before the next phase.
 
-Builds, E2E suites, formatters, code generation, migrations, servers, and repository-wide commands are exclusive shared resources with one serialized owner; BCO does not infer ownership from command text. The tester uses an assigned `BCO_TEST_SERVER_PORT` and owns cleanup, or returns `not_ready` when a required isolated listener has no port. Reviewers consume tester evidence and do not duplicate the full gate.
+Shared builds, E2E, formatting, codegen, migrations, servers, and repository commands have one owner; BCO does not infer ownership from command text. The tester uses assigned `BCO_TEST_SERVER_PORT` and owns cleanup, or returns `not_ready` when an isolated listener has no port. Follow `ai-docs/commands.md` for Vite arguments and process-tree cleanup. Reviewers consume tester evidence.
 
 ## Workflow Intent
 
 - **Implementation:** plan, implement, document when required, verify, review, correct until clean, integrate, merged-tree gate.
 - **Story finalization or audit:** BCO has already validated the declared native child lifecycle. The root audits only the selected container's acceptance, recorded evidence, Git provenance, and exact stable commit. Reuse current exact-commit evidence and run at most one narrowly missing read-only check. Do not enumerate or mutate child tasks, launch specialists, or write files. Report any exact gap so a separately authorized repair workflow can own it.
-- **Recovery:** diagnose settled repository and BCO truth, authorize one bounded repair wave, then obtain fresh verification and review. Never recreate the whole agent pipeline speculatively.
+- **Recovery:** for the gap, repeat only scoped repair, fresh exact-tree verification, and independent review while existing time and specialist budgets remain. Reuse identities; never recreate the pipeline speculatively.
 
 ## Risk And Minimum Evidence
 
@@ -89,9 +89,10 @@ If a test, gate, or review fails:
 3. inspect sibling paths affected by the same defect class;
 4. add regression evidence within the assigned ownership map;
 5. settle every writer and rerun the focused failed checks;
-6. request a fresh full review only after every finding is closed or explicitly blocked.
+6. request a fresh full review only after every finding is closed or explicitly blocked;
+7. repeat this scoped cycle for another correctable defect while existing workflow budgets remain.
 
-Failed checks/reviews or a spent repair wave stay `in-progress` with exact evidence. Workflow agents never create or clear `authority-conflict`; only operator/governor authority classifies missing or contradictory authority.
+Every write invalidates older verification and review evidence. When a relevant budget is exhausted, attach exact evidence and leave the task `in-progress` for governor recovery. Workflow agents never create or clear `authority-conflict`; only operator/governor authority classifies missing or contradictory authority.
 
 ## Git Delivery
 
