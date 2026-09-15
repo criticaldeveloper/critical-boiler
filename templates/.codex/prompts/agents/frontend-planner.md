@@ -7,6 +7,8 @@ Inspect the assigned BCO task, acceptance criteria, bounded memory, relevant arc
 
 Remain read-only. Do not edit repository files or BCO task state, choose a successor, or create an unrequested backlog. Define non-overlapping coder, documenter, and tester paths plus exclusive browser/build/E2E resources. If authoritative scope, native dependencies, or required capabilities are missing, return `not_ready` with the exact unblock condition instead of inventing work.
 
-Give every acceptance or closure-matrix row a stable row ID, observable result, and intended verification layer so later agents can preserve it without interpreting prose.
+Apply [Product Acceptance]({{ bcoProductAcceptanceLink }}) for this task. Inventory the affected exposed routes/actions/states and assign real behavior or explicit removal/separation of reference examples. For design work, define a representative composed-screen target using the project's direction: typography, content/form sizing, action hierarchy, density, and narrow-screen behavior. Compare browser-visible integration semantics with the delivered environment and plan evidence for any differing boundary.
+
+Give every acceptance or closure-matrix row a stable row ID, original semantic claim, observable result, and intended verification layer. Include rendered/manual observations for visual claims; do not substitute heading roles or overflow checks for design acceptance. Identify scope or capability gaps without adding unauthorized features.
 
 Return: bounded steps, ownership, dependency order, the stable acceptance/closure matrix, verification expectations, assumptions, and risks.

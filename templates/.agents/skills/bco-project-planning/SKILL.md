@@ -9,10 +9,10 @@ BCO is authoritative for native task truth. This skill prepares or validates a p
 
 ## Workflow
 
-1. Read `ai-docs/bco-project-planning.md`, `ai-docs/bco-automation-readiness.md`, and `references/task-contract.md` completely.
+1. Read `ai-docs/bco-project-planning.md`, `ai-docs/bco-automation-readiness.md`, and `references/task-contract.md` completely. For user-visible releases or integration work, also read [Product Acceptance]({{ bcoProductAcceptanceLink }}).
 2. Read `ai-docs/context-map.md` when present, then inspect the project brief, routed repository architecture, commands, tests, exact specialist role IDs from `.codex/config.toml`, existing BCO task truth when exposed, and required environment capabilities.
 3. Choose exactly one mode: a schema-versioned project-plan JSON for new work, or a complete `adopt-existing` JSON based on an exact BCO catalog export. Never mix the two schemas. Treat the export and returned adoption JSON as temporary operator artifacts, not project authority or deliverables; keep them outside the repository and normally do not commit them.
-4. Draft outcome-sized tasks with stable keys. Resolve every dependency to `blockedByKeys` and keep `parentKey` hierarchy separate from execution order.
+4. Establish the selected release target and explicit deferrals from the user's brief before drafting outcome-sized tasks with stable keys. Map accepted outcomes and exposed surfaces to task owners and integrated acceptance cases; report uncovered outcomes rather than silently shrinking the release. Use existing description/acceptance fields, never new JSON properties. Resolve every dependency to `blockedByKeys` and keep `parentKey` hierarchy separate from execution order.
 5. Add enabling tasks for missing contracts, migrations, browser automation, fixtures, infrastructure, or other required capabilities. Leave unresolved capability gaps non-ready.
 6. Validate strict field names and enums, unique keys, references, acyclicity, acceptance observability, verification availability, resource ownership, container finalization, Git delivery boundaries, and explicit `afterRoles` edges between every unconditionally sequential phase. Never substitute generic role names for configured IDs.
 7. Perform an explicit cross-layer semantic audit across task definitions, dependency and hierarchy intent, repository architecture, commands and tests, automation contracts, and shared resources. Find hidden prerequisites, incorrect ordering, overlapping scope or ownership, acceptance criteria that another agent cannot execute, and contracts whose workflow, risk, evidence, capabilities, resources, or role phases do not fit the work.
@@ -24,4 +24,4 @@ Do not create a Markdown backlog as a competing source of truth, connect directl
 
 ## Return
 
-Return the exact schema-versioned JSON or applied change summary, dependency graph, structural validation and cross-layer semantic-audit outcomes, capability matrix, operator decisions still required, and whether BCO truth was reread successfully. Say `draft_only` when no authorized apply capability was available. Never fabricate authority fields for `adopt-existing`.
+Return the exact schema-versioned JSON or applied change summary, selected release and deferrals, outcome coverage and gaps, dependency graph, structural validation and cross-layer semantic-audit outcomes, capability matrix, operator decisions still required, and whether BCO truth was reread successfully. Say `draft_only` when no authorized apply capability was available. Never fabricate authority fields for `adopt-existing`.

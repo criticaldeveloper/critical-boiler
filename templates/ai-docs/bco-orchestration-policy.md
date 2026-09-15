@@ -41,7 +41,7 @@ Every delegation names its phase, predecessor result, exact owned paths, prohibi
 - A tester refuses verification while product or documentation writers are active, when the tree identity is unknown, or when a required test/browser capability is unavailable.
 - A reviewer refuses review without the exact verified commit or tree identity and current verification evidence.
 - Any post-verification write makes the evidence stale. Any post-review write requires both fresh verification and fresh review.
-- A planner assigns stable acceptance/closure row IDs. The tester cites a test file, assertion, and command outcome per row; the reviewer rejects missing mappings regardless of broad green suites.
+- A planner assigns stable acceptance/closure row IDs. Executable claims cite a test file, assertion, and command outcome per row; visual claims cite inspected renders. Reviewers assess sufficiency with [Product Acceptance]({{ bcoProductAcceptanceLink }}).
 
 `not_ready` is a successful defensive response, not permission to infer missing authority or launch another role.
 

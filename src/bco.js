@@ -26,7 +26,7 @@ const EXTENSIONS = {
 - \`developer_orchestrator\` is the root agent for the Complete Orchestration System. It routes frontend work to \`frontend_orchestrator\`, backend work to \`backend_orchestrator\`, and full-stack work to both through non-overlapping task ownership.
 - Role policies constrain specialists that actually appear; they are not agent rosters. Domain orchestrators launch only the minimum required roles and enforce one active specialist phase by default. Tester, reviewer, and documenter work must never start from a tree that an implementation writer can still invalidate.
 - Automation contracts use exact role IDs and explicit afterRoles edges; BCO never infers role order.
-- Stable planner row IDs require tester assertion evidence and independent review.
+- Stable planner rows require claim-appropriate tester evidence and independent review.
 - Story finalization is a root-only, read-only audit of the selected container after BCO validates its native child lifecycle. It never launches specialists, mutates child tasks, or writes files.
 - Assign exact path ownership and one owner for build, E2E, codegen, formatter, browser-server, and other shared commands. Do not run those resources concurrently.
 - Every workflow agent, including the root, returns task-scoped evidence and never selects or starts a project-global successor.
@@ -51,6 +51,7 @@ const EXTENSIONS = {
 
 - \`bco-task-management.md\` owns native task lifecycle, capability, recovery, and evidence rules.
 - \`bco-project-planning.md\` owns backlog dependency, acceptance, capability, and operator-confirmation rules.
+- [\`bco-product-acceptance.md\`]({{ bcoProductAcceptanceLink }}) guides release scope, browser integration, and visual evidence when relevant.
 - \`bco-orchestration-policy.md\` owns declared specialist phases, ownership, verification, Git delivery, correction, and cleanup.
 - \`bco-automation-readiness.md\` owns the generated contract version and capability/resource readiness declaration.
 - [\`bco-next-action-policy.md\`](bco-next-action-policy.md) owns the dedicated AI-governor and Experimental Brain boundary.
@@ -93,7 +94,7 @@ Workflow agents finish the assigned work and return evidence; they do not launch
 - The assigned native BCO task and acceptance criteria are satisfied.
 - Required repository and external capabilities were declared available, or the task was blocked before implementation.
 - For delivery or correction work, focused verification ran on a stable tree with no active implementation writer and passed with exact command evidence.
-- Every planner acceptance or closure-matrix row maps to a concrete assertion and command outcome on that verified tree.
+- Every planner acceptance or closure-matrix row preserves its original claim and maps to sufficient evidence on the verified tree: assertions and command outcomes for executable claims, inspected artifacts and concrete observations for visual/manual claims.
 - For delivery work, an independent reviewer checked the same exact task commit after verification and all findings are resolved or blocked explicitly.
 - Documentation is synchronized with the implementation.
 - For Git-delivery tasks, the reviewed task branch is merged into the integration branch and the merged-tree gate passes.
@@ -118,7 +119,13 @@ export async function applyBcoExtensions(args) {
 
   for (const [name, target] of targets) {
     const destination = path.join(args.cwd, target);
-    const extension = EXTENSIONS[name];
+    const extension = {
+      ...EXTENSIONS[name],
+      content: EXTENSIONS[name].content.replaceAll(
+        "{{ bcoProductAcceptanceLink }}",
+        productAcceptanceLink(args, target),
+      ),
+    };
     const existing = existsSync(destination)
       ? await readFile(destination, "utf8")
       : "";
@@ -234,6 +241,14 @@ function replaceManagedSection(
   return `${existing.slice(0, start)}${replacement}${existing.slice(
     end + endMarker.length,
   )}`;
+}
+
+export function productAcceptanceLink(args, sourcePath) {
+  return path.relative(path.dirname(sourcePath), relativePath(args, "bcoProductAcceptance"))
+    .split(path.sep)
+    .map((segment) => encodeURIComponent(segment).replace(/[()]/gu,
+      (character) => `%${character.charCodeAt(0).toString(16).toUpperCase()}`))
+    .join("/");
 }
 
 function relativePath(args, fileKey) {
