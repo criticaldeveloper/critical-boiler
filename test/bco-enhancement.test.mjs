@@ -97,7 +97,7 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   const root = await createFixture(t);
   const args = templateArgs(root);
 
-  assert.equal(VERSION, "2.6.3");
+  assert.equal(VERSION, "2.6.4");
   assert.equal(BCO_CONTRACT_VERSION, VERSION);
   assert.equal(BCO_PROJECT_PLAN_SCHEMA_VERSION, 1);
   assert.equal(BCO_TASK_ADOPTION_SCHEMA_VERSION, 1);
@@ -400,6 +400,48 @@ test("BCO sync refreshes managed assets without overwriting project files", asyn
     ),
     1,
   );
+});
+
+test("product acceptance guidance is reachable after generation and managed sync", async (t) => {
+  const consumers = [
+    "bcoPlanningSkill", "bcoProjectPlanning", "bcoOrchestrationPolicy",
+    "frontendPlannerPrompt", "backendPlannerPrompt",
+    "frontendTesterPrompt", "backendTesterPrompt",
+    "frontendReviewerPrompt", "backendReviewerPrompt",
+    "developerOrchestratorPrompt", "aiDocs",
+  ];
+  for (const paths of [{}, {
+    bcoProductAcceptance: "docs/quality (review)#1.md",
+    aiDocs: "notes/AI docs.md",
+    frontendReviewerPrompt: "instructions/reviews/frontend.md",
+  }]) {
+    const root = await createFixture(t);
+    const args = { ...templateArgs(root), paths };
+    const guidePath = path.join(root, paths.bcoProductAcceptance ?? FILES.bcoProductAcceptance.path);
+    let generatedGuide;
+
+    for (const bcoSync of [false, true]) {
+      if (bcoSync) await writeFile(guidePath, "outdated managed guidance\n", "utf8");
+      for (const fileKey of selectedFileKeys({ ...args, bcoSync })) {
+        await writeProjectFile({ ...args, bcoSync }, fileKey);
+      }
+      await applyBcoExtensions({ ...args, bcoSync });
+      const guide = await readFile(guidePath, "utf8");
+      if (bcoSync) assert.equal(guide, generatedGuide);
+      else generatedGuide = guide;
+
+      for (const key of consumers) {
+        const consumerPath = path.join(root, paths[key] ?? FILES[key].path);
+        const content = await readFile(consumerPath, "utf8");
+        assert.doesNotMatch(content, /\{\{/u, key);
+        const links = [...content.matchAll(/\]\(([^)]+)\)/gu)];
+        const resolved = links.map((link) => path.resolve(path.dirname(consumerPath), decodeURIComponent(link[1])));
+        assert.equal(resolved.filter((target) => target === guidePath).length, 1,
+          `${key}: one reachable guide reference, including configured paths`);
+        assert.equal(await readFile(guidePath, "utf8"), guide);
+      }
+    }
+  }
 });
 
 test("BCO sync upgrades legacy unbounded extensions without losing later content", async (t) => {

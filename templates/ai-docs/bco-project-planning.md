@@ -13,6 +13,7 @@ New work uses BCO project-plan schema version `{{ bcoProjectPlanSchemaVersion }}
 
 ## Planning Rules
 
+- For user-visible releases and integration work, apply [Product Acceptance]({{ bcoProductAcceptanceLink }}): preserve the selected release target, map accepted outcomes and exposed surfaces to owners, define representative environment and composed-screen evidence, and keep deferrals explicit. Use existing native descriptions, acceptance criteria, and verification fields; no additional plan/adoption schema properties or competing backlog are introduced. Adoption cannot rewrite scope through automation fields: report a scope gap for an authorized native-task edit/replan.
 - Express every dependency as `blockedByKeys` using stable task keys. A sentence such as “depends on Task 2” is an advisory to inspect, not an edge.
 - Keep hierarchy and dependency separate. Parent/child organization does not imply execution order.
 - Give each task one observable outcome, bounded in-scope and out-of-scope surfaces, acceptance criteria, verification, risk/domain labels, and required capabilities.
@@ -38,7 +39,7 @@ A task is automation-ready only when:
 7. BCO validation confirms a cycle-free, internally consistent graph;
 8. containers have non-delivery finalization contracts and do not own Git delivery;
 9. required sequential specialist phases use exact configured role IDs and explicit `afterRoles` edges;
-10. the cross-layer semantic audit has no unresolved hidden prerequisite, ordering, overlap, executable-acceptance, or automation-contract-fit defect;
+10. the cross-layer semantic audit has no unresolved accepted-outcome coverage, hidden prerequisite, ordering, overlap, executable-acceptance, evidence-sufficiency, or automation-contract-fit defect;
 11. the operator confirms the plan or applied changes.
 
 BCO preview and apply run their own fresh read-only semantic audit and may return readiness defects even when structural validation passes. Resolve those defects instead of encoding deterministic text, path, or error-count heuristics in the project plan. Experimental Brain changes launch timing only. It must not compensate for an incomplete graph, missing capability, or ambiguous task definition.

@@ -34,7 +34,7 @@ Approximate current output size, measured from the generated seed files and esti
 | Vue + SCSS         |    16 |                    10.4k |
 | Vue + Tailwind     |    14 |                     8.5k |
 
-Across the 15 supported starter variants, that is about **144k tokens** of repeatable setup text and config. A single project usually saves roughly **5.6k-12.5k tokens** of generation work before any real feature work begins. The optional Complete Orchestration System adds 37 BCO files and roughly 15.1k more reusable tokens. The more often a team creates repos or asks agents to review fresh scaffolds, the more this compounds.
+Across the 15 supported starter variants, that is about **144k tokens** of repeatable setup text and config. A single project usually saves roughly **5.6k-12.5k tokens** of generation work before any real feature work begins. The optional Complete Orchestration System adds 38 BCO files with role and workflow guidance loaded as needed. The more often a team creates repos or asks agents to review fresh scaffolds, the more this compounds.
 
 Those numbers are intentionally approximate: tokenization varies by model and file content. They are useful as an order-of-magnitude comparison, not as billing math.
 
@@ -256,7 +256,7 @@ In guided setup, choosing Tailwind copies `ai-docs/skills/tailwind-implementatio
 
 ## BCO Enhancement
 
-The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enhancement`. Contract version 2.6.3 generates 37 managed BCO assets. Project-plan and adoption JSON schemas remain version `1`. The current `complete` orchestration system follows a defensive role topology and versioned phase contract:
+The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enhancement`. Version 2.6.4 generates 38 managed BCO assets, including shared product acceptance guidance for planning, testing, and review. Project-plan and adoption JSON schemas remain version `1`; the acceptance-template changes do not change BCO wire contracts or role IDs. The current `complete` orchestration system follows a defensive role topology and versioned phase contract:
 
 - `developer_orchestrator` is the root agent and the main orchestrator selected when the project is registered in BCO.
 - Frontend and backend orchestrators own their domain pipelines.
@@ -265,12 +265,15 @@ The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enha
 - A domain runs one required specialist phase at a time by default: plan when needed, implement, document under one owner, verify a stable tree, independently review that exact tree, correct through the original owner, integrate, and run the merged-tree gate. Correctable findings repeat only scoped repair → fresh exact-tree verification → independent review while the workflow's existing time and specialist budgets remain.
 - Planners and reviewers are read-only. Coders, documenters, and testers require settled predecessor evidence plus exact non-overlapping path ownership before writing.
 - Planner acceptance and closure-matrix rows keep stable IDs through tester assertion evidence and independent review; a broad green suite cannot hide an unproved row.
+- Planning preserves the accepted release target and explicit deferrals, maps outcomes and exposed routes/actions/states to owners, and identifies a silently reduced demonstration scope before declaring readiness.
+- [Product acceptance guidance](templates/ai-docs/bco-product-acceptance.md) makes testers and reviewers assess whether evidence proves the original claim. Browser acceptance preserves relevant delivered origins, credentials, routing, caching, and rendering. Visual acceptance requires inspecting composed screens against the design target; installed components, no overflow, and screenshot counts are insufficient. Sufficient shared artifacts do not need duplicate labels or copies.
 - Build, E2E, formatter, codegen, migration, database, browser-server, port, and Git resources have one explicit owner at a time. The tester owns final verification and any browser-server lifecycle.
 - Generated `.codex/agents/*.toml` files define model, reasoning, sandbox, and role loading.
 - Generated `.codex/prompts/agents/*.md` files define task-bounded role contracts.
 - `.agents/skills/bco-task-orchestration/SKILL.md` defines the reusable native-task workflow.
 - `.agents/skills/bco-project-planning/SKILL.md` turns an operator-authorized project brief into a validated native-task draft with stable keys, explicit dependency edges, capability prerequisites, observable acceptance, verification, resources, and Git delivery evidence. Its explicit cross-layer semantic audit checks hidden prerequisites, ordering, overlap, executable acceptance criteria, and automation-contract fit before preview.
 - `ai-docs/bco-task-management.md`, `ai-docs/bco-project-planning.md`, `ai-docs/bco-orchestration-policy.md`, `ai-docs/bco-automation-readiness.md`, and `ai-docs/bco-next-action-policy.md` define task, planning, capability, delivery, NextWorkflowPlan, and Experimental Brain behavior.
+- `ai-docs/bco-product-acceptance.md` is routed from relevant planning/tester/reviewer prompts and release handoff; unrelated tasks do not need to load it.
 - Marked sections are added to `AGENTS.md`, `ai-docs/README.md`, `ai-docs/commands.md`, and `ai-docs/definition-of-done.md`.
 
 Critical Boiler prepares the repository side only. After generation, register the project root in BCO, choose its native task system, and select `developer_orchestrator`. Invoke `$bco-project-planning` for operator-authorized bootstrap, backlog restructuring, or adoption of an older native catalog. The skill emits BCO's exact schema-versioned JSON and applies it only through BCO preview/validate/apply capabilities; otherwise it returns `draft_only` for operator paste. Existing-task adoption starts from BCO's exact catalog export and never guesses IDs, versions, or fingerprints. Catalog exports and returned adoption JSON are temporary operator artifacts—not project authority or deliverables—so keep them outside the project and normally do not commit them. After apply, native dependency relationships and automation readiness must be reread before automatic chaining is enabled.
@@ -296,7 +299,13 @@ critical-boiler --bco-sync --cwd ./your-project --dry-run
 critical-boiler --bco-sync --cwd ./your-project
 ```
 
-The sync overwrites dedicated Critical Boiler-managed BCO templates, replaces bounded managed sections and the BCO registry block, and leaves baseline architecture, source, package, styling, and unrelated Codex configuration untouched. Keep both generated start/end markers intact so later versions can update the section safely.
+The sync overwrites dedicated Critical Boiler-managed BCO templates, replaces bounded managed sections and the BCO registry block, and leaves baseline architecture, source, package, styling, and unrelated Codex configuration untouched. Product Acceptance links follow configured guide and consumer output paths. Keep both generated start/end markers intact so later versions can update the section safely.
+
+Template edits in a source checkout do not update an installed CLI or existing projects. Before publishing a new package version, use the source CLI for an authorized preview/apply, for example `node ./src/cli.js --bco-sync --cwd <project> --dry-run` from this repository. Remove `--dry-run` only for the intended project's authorized refresh. This does not alter native BCO task definitions or automation contracts.
+
+### Acceptance-template verification
+
+`pnpm test:bco` verifies generation, local-reference reachability, and managed sync preservation; `pnpm check` checks JavaScript syntax. These deterministic checks do not establish good AI judgment. The [behavioral evaluation cases](test/evals/product-acceptance/README.md) exercise scope, visual, integration, and evidence-sufficiency decisions with independent agents. Record actual verdicts separately from the expected rubric and retain failures; passing a small evaluation does not guarantee completion of every future project.
 
 ## Prompt Kit
 

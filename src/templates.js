@@ -8,7 +8,7 @@ import {
   FILES,
   TECHNOLOGIES,
 } from "./catalog.js";
-import { mergeBcoAgentRegistry } from "./bco.js";
+import { mergeBcoAgentRegistry, productAcceptanceLink } from "./bco.js";
 import { templatesDir } from "./paths.js";
 import { renderPackageJson } from "./package-json.js";
 import { isBcoManagedFileKey, selectedFileKeys } from "./project-plan.js";
@@ -18,6 +18,8 @@ export async function renderTemplate(templatePath, args) {
   const absolutePath = path.join(templatesDir, templatePath);
   const raw = await readFile(absolutePath, "utf8");
   const techDetails = args.tech.map((key) => TECHNOLOGIES[key]);
+  const templateKey = Object.keys(FILES).find((key) => FILES[key].template === templatePath);
+  const outputPath = args.paths?.[templateKey] ?? FILES[templateKey]?.path ?? templatePath;
 
   const data = {
     projectName: path.basename(args.cwd),
@@ -26,6 +28,7 @@ export async function renderTemplate(templatePath, args) {
     bcoContractVersion: BCO_CONTRACT_VERSION,
     bcoProjectPlanSchemaVersion: BCO_PROJECT_PLAN_SCHEMA_VERSION,
     bcoTaskAdoptionSchemaVersion: BCO_TASK_ADOPTION_SCHEMA_VERSION,
+    bcoProductAcceptanceLink: productAcceptanceLink(args, outputPath),
     technologies:
       techDetails.map((tech) => tech.label).join(", ") || "Not specified",
     agentTechnologyNotes: listLines(

@@ -15,7 +15,7 @@ Use BCO as authoritative task and workflow truth. Never create a repository task
 4. Delegate only task-owned work through the generated role topology. A role policy constrains specialists that actually appear; it is not a launch roster. Use the minimum roles required by the task and evidence, and enforce one specialist phase at a time by default: plan when needed, implement, document when assigned separately, verify after all writers settle, then independently review the exact verified tree.
 5. Record exact path and exclusive-resource owners; BCO does not infer them from commands. Refuse testing/review with missing or stale predecessor, tree, or resource evidence. Follow `ai-docs/commands.md` for the assigned test port, Vite arguments, and owned process-tree cleanup.
 6. Use the latest task version and a stable command ID for every permitted mutation. On stale state, reread; on forbidden or unavailable state, stop.
-7. Preserve planner row IDs through handoff; each must map to an assertion and command outcome on the independently reviewed tree.
+7. Preserve planner row IDs and reviewed identity: executable claims need assertions/commands; visual/manual claims need inspected artifacts and concrete observations.
 8. Attach exact verification, review, Git, and artifact evidence. Follow the policy's iterative correction loop within existing workflow budgets; writes invalidate older evidence. Request completion only after acceptance, documentation, review, merge, and the merged-tree gate pass.
 9. Finish the assigned workflow and return task-scoped evidence only. Read `ai-docs/bco-next-action-policy.md` to preserve the boundary: BCO's separate read-only AI governor selects and persists any next workflow.
 

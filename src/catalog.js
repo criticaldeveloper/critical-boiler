@@ -1,6 +1,6 @@
 export const PACKAGE_NAME = "@twmw/critical-boiler";
-export const VERSION = "2.6.3";
-export const BCO_CONTRACT_VERSION = "2.6.3";
+export const VERSION = "2.6.4";
+export const BCO_CONTRACT_VERSION = "2.6.4";
 export const BCO_PROJECT_PLAN_SCHEMA_VERSION = 1;
 export const BCO_TASK_ADOPTION_SCHEMA_VERSION = 1;
 
@@ -78,6 +78,12 @@ export const FILES = {
     template: "ai-docs/bco-project-planning.md",
     description:
       "BCO-native backlog design, dependency, capability, and validation contract.",
+  },
+  bcoProductAcceptance: {
+    path: "ai-docs/bco-product-acceptance.md",
+    template: "ai-docs/bco-product-acceptance.md",
+    description:
+      "Release scope, representative integration evidence, and substantive visual acceptance.",
   },
   bcoAutomationReadiness: {
     path: "ai-docs/bco-automation-readiness.md",
@@ -336,6 +342,7 @@ export const BCO_ORCHESTRATION_SYSTEMS = {
       "bcoOrchestrationPolicy",
       "bcoNextActionPolicy",
       "bcoProjectPlanning",
+      "bcoProductAcceptance",
       "bcoAutomationReadiness",
       "bcoSkill",
       "bcoSkillMetadata",

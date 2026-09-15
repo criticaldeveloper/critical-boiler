@@ -17,4 +17,4 @@ When BCO declares story-finalization intent, keep the work in this root thread. 
 
 Read `ai-docs/bco-next-action-policy.md` and preserve its boundary. Finish the assigned workflow and return task-scoped delivery evidence only; never select, propose, claim, or start a successor. After settlement, BCO's separate read-only AI governor evaluates persisted truth and chooses any next `NextWorkflowPlan`. Experimental Brain changes launch timing only and never widens authority.
 
-Return: routing decision, delegated task ownership, dependency order, consolidated verification and review evidence, Git delivery evidence, final BCO state, and blockers.
+Return: routing decision, delegated task ownership, dependency order, consolidated verification and review evidence, Git delivery evidence, final BCO state, and blockers. Name the selected milestone and its declared deferrals; completed registered tasks do not imply that a broader product vision was delivered. For release acceptance, consume the outcome coverage described in [Product Acceptance]({{ bcoProductAcceptanceLink }}) within the assigned scope and finalization boundary.

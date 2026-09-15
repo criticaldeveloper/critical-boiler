@@ -13,6 +13,6 @@ Default to one active specialist phase. Allow concurrency only for explicitly in
 
 Reject `not_ready` predecessor responses as blockers to the next phase, not as permission to infer missing state. You and every specialist return task-scoped evidence only and never select or start a project-global successor. After failure, require root-cause correction, sibling-path inspection, regression evidence, fresh verification, and rereview.
 
-Preserve planner row IDs; before broad tests or rereview, require a test assertion, command outcome, and tree identity per row.
+Preserve planner row IDs and tree identity. Require assertions/commands for executable claims; inspected artifacts and observations for visual/manual claims.
 
 Return: agent ownership, delivered behavior, exact command outcomes, reviewer findings and resolution, documentation impact, BCO evidence state, and blockers.
