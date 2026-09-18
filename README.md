@@ -256,7 +256,7 @@ In guided setup, choosing Tailwind copies `ai-docs/skills/tailwind-implementatio
 
 ## BCO Enhancement
 
-The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enhancement`. Version 2.6.4 generates 38 managed BCO assets, including shared product acceptance guidance for planning, testing, and review. Project-plan and adoption JSON schemas remain version `1`; the acceptance-template changes do not change BCO wire contracts or role IDs. The current `complete` orchestration system follows a defensive role topology and versioned phase contract:
+The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enhancement`. Version 2.6.5 generates 38 managed BCO assets, including AI-led task-plan review and repair and shared product acceptance guidance. Project-plan and adoption JSON schemas remain version `1`; these instruction changes do not change BCO wire contracts or role IDs. The current `complete` orchestration system follows a defensive role topology and versioned phase contract:
 
 - `developer_orchestrator` is the root agent and the main orchestrator selected when the project is registered in BCO.
 - Frontend and backend orchestrators own their domain pipelines.
@@ -278,7 +278,41 @@ The BCO enhancement is opt-in. Enable it during guided setup or pass `--bco-enha
 
 Critical Boiler prepares the repository side only. After generation, register the project root in BCO, choose its native task system, and select `developer_orchestrator`. Invoke `$bco-project-planning` for operator-authorized bootstrap, backlog restructuring, or adoption of an older native catalog. The skill emits BCO's exact schema-versioned JSON and applies it only through BCO preview/validate/apply capabilities; otherwise it returns `draft_only` for operator paste. Existing-task adoption starts from BCO's exact catalog export and never guesses IDs, versions, or fingerprints. Catalog exports and returned adoption JSON are temporary operator artifacts—not project authority or deliverables—so keep them outside the project and normally do not commit them. After apply, native dependency relationships and automation readiness must be reread before automatic chaining is enabled.
 
-The planning readiness gate makes native `blocked-by` edges—not phrases such as “Task 2”—the execution graph. Prose dependency language is a review advisory rather than a brittle deterministic rejection. Before apply, the planning agent and BCO's fresh read-only audit review the complete cross-layer plan and repository for hidden prerequisites, incorrect ordering, overlap, non-executable acceptance criteria, and automation-contract mismatch. Browser-critical tasks still declare a working repository E2E runner such as Playwright or an exposed browser-control capability. If neither exists, the plan adds an enabling predecessor or remains non-ready; a build is not browser evidence.
+The planning readiness gate makes native `blocked-by` edges—not phrases such as “Task 2”—the execution graph. Prose dependency language is a review advisory rather than a brittle deterministic rejection. Before apply, the planning agent and BCO's fresh read-only audit review the complete cross-layer plan and repository for hidden prerequisites, incorrect ordering, overlap, non-executable acceptance criteria, and automation-contract mismatch. Browser-critical tasks declare a repository E2E runner such as Playwright or an exposed browser-control capability, or name an enabling predecessor that supplies it. BCO can admit a coherent plan with future capability waits; each consumer must satisfy fresh launch checks. A build is not browser evidence.
+
+### AI-led project initialization and plan repair
+
+Invoke the generated skill with the main brief and any existing unimported JSON, for example:
+
+```text
+Use $bco-project-planning to review and repair this entire task series for autonomous local
+delivery. Inspect the repository and actual execution capabilities. Preserve the brief's
+product outcomes and my explicit exclusions, resolve missing prerequisites and conflicting
+contracts, and return one complete corrected BCO JSON file with an honest readiness report.
+Do not apply the plan or change EBE.
+```
+
+The AI chooses necessary work and feasible methods from the evidence. It can correct deficiencies
+not anticipated by the examples; there is no hardcoded technology list, task-count threshold, or
+hosting/Narrator keyword ban. Unrequested hosting, purchases, operator sessions, and physical-device
+checks do not become completion requirements. Explicitly requested external outcomes remain in
+scope with their real input/authority needs. Agent-executable accessibility and local production
+verification remain relevant when manual checks are excluded.
+
+The skill reviews technology/tool availability, durable inputs, provider-consumer dependencies,
+shared-resource ownership, and whether the task permits its own correction, verification, review,
+and delivery. A planning-session tool or model name is not proof of a BCO runtime capability.
+Setup may create later tools without requiring them at its own launch. Resource names declare
+coordination scopes; no general resource registry or preassigned planning-session server port is
+required.
+
+The result is the whole strict import JSON, with audit metadata kept separately. The report names
+material corrections, exact validation performed, prerequisite providers, and genuinely unresolved
+decisions. BCO's canonical preview is used when available; local checks are not reported as BCO
+approval. `draft_only` means no apply occurred, even if preview passed. Importable, initially
+launchable, and waiting for prerequisite output are distinct states. This prepares a chain; it does
+not guarantee future execution succeeds. Existing imported scope changes require authorized native
+edits followed by a fresh adoption export, not hidden rewrites through automation fields.
 
 BCO owns claims, injected task capabilities, evidence, completion, and persisted next-workflow decisions. Workflow agents return evidence for their assigned work; BCO's separate read-only AI governor decides what follows after terminal settlement. Before native-task launch it performs just-in-time semantic readiness against exact task, automation-contract, dependency, and repository truth; stale task, contract, or HEAD authority is automatically reconsidered. It can use one fresh correction turn after a completion-evidence selection rejection, and it may propose one complete missing non-container prerequisite only when a second independent AI review repeats the exact proposal. BCO validates and enacts any mutation while the governor remains read-only.
 
@@ -305,7 +339,7 @@ Template edits in a source checkout do not update an installed CLI or existing p
 
 ### Acceptance-template verification
 
-`pnpm test:bco` verifies generation, local-reference reachability, and managed sync preservation; `pnpm check` checks JavaScript syntax. These deterministic checks do not establish good AI judgment. The [behavioral evaluation cases](test/evals/product-acceptance/README.md) exercise scope, visual, integration, and evidence-sufficiency decisions with independent agents. Record actual verdicts separately from the expected rubric and retain failures; passing a small evaluation does not guarantee completion of every future project.
+`pnpm test:bco` verifies generation, local-reference reachability, and managed sync preservation; `pnpm check` checks JavaScript syntax. These deterministic checks do not establish good AI judgment. The [planning evaluation cases](test/evals/project-planning/README.md) exercise LENTO-derived failures, valid future prerequisites, and explicitly requested external work. The [product acceptance cases](test/evals/product-acceptance/README.md) exercise visual, integration, and evidence-sufficiency decisions. Record actual results separately from expected rubrics and retain failures; passing a small evaluation does not guarantee completion of every future project.
 
 ## Prompt Kit
 

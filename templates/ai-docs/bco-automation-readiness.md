@@ -3,13 +3,13 @@
 
 Critical Boiler generated BCO contract version: `{{ bcoContractVersion }}`.
 
-Dedicated BCO docs, skills, agent configurations, prompts, and the managed `.codex/config.toml` registry section belong to this contract. Refresh only those managed assets in an existing project with:
+Refresh managed BCO docs, skills, prompts, and agent configuration with:
 
 ```sh
 critical-boiler --bco-sync --cwd <project-root>
 ```
 
-The sync preserves unrelated project files and non-BCO Codex configuration. Bounded managed sections are replaced between their start and end markers. Do not remove or edit only one marker.
+Sync preserves unrelated files/configuration. Keep both boundary markers of managed sections intact.
 
 ## Contract Freshness
 
@@ -19,14 +19,9 @@ A missing or stale contract is operator-owned project-plan authority. Use **Prep
 
 ## Capability Declaration
 
-Before native tasks are confirmed, `$bco-project-planning` records each required capability as one of:
+`$bco-project-planning` binds requirements to observed repository/runtime capabilities, named enabling predecessors, explicitly requested external inputs, or precise unresolved needs. Use BCO-supported identifiers. A package declaration, model name, or planner tool does not prove workflow availability; distinguish inspected existence from successful execution.
 
-- **repository:** an exact documented command, dependency, configuration, fixture, or test harness exists;
-- **environment:** an exposed BCO/Codex capability is available for the workflow;
-- **enabling task:** a native predecessor will create the capability before dependent work;
-- **blocked:** the capability is unavailable and no automated work may start.
-
-Do not treat a package name in prose as capability evidence. Inspect the installed dependency, configuration, command, and runnable path.
+Providers create and demonstrate future capabilities before consumers through native dependencies. Their absent outputs need not prevent plan import; BCO rechecks consumers at launch. Do not fake availability or empty requirement arrays to bypass validation. Resolve genuine gaps for affected tasks without blocking independent work. Detailed scope and feasibility reasoning belongs in `ai-docs/bco-project-planning.md`.
 
 ## Browser Verification
 
@@ -39,4 +34,6 @@ If neither exists, create an enabling task or mark the dependent task blocked. A
 
 ## Shared Resources
 
-Every task that uses a build, E2E suite, formatter, code generator, database, migration runner, preview server, browser server, or fixed port declares the resource and expected lifecycle. Domain orchestrators grant one owner at a time. The owner records the command, chosen port or database where applicable, cleanup result, and exact tree identity in evidence.
+Declare shared build, E2E, formatter, codegen, database, migration, server, and port resources and lifecycle. Domain orchestrators grant one owner at a time, recording commands, assigned ports/databases, cleanup, and exact tree identity.
+
+`requiredResources` names coordination scopes, not registry IDs. BCO assigns `BCO_TEST_SERVER_PORT` at launch; its absence during planning is expected. Commands consume that port. Keep briefs/assets at durable project or authorized artifact paths accessible to execution agents.

@@ -97,7 +97,7 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   const root = await createFixture(t);
   const args = templateArgs(root);
 
-  assert.equal(VERSION, "2.6.4");
+  assert.equal(VERSION, "2.6.5");
   assert.equal(BCO_CONTRACT_VERSION, VERSION);
   assert.equal(BCO_PROJECT_PLAN_SCHEMA_VERSION, 1);
   assert.equal(BCO_TASK_ADOPTION_SCHEMA_VERSION, 1);
@@ -441,6 +441,41 @@ test("product acceptance guidance is reachable after generation and managed sync
         assert.equal(await readFile(guidePath, "utf8"), guide);
       }
     }
+  }
+});
+
+test("planning contract sync refreshes all consumers while preserving operator inputs", async (t) => {
+  const root = await createFixture(t);
+  const args = templateArgs(root);
+  const planningKeys = [
+    "bcoPlanningSkill", "bcoPlanningSkillMetadata", "bcoPlanningSkillTaskContract",
+    "bcoProjectPlanning", "bcoAutomationReadiness", "bcoProductAcceptance",
+    "frontendPlannerPrompt", "backendPlannerPrompt",
+  ];
+  const expected = new Map();
+  for (const key of planningKeys) {
+    await writeProjectFile(args, key);
+    const file = path.join(root, FILES[key].path);
+    const generated = await readFile(file, "utf8");
+    assert.doesNotMatch(generated, /\{\{/u, key);
+    expected.set(file, generated);
+    await writeFile(file, "legacy managed planning contract\n", "utf8");
+  }
+  const operatorFiles = new Map([
+    [path.join(root, "ai-docs", "brief.md"), "Local release only; no hosting or human walkthrough.\n"],
+    [path.join(root, "draft-plan.json"), '{"schemaVersion":1,"planId":"operator-draft","tasks":[]}\n'],
+    [path.join(root, ".codex", "config.toml"), 'model = "operator-model"\n'],
+  ]);
+  for (const [file, content] of operatorFiles) await writeFile(file, content, "utf8");
+
+  const syncArgs = { ...args, bcoSync: true };
+  for (const key of selectedFileKeys(syncArgs)) await writeProjectFile(syncArgs, key);
+  await applyBcoExtensions(syncArgs);
+  for (const [file, content] of expected) assert.equal(await readFile(file, "utf8"), content);
+  for (const [file, content] of operatorFiles) {
+    const actual = await readFile(file, "utf8");
+    if (path.basename(file) === "config.toml") assert.ok(actual.startsWith(content));
+    else assert.equal(actual, content);
   }
 });
 

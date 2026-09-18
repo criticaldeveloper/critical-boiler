@@ -1,6 +1,6 @@
 {
   "name": "@twmw/critical-boiler",
-  "version": "2.6.4",
+  "version": "2.6.5",
   "author": "Critical Developer",
   "description": "A pnpm-installable CLI for bootstrapping AI docs, project starters, and optional BCO agent orchestration.",
   "repository": {

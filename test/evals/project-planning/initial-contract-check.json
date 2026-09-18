@@ -1,0 +1,24 @@
+{
+  "case-A-plan.json": {
+    "defects": [
+      {
+        "code": "missing-delivery-dependency",
+        "taskKey": "REL",
+        "message": "Task \"REL\" has a verification profile but its blocked-by chain does not reach declared delivery work."
+      }
+    ],
+    "advisories": []
+  },
+  "case-B-plan.json": {
+    "defects": [],
+    "advisories": []
+  },
+  "case-C-plan.json": {
+    "defects": [],
+    "advisories": []
+  },
+  "case-D-plan.json": {
+    "defects": [],
+    "advisories": []
+  }
+}
