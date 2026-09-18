@@ -1,0 +1,11 @@
+{
+  "templates/.agents/skills/bco-project-planning/SKILL.md": "f53b10db55e8f847db12eee5df46aa374a5520818bf664bc0bee8bc347474fa6",
+  "templates/.agents/skills/bco-project-planning/agents/openai.yaml": "fcfb5a0070b16973bc19a902edfd9efdf05a01d1e539e2a71e57620eafb6759d",
+  "templates/.agents/skills/bco-project-planning/references/task-contract.md": "e762342be644c6cd9701ce86c36f14aa6403f681385ffd7269cacb998a6488c8",
+  "templates/ai-docs/bco-project-planning.md": "ad8a62d2e7061d2d6180d0880ba2d4ac6d41697adcffaec51e5657caa0cc6432",
+  "templates/ai-docs/bco-automation-readiness.md": "141ddd66521bdecf270cc80a56a680c2a10753fcfb24cdd37c99939df90a4ba1",
+  "templates/ai-docs/bco-product-acceptance.md": "0d74535909436c7a1de5f5b5d435ffa45e5bce98ceaa7d11d50de37177c5106b",
+  "templates/.codex/prompts/agents/frontend-planner.md": "e3038b017e0546403e1a4012905e804a4b5f74b953e43b5c1ae0fe9100c41746",
+  "templates/.codex/prompts/agents/backend-planner.md": "ef7c469b30a38e58e80aa9c6884f6d974cf0aebabecc4e24983a524637b83ea5",
+  "test/evals/project-planning/inputs.json": "2669e6af3e8cde891c13d69df0f80245cb798e4af6d90866cbe21b539e3496cb"
+}

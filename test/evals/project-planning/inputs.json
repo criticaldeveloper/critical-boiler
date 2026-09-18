@@ -1,0 +1,224 @@
+{
+  "protocol": "Synthetic offline exercise. Use generated $bco-project-planning and its references. Treat case facts as supplied evidence, not live execution. No BCO tools, network, project mutations, services, or external actions. Return a complete import JSON artifact and concise readiness/validation report for each new-plan case; for existing catalogs return only what supplied authority permits. Do not invent preview receipts. Artifact writes to the evaluator output directory are permitted. Cases are independent.",
+  "common": {
+    "runtime": "BCO exposes repository shell, Git, and configured frontend/backend specialist roles. Supported script:<name> capabilities are derived from package scripts. Resource strings coordinate ownership. BCO preview/apply is unavailable in this exercise.",
+    "repository": "Node and pnpm available. Existing React/TypeScript/Vite/SCSS app; commands pnpm typecheck and pnpm build have passed. Git clean. No browser harness, media renderer, external image/video API, hosting account, or manual-audit operator is available. Planning desktop tools are not exposed to workflows.",
+    "userAuthority": "Draft a plan only. Do not import, start workflows, change EBE, or edit the real project."
+  },
+  "cases": [
+    {
+      "id": "A",
+      "request": "Repair the whole draft for a local ice-cream storefront with authored looping product media, landing page, working order form, responsive behavior, keyboard access and automated browser checks. The prior brief suggested a human screen-reader smoke; my latest decision excludes human sessions, hosting and physical-device tests. A local render method is acceptable. Return the full corrected JSON for BCO.",
+      "artifacts": "Only the private planning path C:/planner/session/brief.md currently holds the brief. A planning-session image tool was listed, with no workflow provider. No asset-generation commands exist yet.",
+      "draft": {
+        "schemaVersion": 1,
+        "planId": "storefront-local",
+        "tasks": [
+          {
+            "key": "REL",
+            "title": "Storefront release",
+            "description": "Storefront release",
+            "acceptanceCriteria": "Demonstrate the described result.",
+            "verification": "Check the result.",
+            "type": "epic",
+            "priority": 2,
+            "labels": [
+              "frontend"
+            ],
+            "blockedByKeys": [
+              "ACCEPT"
+            ],
+            "automation": {
+              "schemaVersion": 1,
+              "workflowProfile": "delivery",
+              "riskTier": "standard",
+              "requiredCapabilities": [],
+              "expectedEvidence": [
+                "verification",
+                "review",
+                "git-commit"
+              ],
+              "requiredResources": [],
+              "gitDeliveryOwner": true
+            }
+          },
+          {
+            "key": "MEDIA",
+            "title": "Use the planner image tool to produce looping product video",
+            "description": "Use the planner image tool to produce looping product video",
+            "acceptanceCriteria": "Demonstrate the described result.",
+            "verification": "Check the result.",
+            "type": "task",
+            "priority": 2,
+            "labels": [
+              "frontend"
+            ],
+            "blockedByKeys": [],
+            "automation": {
+              "schemaVersion": 1,
+              "workflowProfile": "delivery",
+              "riskTier": "standard",
+              "requiredCapabilities": [],
+              "expectedEvidence": [
+                "verification",
+                "review",
+                "git-commit"
+              ],
+              "requiredResources": [],
+              "gitDeliveryOwner": true
+            },
+            "parentKey": "REL"
+          },
+          {
+            "key": "FORM",
+            "title": "Implement and test the order form contract",
+            "description": "Implement and test the order form contract",
+            "acceptanceCriteria": "Demonstrate the described result.",
+            "verification": "Check the result.",
+            "type": "task",
+            "priority": 2,
+            "labels": [
+              "frontend"
+            ],
+            "blockedByKeys": [],
+            "automation": {
+              "schemaVersion": 1,
+              "workflowProfile": "delivery",
+              "riskTier": "standard",
+              "requiredCapabilities": [],
+              "expectedEvidence": [
+                "verification",
+                "review",
+                "git-commit"
+              ],
+              "requiredResources": [],
+              "gitDeliveryOwner": true
+            },
+            "parentKey": "REL"
+          },
+          {
+            "key": "HOME",
+            "title": "Integrate authored media and the order form into the landing page",
+            "description": "Integrate authored media and the order form into the landing page",
+            "acceptanceCriteria": "Demonstrate the described result.",
+            "verification": "Check the result.",
+            "type": "task",
+            "priority": 2,
+            "labels": [
+              "frontend"
+            ],
+            "blockedByKeys": [
+              "MEDIA"
+            ],
+            "automation": {
+              "schemaVersion": 1,
+              "workflowProfile": "delivery",
+              "riskTier": "standard",
+              "requiredCapabilities": [],
+              "expectedEvidence": [
+                "verification",
+                "review",
+                "git-commit"
+              ],
+              "requiredResources": [],
+              "gitDeliveryOwner": true
+            },
+            "parentKey": "REL"
+          },
+          {
+            "key": "ACCEPT",
+            "title": "Publish the site and run operator Narrator acceptance",
+            "description": "Read-only acceptance. Repair failing harness selectors and commit a clean candidate, then integrate main.",
+            "acceptanceCriteria": "Demonstrate the described result.",
+            "verification": "Check the result.",
+            "type": "task",
+            "priority": 2,
+            "labels": [
+              "frontend"
+            ],
+            "blockedByKeys": [
+              "HOME"
+            ],
+            "automation": {
+              "schemaVersion": 1,
+              "workflowProfile": "integration",
+              "riskTier": "standard",
+              "requiredCapabilities": [],
+              "expectedEvidence": [
+                "verification",
+                "review",
+                "git-commit"
+              ],
+              "requiredResources": [],
+              "gitDeliveryOwner": false
+            },
+            "parentKey": "REL"
+          }
+        ]
+      }
+    },
+    {
+      "id": "B",
+      "request": "Create the smallest useful plan for an existing local app to add browser acceptance. SETUP should implement a repository Playwright command and clean server lifecycle; CHECK should verify keyboard navigation against the delivered app. Will the absent E2E script, unset BCO_TEST_SERVER_PORT, and missing resource registry prevent me importing the plan?",
+      "additionalFacts": "Existing app behavior and build are already delivered. SETUP may add the test harness and dependencies and commit/review/merge them. CHECK is read-only after SETUP. No mandatory remote or human work."
+    },
+    {
+      "id": "C",
+      "request": "Create a release plan that explicitly includes deployment to our selected hosting account and a human screen-reader audit before public launch. These are contractual requirements; local checks alone are insufficient. Only draft the plan.",
+      "additionalFacts": "The app is locally delivered. Hosting credentials and target project ID have not been provided; the user can provide them. The audit owner/time is not assigned. A local deployment-preparation task can proceed without those inputs. Do not substitute a different host or remove the human audit."
+    },
+    {
+      "id": "D",
+      "request": "Plan a local catalog page using our approved product photos and exact regulated copy without substitutes. Return a draft that allows independent work to start.",
+      "additionalFacts": "Approved photos and copy have not been supplied. No authorized source is discoverable. Layout scaffolding, routing, and fixture-based component checks can proceed independently; final content acceptance cannot. Placeholders are permitted during development but are not release evidence."
+    },
+    {
+      "id": "E",
+      "request": "Prepare automation for this existing catalog. Our latest scope excludes the old operator Narrator session. Do not change running tasks or guess authority fields.",
+      "catalog": {
+        "schemaVersion": 1,
+        "tasks": [
+          {
+            "taskId": "native-release-1",
+            "taskKey": "RELEASE",
+            "version": 16,
+            "contentFingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "status": "ready",
+            "title": "Local release acceptance",
+            "description": "Run operator-attended Narrator acceptance.",
+            "acceptanceCriteria": "A human completes the Narrator walkthrough.",
+            "verification": "Record the operator session.",
+            "automation": {
+              "schemaVersion": 1,
+              "workflowProfile": "verification",
+              "riskTier": "standard",
+              "requiredCapabilities": [
+                "manual:narrator"
+              ],
+              "expectedEvidence": [
+                "verification",
+                "review",
+                "git-commit"
+              ],
+              "requiredResources": [
+                "operator-session"
+              ],
+              "gitDeliveryOwner": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "F",
+      "request": "Review this task assignment as frontend_planner and return its execution plan without rewriting the native task. Preserve current scope exclusions.",
+      "assignment": {
+        "key": "ACCEPT",
+        "description": "Verify local release after merged upstream delivery. Read-only verification; no source, harness, or Git changes. Hosting and human audit are excluded.",
+        "acceptanceCriteria": "Typecheck, build, browser keyboard checks and independently reviewed acceptance evidence.",
+        "verification": "pnpm typecheck; pnpm build; pnpm e2e"
+      },
+      "additionalFacts": "The e2e command exists and ran, but a stale test selector fails. A harness correction is necessary before acceptance. No correction authority exists in this task. Report findings and a bounded next action; do not repair or silently waive the failure."
+    }
+  ]
+}

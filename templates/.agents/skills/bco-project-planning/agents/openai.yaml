@@ -1,7 +1,7 @@
 interface:
   display_name: "BCO Project Planning"
-  short_description: "Build dependency-safe native BCO task plans"
-  default_prompt: "Use $bco-project-planning to turn this project brief into a validated, automation-ready native BCO task graph."
+  short_description: "Use AI to repair plans and return complete BCO JSON"
+  default_prompt: "Use $bco-project-planning to create or repair this complete task series for my intended release. Inspect the brief, repository, and actual BCO capabilities; resolve scope, prerequisite, resource, and delivery deficiencies with AI reasoning. Return one corrected BCO JSON file and an honest readiness report. Do not apply or change EBE unless authorized."
 
 policy:
   allow_implicit_invocation: true
