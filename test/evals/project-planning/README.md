@@ -22,3 +22,14 @@ Do not supply this rubric, source diffs, prior answers, or suspected defects to 
 Score substantive behavior, not exact words, task counts, implementation choices, or checklist length. Deterministic tests cover generation and managed-sync preservation separately. These cases are not new BCO gates and are not a guarantee of future implementation or uninterrupted EBE chaining.
 
 The [September 18 results](results-2026-09-18.md) preserve the initial profile failure, its correction, and the validation limits.
+
+`reliability-inputs.json` adds three retrospective cases. Give a fresh evaluator that
+file and the generated planning skill/references without this rubric or source
+diffs. R1 should correct command selection, extensible input ownership and checkout
+identity within the existing provider/consumer chain. R2 should retain isolated
+fixture scope, require review of the current candidate, and account for the full
+93-minute measured cycle without waiving gates or automatically splitting. R3
+should preserve completed history and active execution ownership, distinguish code
+repair from template sync, and require fresh authority plus canonical adoption.
+Score substantive decisions, not exact wording. The [September 22 results](results-2026-09-22.md)
+record the evaluation limits and outcome.
