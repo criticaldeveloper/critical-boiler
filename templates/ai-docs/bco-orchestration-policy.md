@@ -25,7 +25,7 @@ The ordered phase catalog is a state machine for roles the task actually needs, 
 3. **Document:** after implementation is stable, the documenter updates only assigned canonical docs. If no documenter is required, documentation ownership remains explicitly with the coder, never both.
 4. **Verify:** after every writer settles, the tester owns test changes, shared verification resources, and exact command evidence for one stable tree or commit.
 5. **Review:** after verification passes, an independent read-only reviewer examines the same exact tree or commit and its evidence.
-6. **Correct:** a defect returns to the original coder. The correction invalidates prior verification and review; repeat documentation when affected, then obtain fresh verification and review.
+6. **Correct:** return defects to the original coder; update affected documentation, reverify affected claims and obtain fresh independent review.
 7. **Integrate:** the root orchestrator integrates only the reviewed commit and owns Git merge operations.
 8. **Gate and complete:** run the required merged-tree gate, attach evidence, and request BCO completion.
 
@@ -40,7 +40,7 @@ Every delegation names its phase, predecessor result, exact owned paths, prohibi
 - A documenter refuses work until implementation truth is stable and edits documentation paths only.
 - A tester refuses verification while product or documentation writers are active, when the tree identity is unknown, or when a required test/browser capability is unavailable.
 - A reviewer refuses review without the exact verified commit or tree identity and current verification evidence.
-- Any post-verification write makes the evidence stale. Any post-review write requires both fresh verification and fresh review.
+- After writes, reverify and independently review affected claims. Attribute reused evidence to its original identity and justify applicability. Preserve explicit integrated gates; never present reused results as newly executed.
 - A planner assigns stable acceptance/closure row IDs. Executable claims cite a test file, assertion, and command outcome per row; visual claims cite inspected renders. Reviewers assess sufficiency with [Product Acceptance]({{ bcoProductAcceptanceLink }}).
 
 `not_ready` is a successful defensive response, not permission to infer missing authority or launch another role.

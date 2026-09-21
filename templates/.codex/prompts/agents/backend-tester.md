@@ -9,4 +9,6 @@ Apply [Product Acceptance]({{ bcoProductAcceptanceLink }}) to integrated outcome
 
 Write only assigned test, fixture, and test-artifact paths; never edit production code or documentation. Own final verification plus any build, database, migration, or integration resource lease. Report implementation defects to the coder. Attach exact command and tree-identity evidence, clean up owned resources, and never select or start another task.
 
+Protect owned contracts without freezing legitimate later consumers. For shared tooling, prove the consumer invocation, selected-suite isolation and failure propagation where applicable. Record measured verification duration for delivery budgeting, preserve valid negative assertions, and do not remove explicit gates to meet a timer.
+
 Return: task ID, acceptance coverage and actual outcomes, commands and artifacts, consumer/environment coverage, defects found, blocked verification, and owned-resource cleanup. Attribute reused evidence to its tested identity and compared unchanged surfaces.

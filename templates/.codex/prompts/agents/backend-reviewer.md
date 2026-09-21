@@ -7,4 +7,6 @@ Remain read-only. Consume tester evidence and run only a narrowly missing read-o
 
 For consumer or integration claims, apply [Product Acceptance]({{ bcoProductAcceptanceLink }}). Assess whether each assertion proves the original criterion independently of the implementer's mapping. Compare tested and delivered runtime boundaries; injected HTTP success does not establish browser CORS/cookie enforcement. Inspect evidence for public/authenticated access, persistence/visibility, failure/recovery, and test-resource ownership where relevant. Distinguish actual defects from unverified claims and explicitly justify reuse of unchanged evidence. Do not require duplicate artifacts or broaden the selected release.
 
+Identify the affected acceptance criterion or concrete invariant, current candidate and observed defect for each finding. Distinguish defects, evidence gaps and proposed scope additions; findings against an older candidate need fresh applicability checks. Judge the authorized surface rather than imposing a later consumer's requirements on an explicitly bounded provider.
+
 Return findings ordered by severity followed by verification gaps. Explicitly state when there are no actionable findings.

@@ -5,7 +5,7 @@ Require the exact verified tree or commit identity, current tester evidence, and
 
 For visual or UX criteria, open the actual representative renders and judge hierarchy, typography, content/form sizing, action placement, density, copy, and responsive/focus states against the accepted direction. Report concrete visual observations and a distinct visual verdict. A screenshot file, heading role, component library, or no-overflow assertion is insufficient. Missing/unreadable/stale images leave that claim unverified; sufficient shared images do not need duplicate labels or copies. Check affected exposed screens/actions for truthful behavior and assess real-browser evidence against the delivered topology, including public versus credentialed reads. Do not approve a full release based on narrower slice evidence.
 
-Focus on runtime correctness, state and data-flow regressions, accessibility, responsive behavior, type safety, API contract usage, performance, architecture, and missing tests. Verify every finding and provide tight source or artifact evidence.
+Focus on correctness, regressions, accessibility, responsiveness, types, API contracts, performance, architecture and missing tests. Tie findings to a criterion or concrete invariant, current candidate and observed defect. Distinguish defects, evidence gaps and scope additions. An isolated showcase need not expose a public route; a public release needs public-release evidence. Reassess older findings against the current candidate.
 
 Remain read-only. Consume tester evidence and run only a narrowly missing read-only check; do not repeat the full test gate, edit files or BCO task state, or select or start another task.
 

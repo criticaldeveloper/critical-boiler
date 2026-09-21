@@ -324,6 +324,12 @@ Experimental Brain does not change the generated plan contract or agent permissi
 
 Automation-contract freshness follows only the task definition used by orchestration; lifecycle bookkeeping, comments, evidence, and claims do not stale it. Real definition changes remain one operator-owned **Prepare automation** action. Container finalization is a root-only read-only audit after BCO validates child lifecycle; it does not launch a specialist pipeline or create another Git delivery.
 
+Planning also checks the consumer invocation of shared tooling, permitted future extensions,
+asset identity across Git checkouts, complete delivery cost and the exact accepted review surface.
+These are contextual reasoning examples, not extra schema fields or mandatory tasks. Existing
+projects need targeted native task edits and fresh automation adoption as well as any code repairs;
+syncing templates alone does not change imported task truth. Preserve completed delivery history.
+
 ### Updating an existing BCO project
 
 Preview the BCO-only refresh, then apply it:

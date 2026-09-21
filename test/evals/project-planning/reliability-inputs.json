@@ -1,0 +1,35 @@
+{
+  "protocol": "Use the generated project-planning skill and routed references. Evaluate these synthetic requests from the supplied observations only. Return proposed task corrections, verification and any authority gaps; no network, live BCO calls, task mutations, services or repository edits. Do not claim supplied observations as freshly executed checks.",
+  "cases": [
+    {
+      "id": "R1",
+      "request": "Review this draft provider/consumer plan before import; correct it without adding unnecessary tasks.",
+      "observations": {
+        "runnerTask": "TOOL supplies pnpm e2e -- <spec> to UI tasks. Acceptance currently checks that the complete suite passes.",
+        "inputTask": "INPUT owns assets/source/identity, facility and telescope. Its regression compares the entire assets/source tree to an exact list.",
+        "consumerTask": "ART depends on TOOL and INPUT and adds assets/source/motion. It must preserve INPUT's required files.",
+        "platform": "Windows Git core.autocrlf=true; renderer.ps1 is hashed from working-tree bytes without text/eol attributes. One candidate passed but its merged checkout hash differed.",
+        "authority": "Planning only. Shared runner and source-asset definitions may be corrected within existing outcomes. No BCO preview is exposed."
+      }
+    },
+    {
+      "id": "R2",
+      "request": "Assess the proposed next task and its review requirements.",
+      "observations": {
+        "task": "UI delivers reusable components demonstrated on an explicitly isolated bilingual fixture. HOME later owns the public homepage. Required candidate and integrated gates are retained.",
+        "review": "Reviewer requested a public route during UI acceptance, citing the full project's eventual homepage target. Its rejection referred to candidate A; candidate B has new verification but no independent review yet.",
+        "duration": "Last analogous task: implementation 35 min, rendering/browser verification 28 min, review 12 min, integration verification 18 min. Workflow soft checkpoint 90 min, hard 120 min. Correction cost is unknown.",
+        "authority": "No scope to remove gates, change runtime limits or claim review of B."
+      }
+    },
+    {
+      "id": "R3",
+      "request": "Update planning guidance and improve existing task definitions while preserving delivered work.",
+      "observations": {
+        "catalog": "TOOL completed; ART in progress and actively claimed; HOME open. Export has exact task IDs and versions, but it predates ART's current claim.",
+        "finding": "A shared test helper has a demonstrated filtering bug. HOME's verification uses it. Updating a template alone does not alter native tasks or code.",
+        "authority": "Operator authorizes targeted corrections and adoption after validation, but did not request workflow cancellation or changing automatic launch settings. No live mutation tools are available in this evaluation."
+      }
+    }
+  ]
+}
