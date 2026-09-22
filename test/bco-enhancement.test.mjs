@@ -97,8 +97,8 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   const root = await createFixture(t);
   const args = templateArgs(root);
 
-  assert.equal(VERSION, "2.6.7");
-  assert.equal(BCO_CONTRACT_VERSION, VERSION);
+  assert.equal(VERSION, "2.6.8");
+  assert.equal(BCO_CONTRACT_VERSION, "2.6.7");
   assert.equal(BCO_PROJECT_PLAN_SCHEMA_VERSION, 1);
   assert.equal(BCO_TASK_ADOPTION_SCHEMA_VERSION, 1);
 
@@ -400,6 +400,26 @@ test("BCO sync refreshes managed assets without overwriting project files", asyn
     ),
     1,
   );
+});
+
+test("managed recovery guidance keeps runtime reproduction separate from independent acceptance", async (t) => {
+  const root = await createFixture(t);
+  const args = { ...templateArgs(root), bcoSync: true };
+  await mkdir(path.join(root, "scripts"));
+  await writeFile(path.join(root, "scripts", "retained.mjs"), "// uncommitted repair\n");
+  await writeFile(path.join(root, "package.json"), '{"private":true}\n');
+  for (const fileKey of selectedFileKeys(args)) await writeProjectFile(args, fileKey);
+  await applyBcoExtensions(args);
+  for (const domain of ["frontend", "backend"]) {
+    const role = (name) => readFile(path.join(root, ".codex/prompts/agents", `${domain}-${name}.md`), "utf8");
+    assert.match(await role("coder"), /explicitly assigned exclusive resource lease/u);
+    assert.match(await role("coder"), /Independent tester acceptance and review remain required/u);
+    assert.doesNotMatch(await role("coder"), /Run only small implementation checks/u);
+    assert.match(await role("tester"), /Distinguish product failures from probe\/capture defects/u);
+    assert.match(await role("orchestrator"), /complete authorized correction\/verification\/review cycle/u);
+  }
+  assert.equal(await readFile(path.join(root, "scripts", "retained.mjs"), "utf8"), "// uncommitted repair\n");
+  assert.equal(await readFile(path.join(root, "package.json"), "utf8"), '{"private":true}\n');
 });
 
 test("product acceptance guidance is reachable after generation and managed sync", async (t) => {

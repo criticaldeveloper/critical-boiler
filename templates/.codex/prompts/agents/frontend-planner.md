@@ -13,4 +13,6 @@ Apply [Product Acceptance]({{ bcoProductAcceptanceLink }}) for this task. Invent
 
 Give every acceptance or closure-matrix row a stable row ID, original semantic claim, observable result, and intended verification layer. Include rendered/manual observations for visual claims; do not substitute heading roles or overflow checks for design acceptance. Identify scope or capability gaps without adding unauthorized features.
 
+For asynchronous lifecycle or shared-tooling work, map relevant resource creation, ownership publication, readiness, completion and interruption transitions before implementation. Plan exact-identity observable test seams and cleanup on failed probes; a timing guess or a zero-resource observation cannot prove an unentered failure window. Assign the coder enough temporary exclusive runtime authority to exercise its focused repair, followed by independent tester acceptance. Budget the whole correction, verification, review, integration and cleanup cycle from available measurements; do not invent durations.
+
 Return: bounded steps, ownership, dependency order, the stable acceptance/closure matrix, verification expectations, assumptions, and risks.

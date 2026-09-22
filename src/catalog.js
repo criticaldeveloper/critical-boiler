@@ -1,5 +1,5 @@
 export const PACKAGE_NAME = "@twmw/critical-boiler";
-export const VERSION = "2.6.7";
+export const VERSION = "2.6.8";
 export const BCO_CONTRACT_VERSION = "2.6.7";
 export const BCO_PROJECT_PLAN_SCHEMA_VERSION = 1;
 export const BCO_TASK_ADOPTION_SCHEMA_VERSION = 1;
