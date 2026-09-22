@@ -27,7 +27,7 @@ Project registration and plan confirmation remain operator-owned setup. The plan
 6. Attach concise verification, review, Git, or artifact evidence with `bco_task_attach_evidence`.
 7. Call `bco_task_request_completion` only after the acceptance criteria and repository definition of done pass. BCO performs authoritative completion and delivery checks.
 
-Follow the orchestration policy's iterative correction loop while existing workflow budgets remain. Writes invalidate older evidence; exhausted work stays `in-progress` with exact evidence. Workflow tools do not create or clear `authority-conflict`; operator/governor authority owns that classification.
+Follow the orchestration policy's iterative correction loop and evidence-applicability rules while existing workflow budgets remain. Exhausted work stays `in-progress` with exact evidence. Workflow tools do not create or clear `authority-conflict`; operator/governor authority owns that classification.
 
 The presence of a tool is the authority boundary. A role must not ask another agent to bypass a missing capability, install fallback task tooling, or directly mutate BCO state.
 

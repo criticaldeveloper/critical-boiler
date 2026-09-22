@@ -14,22 +14,22 @@ This policy defines the Complete Orchestration System generated for `{{ projectN
 
 Each domain orchestrator may use one planner, coder, tester, reviewer, and documenter identity. Reuse the owning specialist across correction rounds. Do not create concurrent duplicate waves for the same role or scope.
 
-A declared role policy is an admission-control backstop for roles that actually appear, not a roster that the workflow must instantiate. Launch only the minimum specialists required by the selected task, risk, and current evidence. Encode an `afterRoles` edge only when that predecessor is unconditionally required for the workflow profile; do not make an optional repair coder a required predecessor of verification or finalization.
+A role policy is an admission-control backstop, not a roster. Use only required specialists. Add `afterRoles` only for unconditional predecessors; optional repair must not block verification or finalization.
 
 ## Deterministic Specialist Phases
 
-The ordered phase catalog is a state machine for roles the task actually needs, not a list of agents to launch. Low-risk or verification work may omit planning, implementation, or separate documentation when its contract and evidence do not require those roles:
+Apply only phases required by the task contract and evidence:
 
 1. **Plan:** the planner inspects task truth and returns scope, exact ownership, dependency order, risks, and verification requirements without writing.
 2. **Implement:** after the plan is accepted, the coder is the only product-code writer. Wait for the coder to finish and settle.
 3. **Document:** after implementation is stable, the documenter updates only assigned canonical docs. If no documenter is required, documentation ownership remains explicitly with the coder, never both.
 4. **Verify:** after every writer settles, the tester owns test changes, shared verification resources, and exact command evidence for one stable tree or commit.
 5. **Review:** after verification passes, an independent read-only reviewer examines the same exact tree or commit and its evidence.
-6. **Correct:** return defects to the original coder; update affected documentation, reverify affected claims and obtain fresh independent review.
+6. **Correct:** return defects to their owning coder or tester; reverify affected claims and obtain fresh independent review.
 7. **Integrate:** the root orchestrator integrates only the reviewed commit and owns Git merge operations.
 8. **Gate and complete:** run the required merged-tree gate, attach evidence, and request BCO completion.
 
-Only one specialist phase is active in a domain by default. Parallel work is allowed only for explicitly independent, non-overlapping scopes whose inputs are already stable and that share no command, server, database, generated artifact, or Git resource. Read-only discovery may overlap only when its result cannot become stale before use. Tester, reviewer, and documenter phases never overlap an implementation writer.
+Only one specialist phase is active in a domain by default. Parallel scopes need stable inputs and independent paths/resources. Read-only discovery must stay applicable. Tester, reviewer, and documenter phases never overlap an implementation writer.
 
 ## Defensive Phase Preconditions
 
@@ -58,7 +58,7 @@ The domain orchestrator records a non-overlapping ownership map before implement
 | Reviewer | Read-only findings against the exact verified tree |
 | Root orchestrator | Git integration, merged-tree gate, and BCO delivery evidence |
 
-The coder and tester must never share a writable test path. If tests must change during correction, the orchestrator assigns each path to one owner and waits for that owner to settle before the next phase.
+Each writable path has one owner. Settle that owner before the next phase.
 
 Shared builds, E2E, formatting, codegen, migrations, servers, and repository commands have one owner; BCO does not infer ownership from command text. The tester uses assigned `BCO_TEST_SERVER_PORT` and owns cleanup, or returns `not_ready` when an isolated listener has no port. Follow `ai-docs/commands.md` for Vite arguments and process-tree cleanup. Reviewers consume tester evidence.
 
@@ -70,29 +70,25 @@ Shared builds, E2E, formatting, codegen, migrations, servers, and repository com
 
 ## Risk And Minimum Evidence
 
-Classify the complete affected scope before delegation. When uncertain, use the higher tier.
-
-- **Low:** bounded implementation, focused verification, independent review.
-- **Medium:** concise planning checkpoint, implementation, focused testing, independent review, and the applicable integrated gate.
-- **High:** full role-separated planning, implementation, focused testing, independent review, and every applicable security, persistence, migration, contract, E2E, or operational gate.
-
-Authentication, authorization, privacy, secrets, persistence, schemas, migrations, data integrity, destructive behavior, CI, supply chain, billing, and uncertain scope are high risk. Small diffs do not lower risk.
+Classify the affected scope before delegation; use the higher tier when uncertain. Low risk requires focused verification and independent review; medium adds a planning checkpoint and applicable integrated gate; high requires full role-separated planning and every applicable security, persistence, migration, contract, E2E and operational gate. Authentication, authorization, privacy, secrets, persistence, schemas, migrations, data integrity, destructive behavior, CI, supply chain, billing and uncertain scope are high risk regardless of diff size.
 
 ## Verification And Correction
 
 Run the smallest focused checks first. The tester maps acceptance criteria to observable evidence and records the exact tree or commit. A reviewer must be independent from the coder and review that same identity. A clean review remains valid only while the reviewed surface remains unchanged.
 
+Record the actual input/scene, command arguments, fixture mode and applicable test counts with candidate evidence; carry these into integration. Equal trees do not make different commands equivalent. An all-skipped run proves no asserted behavior.
+
 If a test, gate, or review fails:
 
 1. record the failure and root cause through BCO;
-2. return correction to the original owning coder;
-3. inspect sibling paths affected by the same defect class;
+2. return production defects to the coder and test/fixture defects to their assigned tester;
+3. inspect actual output/DOM and correct sibling instances of the same defect within ownership;
 4. add regression evidence within the assigned ownership map;
 5. settle every writer and rerun the focused failed checks;
 6. request a fresh full review only after every finding is closed or explicitly blocked;
 7. repeat this scoped cycle for another correctable defect while existing workflow budgets remain.
 
-Every write invalidates older verification and review evidence. When a relevant budget is exhausted, attach exact evidence and leave the task `in-progress` for governor recovery. Workflow agents never create or clear `authority-conflict`; only operator/governor authority classifies missing or contradictory authority.
+Rerun affected checks first; do not restart unrelated checks for each assertion edit. Compare changed paths and claims before reusing earlier evidence, keeping its original identity and applicability rationale. Uncertain or affected evidence needs fresh verification/review; all explicit final and integrated gates remain required. When a budget is exhausted, preserve evidence and leave the task `in-progress`. Workflow agents never create or clear `authority-conflict`; classification belongs to operator/governor authority.
 
 ## Git Delivery
 
@@ -102,12 +98,12 @@ The root orchestrator owns integration. A task is delivery-complete only after:
 
 1. the exact task commit passes focused validation;
 2. an independent reviewer approves that verified commit;
-3. the task branch is merged into the integration branch;
+3. the exact reviewed task tip is merged into the integration branch with `git merge --no-ff`; verify the required merge parents and task identity before running integrated checks;
 4. the applicable integrated gate passes on the exact merged tree;
 5. command, review, commit, merge, and artifact evidence is attached through BCO;
 6. authoritative completion is requested and reconciled.
 
-The next task branch starts from the updated integration branch. Do not rewrite history, discard unrelated changes, or close branch-only work as complete.
+BCO's task-delivery gate requires a non-fast-forward merge; fast-forward or squash integration does not satisfy it. If topology is already wrong, preserve commits and reconcile through bounded root delivery repair. Never reset or rewrite shared history. The next task branch starts from updated integration truth; branch-only work is incomplete.
 
 ## Cleanup
 

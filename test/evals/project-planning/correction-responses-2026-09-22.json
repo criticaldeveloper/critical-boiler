@@ -1,0 +1,100 @@
+{
+  "protocol": "Independent forward evaluation from the generated BCO task-orchestration skill and routed references. All checks and outcomes below are supplied observations or proposed actions; no BCO calls, tests, services, networking, or repository mutations were performed.",
+  "cases": [
+    {
+      "id": "C1",
+      "assessment": "Verification is incomplete, but the observed failures are tester-owned locator/assertion defects. Continue a scoped correction cycle within the existing budget; production changes are not justified by these observations.",
+      "next_bounded_actions": [
+        "Record the two browser failures and their root causes against candidate A. Route correction through the frontend orchestrator to the existing tester; retain exclusive ownership of the affected test paths and verification resources. No coder phase or duplicate specialist wave is needed.",
+        "Use the observed DOM semantics: assert the card anchor itself rather than searching for a child anchor. For the three metadata values, use an exact collection assertion or three explicitly scoped single-element assertions that preserve every intended value and count. Inspect sibling occurrences of these same locator defects within assigned test ownership.",
+        "Preserve acceptance row IDs and expected behavior. Do not delete checks, add skips, reduce expected values, or modify production to accommodate incorrect tests.",
+        "Settle the tester's edits, identify the resulting candidate tree or commit, and rerun the focused failed browser cases plus any affected sibling cases. Continue only scoped correction if another defect appears and the existing budget allows it.",
+        "After sufficient acceptance evidence and required final checks pass, obtain a fresh independent review of the final candidate and its evidence. Root integration then requires the exact reviewed tip, a non-fast-forward merge, and all explicitly required fresh merged-tree gates before a completion request."
+      ],
+      "evidence_retained": [
+        "A's passed typecheck, unit-test and production-build results remain attributable to A. Reuse each only after comparing the changed test paths, command inputs and proven claims and explaining why that result remains applicable.",
+        "The supplied absence of production/configuration changes supports retention of unaffected evidence; it does not prove that every check excludes the edited tests.",
+        "Retain both failed E2E outcomes, their exact failing assertions and root-cause evidence. Do not recast them as passes or as newly executed checks."
+      ],
+      "required_fresh_checks": [
+        "Focused browser assertions must pass on the corrected stable candidate, with actual command, fixture mode, inputs, assertion counts and artifacts recorded.",
+        "Repeat any typecheck, unit test or other check whose scope includes the changed test code or whose applicability is uncertain; avoid restarting unrelated checks solely because an assertion changed.",
+        "Fresh independent review must cover the final candidate and acceptance sufficiency. Every explicit final or integrated gate still runs at its required identity."
+      ],
+      "authority_limits": [
+        "This evaluation proposes actions only. Exact test paths and commands were not supplied, and the fixture commands document does not configure E2E/typecheck/unit-test scripts; do not invent command names or claim execution.",
+        "A live workflow first reloads assigned task truth and bounded memory through exposed capabilities. Missing ownership, identity, browser capability or assigned test port produces not_ready.",
+        "Only the tester changes assigned tests; root does not implement product code or delegate directly to specialists. Use assigned BCO_TEST_SERVER_PORT and owned process-tree cleanup when verification is actually authorized.",
+        "On exhausted bounds, preserve exact evidence and leave the task in-progress. Do not choose a successor or create/clear authority-conflict."
+      ]
+    },
+    {
+      "id": "C2",
+      "assessment": "The integrated asset gate is not satisfied. The delivered telescope.blend failed rendering because it has no camera, and an exit-zero browser invocation with all 27 tests skipped establishes no asserted browser behavior.",
+      "next_bounded_actions": [
+        "Record merge M's exact tree, telescope.blend input, renderer failure, browser invocation in normal mode and 27 skipped tests as separate outcomes. Preserve the renderer failure rather than replacing it with the earlier smoke result.",
+        "Complete only remaining already-approved integrated verification within the existing hard, inactivity and cancellation bounds. The elapsed soft checkpoint alone does not interrupt bounded verification already authorized.",
+        "If the already-approved browser gate includes the candidate's fixture-mode invocation, rerun that exact applicable invocation on M and record active assertion counts. If fixture mode is not authorized or cannot establish the delivered-environment claim, report that precise unverified claim instead of substituting it silently.",
+        "Settle verification, retain any successful partial evidence alongside failures, and hand off the exact gaps for the separate governor's assessment. Do not request completion."
+      ],
+      "evidence_retained": [
+        "A's generic-smoke.blend render remains evidence about that smoke asset on A only. It does not validate telescope.blend, despite identical trees at A and M.",
+        "A's 27 passing fixture-mode browser assertions remain candidate evidence with that mode, input and identity. They can inform applicability assessment but do not satisfy an explicitly fresh integrated browser gate.",
+        "M's renderer failure and all-skipped browser outcome are valid negative or missing-coverage evidence and must remain visible."
+      ],
+      "required_fresh_checks": [
+        "Only checks already authorized as integrated verification may continue in this workflow. An applicable browser gate requires actual executed assertions on M with exact command, mode and counts; zero exit status alone is insufficient.",
+        "The asset criterion ultimately requires a successful render of the actual delivered telescope.blend under its required environment and substantive inspection where acceptance is visual. That is currently failed and cannot be repaired within this workflow.",
+        "Any future authorized repair needs verification of affected claims and independent review at its new identity, followed by required integrated gates; no such future work is launched or selected here."
+      ],
+      "authority_limits": [
+        "The execution contract explicitly forbids new repairs and delegation after this new gate failure. Do not add a camera, edit assets/tests/configuration, launch coder/tester repair, or reopen a specialist pipeline.",
+        "Do not treat the soft checkpoint as authority for broader scope or as a reason to abandon still-authorized bounded verification.",
+        "Leave the task in-progress with exact evidence. The separate read-only AI governor interprets the gaps and selects a persisted next action; this workflow does not choose a repair task, successor or authority-conflict classification."
+      ]
+    },
+    {
+      "id": "C3",
+      "assessment": "Candidate C is ready for root-owned local integration, subject to reconfirming the supplied identities and required topology. Candidate validation and review alone do not complete BCO delivery.",
+      "next_bounded_actions": [
+        "Resolve B and C to exact SHAs; verify clean main still points to B, the clean task branch still points to reviewed C, C descends from B, review/validation evidence belongs to C, and no writer or resource owner conflicts exist.",
+        "As root, switch to main and perform git merge --no-ff using the exact reviewed C SHA. Preserve task identity in the integration evidence and required commit metadata.",
+        "Before testing, verify new merge M has the expected integration parent B and exact reviewed task parent C, and inspect the resulting tree. With the supplied linear ancestry it should equal C's tree; an unexpected difference requires stopping for reassessment.",
+        "Run every required fresh integrated gate on the exact M tree with the real inputs and environment required by acceptance. Root owns integration and gate resources.",
+        "Attach the task commit C, merge M, parent/tree verification, independent review, candidate checks, fresh integrated commands/outcomes and artifacts through exposed BCO evidence capabilities. Request completion with current expectedVersion and a stable commandId, then reconcile the authoritative result.",
+        "Release owned resources and return the task-scoped delivery evidence. Do not start a successor task."
+      ],
+      "evidence_retained": [
+        "The supplied independent approval and candidate checks remain evidence for C as long as the reviewed surface and identity remain unchanged.",
+        "Preserve base B, reviewed task C and their ancestry as delivery provenance. Candidate checks must never be described as fresh integrated executions."
+      ],
+      "required_fresh_checks": [
+        "Verify current clean branch state, exact reviewed task identity and expected merge parents before integrated tests.",
+        "Run all explicit integrated gates on M even if its tree equals C; record exact inputs, commands, environment/mode, active test counts and results.",
+        "Reconcile BCO completion rather than treating an evidence attachment or request submission as authoritative completion."
+      ],
+      "authority_limits": [
+        "Only root performs local integration. No push, publication, reset, history rewrite, product edits or successor launch is authorized.",
+        "The evaluation executes no Git or BCO actions. Exact gate commands and task keys are not supplied and must not be invented.",
+        "Unexpected main movement, active writers, conflicts or stale evidence require rereading and reassessment within existing authority rather than forcing integration."
+      ],
+      "alternate_main_already_fast_forwarded_to_C": {
+        "assessment": "Ordinary git merge --no-ff C from main at C is already up to date and creates no merge commit, so it cannot repair the missing topology.",
+        "next_bounded_actions": [
+          "Preserve main at C and the reviewed task tip C. Reconfirm clean state, original base B, no other writers, and bounded root delivery-repair authority.",
+          "Create a separate temporary local delivery-repair branch at original integration base B. On it, merge the exact reviewed C using git merge --no-ff to create M with first parent B and second parent C. This changes topology without altering the reviewed product tree.",
+          "Verify M's exact parents, task identity and tree equality with C. Because C is M's second parent, M is a descendant of current main C.",
+          "Switch back to main, verify it still equals C and remains clean, and advance it using git merge --ff-only with the verified repair merge M. This appends the merge to main without resetting or rewriting any commit; the final delivered commit is the required two-parent M.",
+          "Verify main now points to M, run the required fresh integrated gates on M, attach the full repair provenance and completion evidence, and reconcile completion as above.",
+          "If B cannot be established, main moved, the gate rejects the proposed exact topology, or bounded repair authority is missing, retain the commits and report the specific delivery gap for authorized resolution. Do not improvise a reset, squash or rewritten task tip."
+        ],
+        "retained_evidence": "Reuse unchanged C review and candidate evidence with explicit identity and applicability; topology repair does not waive merged-tree gates."
+      }
+    }
+  ],
+  "source_limitations": [
+    "Read the generated SKILL.md and its routed task-management, orchestration-policy, commands, next-action-policy and product-acceptance references only, plus correction-inputs.json.",
+    "The optional ai-docs/context-map.md is absent.",
+    "The task-management reference uses the broad phrase 'Writes invalidate older evidence'; the orchestration skill and detailed correction/acceptance policies explicitly require claim- and identity-scoped applicability assessment, retention of unaffected evidence, and preservation of explicit integrated gates."
+  ]
+}

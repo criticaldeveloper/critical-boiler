@@ -97,7 +97,7 @@ test("complete orchestration generates versioned BCO contracts and thirteen agen
   const root = await createFixture(t);
   const args = templateArgs(root);
 
-  assert.equal(VERSION, "2.6.6");
+  assert.equal(VERSION, "2.6.7");
   assert.equal(BCO_CONTRACT_VERSION, VERSION);
   assert.equal(BCO_PROJECT_PLAN_SCHEMA_VERSION, 1);
   assert.equal(BCO_TASK_ADOPTION_SCHEMA_VERSION, 1);
