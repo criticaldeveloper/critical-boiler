@@ -1,0 +1,32 @@
+{
+  "protocol": "Use the generated BCO task-orchestration skill and routed references. For each synthetic request, return the next bounded actions, evidence that can be retained, required fresh checks, and authority limits. Supplied observations stand in for inspection; do not call BCO, run services, change repositories, or claim fresh test results. Only evaluation-output writes are permitted.",
+  "cases": [
+    {
+      "id": "C1",
+      "request": "Continue verification after this browser failure.",
+      "observations": {
+        "candidate": "A passed typecheck, unit tests and production build. E2E failed because a card is itself an anchor but its locator searches for a child anchor. Another locator applies a single-element matcher to three metadata values.",
+        "ownership": "Tester owns these tests; coder owns production. Both are settled. No production or configuration changes have occurred since A.",
+        "contract": "The final candidate needs sufficient acceptance evidence, independent review and explicit merged-tree gates. There is enough time for scoped correction. No permission to weaken assertions."
+      }
+    },
+    {
+      "id": "C2",
+      "request": "Assess whether the integrated asset gate is satisfied and what to do next.",
+      "observations": {
+        "candidate": "Verified commit A rendered generic-smoke.blend. The task delivers telescope.blend. A's browser run used fixture mode and passed 27 assertions.",
+        "integration": "Merge M has the identical tree. Its renderer used telescope.blend and failed because it has no camera. Its browser invocation exited zero with all 27 tests skipped in normal mode.",
+        "authority": "A soft scope checkpoint has elapsed. The execution contract permits finishing already-approved integrated verification but forbids new repairs or delegation after a new gate failure. Preserve results for governor assessment."
+      }
+    },
+    {
+      "id": "C3",
+      "request": "Finish local BCO delivery of this reviewed task.",
+      "observations": {
+        "state": "Clean main is at base B. Clean task branch ends at independently approved candidate C, descended from B. No other writer is active. Candidate checks passed.",
+        "contract": "BCO checks for a non-fast-forward merge of the exact reviewed task tip. Root owns local integration and required fresh integrated gates. No push, publication, reset or history rewrite is authorized.",
+        "alternate": "Also explain how the next step changes if main already fast-forwarded to C before the missing merge topology was noticed."
+      }
+    }
+  ]
+}

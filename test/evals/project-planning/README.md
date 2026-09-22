@@ -33,3 +33,13 @@ should preserve completed history and active execution ownership, distinguish co
 repair from template sync, and require fresh authority plus canonical adoption.
 Score substantive decisions, not exact wording. The [September 22 results](results-2026-09-22.md)
 record the evaluation limits and outcome.
+
+`correction-inputs.json` exercises task execution through the generated
+`bco-task-orchestration` skill and routed references. Give the evaluator only that
+input and generated context. C1 must preserve assertion meaning, assign test fixes
+to the tester, inspect sibling failures, and assess evidence reuse by affected
+claims without waiving final gates. C2 must reject mismatched scene evidence and
+all-skipped acceptance while preserving the supplied checkpoint authority. C3 must
+verify the required merge topology before integrated gates and preserve commits
+when repairing an earlier fast-forward. Evaluate reasoning rather than exact
+wording; record contradictory guidance even if the evaluator resolves it correctly.

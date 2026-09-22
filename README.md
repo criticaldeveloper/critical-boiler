@@ -330,6 +330,13 @@ These are contextual reasoning examples, not extra schema fields or mandatory ta
 projects need targeted native task edits and fresh automation adoption as well as any code repairs;
 syncing templates alone does not change imported task truth. Preserve completed delivery history.
 
+Correction rounds rerun affected checks first and reuse unaffected evidence only with its original
+identity and a justified applicability assessment; explicit final and integrated gates remain.
+Candidate evidence records actual inputs/scenes, arguments, fixture mode and applicable test counts
+for integration. Testers diagnose real DOM/output and sibling assertion errors before another full
+run. Root delivery uses BCO's required non-fast-forward merge and verifies topology before integrated
+checks. Existing active workflows must settle before their project guides or task contracts change.
+
 ### Updating an existing BCO project
 
 Preview the BCO-only refresh, then apply it:
