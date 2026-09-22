@@ -330,6 +330,8 @@ These are contextual reasoning examples, not extra schema fields or mandatory ta
 projects need targeted native task edits and fresh automation adoption as well as any code repairs;
 syncing templates alone does not change imported task truth. Preserve completed delivery history.
 
+Version 2.6.8 refines execution guidance while retaining BCO contract 2.6.7 compatibility. Coders may receive temporary exclusive runtime resources to prove focused repairs before independent tester acceptance. Domain orchestrators own the whole correction/review cycle. Handoffs distinguish causal findings from uncertain probe results, and lifecycle work plans exact-state interruption evidence. Soft checkpoints follow BCO’s current AI budget reassessment within unchanged hard limits; no extra retry counters or task authority are introduced. Existing projects need an explicit managed `--bco-sync`; installing the CLI alone does not refresh them.
+
 Correction rounds rerun affected checks first and reuse unaffected evidence only with its original
 identity and a justified applicability assessment; explicit final and integrated gates remain.
 Candidate evidence records actual inputs/scenes, arguments, fixture mode and applicable test counts

@@ -75,7 +75,7 @@ BCO is an external local control plane; this project has no repository-local BCO
 
 When BCO starts a workflow, use only its injected capability-scoped task and memory tools. An unavailable BCO capability is an orchestration blocker, not permission to install fallback task tooling or update BCO's database directly.
 
-The tester owns final verification and any browser server it starts; shared commands have one explicit owner. Use the exact \`BCO_TEST_SERVER_PORT\`, or return \`not_ready\` when an isolated listener has none. For Vite, pass \`--host\` and \`--port\` directly after the pnpm script name without an extra standalone \`--\`. Record the server root PID, verify its listener, and stop the owned process tree before completion; never terminate a pre-existing process. Role policies constrain roles that appear; they do not require every configured specialist.
+The coder may receive temporary exclusive runtime resources for focused reproduction, followed by independent tester acceptance. Transfer ownership after settlement, within task/path authority; shared commands have one owner. Use the exact \`BCO_TEST_SERVER_PORT\`, or return \`not_ready\` when an isolated listener has none. For Vite, pass \`--host\` and \`--port\` directly after the pnpm script name without an extra standalone \`--\`. Record the server root PID, verify its listener, and stop the owned process tree before completion; never terminate a pre-existing process. Role policies constrain roles that appear; they do not require every configured specialist.
 
 Workflow agents finish the assigned work and return evidence; they do not launch another workflow. BCO's dedicated AI governor evaluates persisted terminal truth afterward.
 <!-- critical-boiler:bco-commands:end -->
