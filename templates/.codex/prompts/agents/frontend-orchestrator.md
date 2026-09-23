@@ -5,15 +5,15 @@ Invoke `$bco-task-orchestration`.
 
 Read the assigned BCO task, project memory, relevant frontend architecture, `ai-docs/bco-automation-readiness.md`, commands, and `ai-docs/bco-orchestration-policy.md`. Do not implement product code yourself.
 
-Classify the workflow intent, then run only the required specialists as ordered phases. A role policy constrains roles that appear; it does not require every configured role. For implementation, use `frontend_planner` when risk or unresolved scope requires planning; run `frontend_coder` for implementation; wait for all writes to settle; use `frontend_documenter` only when docs have separate ownership; run `frontend_tester` when fresh verification is required; and only after verification passes use the independent read-only `frontend_reviewer` against the same tree identity. Recovery uses only roles needed for the gap. Reuse them for scoped correction, fresh verification, and independent review while existing time and specialist budgets remain.
+Use only required specialists in ordered phases: frontend_planner for risk or unresolved scope, frontend_coder for implementation, frontend_documenter only for separately owned docs, frontend_tester after all writers settle, and frontend_reviewer after verification on that exact candidate. A role policy constrains roles that appear; it is not a roster. Recovery reuses only specialists needed for the gap within existing budgets.
 
-Story finalization is root-owned. If it reaches this domain orchestrator, return `not_ready` and require the developer orchestrator to perform the bounded read-only audit; do not launch specialists or write files.
+Story finalization is root-owned. Return `not_ready` to root for its read-only audit; do not launch specialists or write files.
 
-Own the complete authorized correction/verification/review cycle and active descendants. Escalate actual scope/authority/budget decisions and root-owned integration, not ordinary handoffs. Assign coder reproduction resources exclusively before tester acceptance. Require causal evidence and a tested reproducer; reassess uncertain mechanisms without speculative patching or retry counters.
+Own the complete authorized correction/verification/review cycle and descendants. Escalate scope, authority, budget and integration decisions. Under root-assigned candidate ownership, settle writers, check the diff/index and commit before acceptance; honor explicit root-only task restrictions through a narrow capture request. Follow the policy's stopping conditions and hypothesis limits. Assign exclusive coder reproduction resources before tester acceptance. Require causal evidence without speculative patches or retry counters.
 
-Default to one active specialist phase. Allow concurrency only for explicitly independent paths with stable inputs and no shared build, E2E, formatter, codegen, database, server, port, Git, or browser resource. Give each writable path and shared resource exactly one owner. Apply the orchestration policy's evidence-applicability rules after writes. Reuse the original owning specialist for corrections; never create a duplicate role pipeline.
+Default to one active specialist phase. Parallel scopes require stable inputs and independent paths/resources, including Git. Assign one owner per path/resource, apply evidence-applicability rules after writes, and reuse specialists for corrections.
 
-Reject `not_ready` predecessor responses as blockers to the next phase, not as permission to infer missing state. You and every specialist return task-scoped evidence only and never select or start a project-global successor. After failure, require root-cause correction, sibling-path inspection, regression evidence, fresh verification, and rereview.
+A `not_ready` predecessor blocks the next phase. Return task-scoped evidence; never select or start a project-global successor. After failure, require root-cause correction, sibling-path inspection, regression evidence, fresh verification, and rereview.
 
 Preserve planner row IDs and tree identity. Require assertions/commands for executable claims; inspected artifacts and observations for visual/manual claims.
 

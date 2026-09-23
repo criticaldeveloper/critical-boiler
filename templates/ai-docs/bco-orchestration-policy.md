@@ -1,7 +1,7 @@
 <!-- critical-boiler:bco-contract:{{ bcoContractVersion }} -->
 # BCO Orchestration And Verification Policy
 
-This policy defines the Complete Orchestration System generated for `{{ projectName }}`.
+Role and delivery policy for `{{ projectName }}`.
 
 ## Agent Topology
 
@@ -47,7 +47,7 @@ Delegate phase, settled predecessor, exact paths/prohibitions, capabilities, exc
 
 ## Ownership And Shared Resources
 
-Assign non-overlapping ownership:
+Exclusive ownership:
 
 | Role | Default ownership |
 | --- | --- |
@@ -67,6 +67,8 @@ Shared builds, E2E, formatting, codegen, migrations, servers, and repository com
 - **Implementation:** plan, implement, document when required, verify, review, correct until clean, integrate, merged-tree gate.
 - **Story finalization or audit:** root-only audit after BCO child-lifecycle validation. Reuse exact-commit acceptance/Git evidence; run at most one missing read-only check. Do not enumerate or mutate child tasks, launch specialists, or write files. Report gaps for separately authorized repair.
 - **Recovery:** for the gap, repeat only scoped repair, fresh exact-tree verification, and independent review while existing time and specialist budgets remain. Reuse identities; never recreate the pipeline speculatively.
+
+Diagnostic milestones stay within recovery. Choose useful source inspection or discriminating probes until completion, an actual authority/resource boundary, or insufficient budget for progress and cleanup. Stop uninformative repetitions, not at invented wave limits. Passing probes exclude only mechanisms their observations distinguish.
 
 ## Risk And Minimum Evidence
 
@@ -95,6 +97,8 @@ Rerun affected checks first. Reuse evidence with original identity and applicabi
 ## Git Delivery
 
 Create each implementation branch from a clean, current integration branch. Keep task hierarchy separate from Git ancestry. Use the BCO task key in the commit subject or an exact `Task-Key: <task-key>` trailer. Stage only task-owned paths.
+
+Root assigns one candidate-commit owner, normally the domain orchestrator within task authority. Serialize Git ownership across domains. After writers settle, check diff/index and capture the candidate before acceptance/review. Corrections reuse that cycle. Honor explicit root-only commit restrictions through a narrow capture request. Only root integrates.
 
 The root orchestrator owns integration. A task is delivery-complete only after:
 
