@@ -25,7 +25,7 @@ Project registration and plan confirmation remain operator-owned setup. The plan
 4. Use task amendments, comments, relationships, blockers, deferrals, reopen requests, and evidence tools only when the injected capability exposes them.
 5. Use the latest `expectedVersion` and a stable `commandId` for every mutation. Reuse a command ID only to reconcile the exact same intent.
 6. Attach concise verification, review, Git, or artifact evidence with `bco_task_attach_evidence`.
-7. Call `bco_task_request_completion` only after the acceptance criteria and repository definition of done pass. BCO performs authoritative completion and delivery checks.
+7. Call `bco_task_request_completion` after acceptance and definition-of-done checks pass. Success persists a request; the task stays `in-progress` pending separate governor acceptance. Return existing evidence without duplicate attachments or verification. Pending adjudication is not failed implementation.
 
 Follow the orchestration policy's iterative correction loop and evidence-applicability rules while existing workflow budgets remain. Exhausted work stays `in-progress` with exact evidence. Workflow tools do not create or clear `authority-conflict`; operator/governor authority owns that classification.
 
